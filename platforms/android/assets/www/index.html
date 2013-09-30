@@ -1,0 +1,1257 @@
+﻿<!DOCTYPE html>
+<html>
+    
+<head>
+<title>Mille Feuille</title>
+        
+
+<!-- METAS & MOBILE SETTINGS PRELOAD -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><base href=".">
+<meta charset="utf-8">
+<meta name="viewport" content="target-densitydpi=medium-dpi, width=320" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<!-- SCRIPTS PRELOAD -->        
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/jquery.mobile-1.3.1.min.js"></script>
+<script src="js/jquery-ui-1.10.3.custom.js"></script>
+<script src="js/jquery.ui.touch-punch.min"></script>
+
+
+<script type="text/javascript" src="js/tokenig.js"></script>
+<script src="js/main.js"></script>
+<script src="js/dragger.js"></script>
+
+<!-- LIBRERIAS PIXTATIX (Editor Full Screen) -->
+<script type="text/javascript" src="js/pixastic.core.js"></script>
+<script type="text/javascript" src="js/actions/brightness.js"></script>
+<script type="text/javascript" src="js/actions/hsl.js"></script>
+<script type="text/javascript" src="js/actions/invert.js"></script>
+
+
+
+<!-- STYLES PRELOAD -->
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.1.css">
+<link rel="stylesheet" href="css/text.css">
+<link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+
+<body class="ui-mobile-viewport">
+
+        <!-- Pantalla de Inicio -->  
+        <div data-role="page" data-control-title="Splash" id="splash"   data-url="splash" tabindex="0">
+        <div data-role="content" class="ui-content" role="main">
+            
+         <!--<a data-role="button" data-transition="slideup" data-theme="h" href="phone#welcome" class="ui-btn ui-btn-up-h ui-shadow ui-btn-corner-all"> -->
+            <div><img class="logoSplash" src="images/logo.png" alt=""></div>
+            <div><img class="logoTxt01" src="images/logo01.png" alt=""></div>
+            <div><img class="logoTxt02" src="images/logo02.png" alt=""></div>
+         <!--</a> -->
+
+        </div>
+        </div>
+
+                
+        <!-- Pantalla Bienvenida -->  
+        <div data-role="page" data-control-title="welcome" id="welcomearea" data-url="welcome">
+        <div data-role="content" id="welcome">
+                
+                <div data-controltype="image">
+                <img class="logoWelcome" src="images/logo.png" alt="">
+                </div>
+            
+                <div data-controltype="textblock" class="titular01">
+                WE PRINT YOUR MEMORIES
+                </div>
+            
+                <div data-controltype="textblock" class="subtitular01" id="debugm">
+                We're the simplest, most elegant way to preserve your memories on paper.
+                Please swipe for a quick tour.
+                </div>
+            
+                <!--
+                
+                -->
+                <div id="swipejump"><a href="phone#about01" data-controltype="image" data-transition="slideup" class="btMultiArrows"><img class="multiArrows" src="images/multiArrows.png" alt=""></a></div>
+                
+                
+                <div class="footerButtons">
+                <ul>
+                    <li class="boton btAzul" id="btStart">START NOW</li>
+                    <li class="sepFooter"> <img src="images/dot.png" alt=""> </li>
+                    <li class="boton btGrey" id="btLogin">LOG IN</li>
+                </ul>
+                </div>
+            
+            
+        </div>
+        </div>
+        
+        
+        
+        <!-- Pantalla Acerca de MF -->  
+        <div data-role="page" data-control-title="about01" id="aboutus"  data-url="about01" data-next="about02">
+        <div data-role="content" id="about01">
+            
+                <div id="contenedorabout">
+                
+                    <ul id="listaabout">
+                    <li>
+                        <div class="blueBox">
+                            
+                            <div data-controltype="textblock" class="titular02">
+                            WE KEEP IT SIMPLE
+                            </div>
+
+                            <div data-controltype="textblock" class="subtitular02">
+                            Creating with Mille-feuille album <br>is fun and easy. <br> <br>
+                            Few good options <br>for amazing results in minutes.
+                            </div>
+
+                            <div data-controltype="image">
+                            <img class="icon01" src="images/aboutIcon01.png" alt="">
+                            </div>
+                            
+                        </div>    
+                    </li>
+                    <li>
+                        <div class="blueBox">
+                            
+                            <div data-controltype="textblock" class="titular02">
+                            USE ANY PHOTO
+                            </div>
+
+                            <div data-controltype="textblock" class="subtitular02">
+                            If you have photos on facebook or Instagram you can print them here. 
+                            </div>
+
+                            <div data-controltype="image">
+                            <img class="icon02" src="images/aboutIcon02.png" alt="">
+                            </div>
+                            
+                        </div>
+                    </li>
+                    <li>
+                         <div class="blueBox">
+                             
+                            <div data-controltype="textblock" class="titular02">
+                            UNCOMPROMISING QUALITY
+                            </div>
+
+                            <div data-controltype="textblock" class="subtitular02">
+                            We craft beautiful objects <br> 
+                            you will cherish for years. 
+                            <br><br>
+                            Our albums and canvases are 
+                            handmade in our Madrid workshop 
+                            by artisans  with decades of experience in printing  and bookbinding.
+                            </div>
+
+                            <div data-controltype="image">
+                            <img class="icon03" src="images/aboutIcon03.png" alt="">
+                            </div>
+                             
+                         </div>
+                    </li>
+                    </ul>    
+                    
+                </div>
+
+                <div class="divPaginationDots">
+                    
+                <ul id="marcadoresabout">
+                    <li class="selected"></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                    
+                </div>
+
+
+            
+                <div class="footerButtons">
+                    
+                <ul>
+                <li class="boton btGrey" id="btSign">SIGN UP</li>
+                <li class="sepFooter"> <img src="images/dot.png" alt=""> </li>
+                <li class="boton btGrey" id="btLog">LOG IN</li>
+                </ul>
+                    
+                </div>
+                
+                
+        </div>
+        </div>
+
+  
+            
+        <!-- Registro cuentas MF -->  
+        <div data-role="page" data-control-title="register" id="registerarea" data-url="register">
+        <div data-role="content" id="register">
+            
+                <div class="btArrow prev" id="btRegHome"> <img src="images/arrPrev.png" alt=""></div>
+                
+                <div data-controltype="textblock" class="titular02">
+                REGISTER
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                Enter your details to create and save your first photo set
+                </div>
+                
+                <div class="formRegister">
+                <input type="text" value="Email" id="txtEmailRegister" name="">
+                <input type="text" value="Your Password" id="txtPassRegister" name="">
+                <input type="text" value="Repeat Password" id="txtPassRepeatRegister" name="">
+                
+                    <div class="conditions">
+                        <ul>
+                        <li style="margin-left:-0.5em;margin-top:0.8em;padding:0px"><span  class="checkreg" id="txtErrorRegister"> </span></li>
+                        <li style="margin-left:-0.5em;margin-top:0.8em;padding:0px"><input type="checkbox"><span  class="checkreg"> I have read and I accept the terms and conditions</span></li>
+                        </ul>
+                    </div>
+                
+                </div>
+                
+                <div class="footerButtons">
+                <div class="boton btGrey" id="createAcc">CREATE MY ACCOUNT</div>
+                </div>
+                
+        </div>
+        </div>
+       
+        
+        
+        <!-- Pantalla tipos de Login -->  
+        <div data-role="page" data-control-title="login"  data-url="login" id="logintype">
+        <div data-role="content" id="login">
+            
+                <div class="btArrow prev" id="btLogTypeHome"> <img src="images/arrPrev.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02">
+                LOGIN
+                </div>
+                
+                <div class="formLogin">
+                    
+                    <ul>
+                        
+                    <li class="buttonIcon" id="btLogTypeFB">
+                    <div class="iconButton"><img src="images/iconFb.png" alt=""></div>
+                    <div class="lblButtonIcon">SIGN IN WITH FACEBOOK</div> 
+                    </li>      
+                    
+                    <li class="buttonIcon" id="btLogTypeMF"> 
+                    <div class="iconButton"><img src="images/iconMille.png" alt=""></div> 
+                    <div class="lblButtonIcon">SIGN IN WITH M•FEUILLE</div> 
+                    </li>
+                    
+                    <li class="buttonIcon" id="btLogTypeNone"> 
+                    <div class="iconButton"><img src="images/iconAccess.png" alt=""></div> 
+                    <div class="lblButtonIcon">ACCESS WITHOUT LOGIN</div> 
+                    </li>
+                    
+                    </ul>
+
+                </div>
+                
+        </div>
+        </div>
+        
+        
+        
+        
+        <!-- Pantalla login MF -->  
+        <div data-role="page" data-control-title="access"  data-url="access" id="loginaccess">
+        <div data-role="content" id="access">
+            
+            
+                <div class="btArrow prev" id="btLogHome"> <img src="images/arrPrev.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02">
+                LOGIN
+                </div>
+                
+                <div class="formLogin">
+                <ul>
+                <li class="inputIcon"> <img src="images/iconUser.png" alt=""> <input type="text" value="User" name="" id="txtUserNameMF"></li>
+                <li class="inputIcon"> <img src="images/iconPass.png" alt=""> <input type="text" value="Password" name="" maxlength="6" id="txtPassMF"></li>
+                 <li class="buttonIcon" id="errorLogin"> 
+                    <span id="spanErrorLogin"></span>
+                    </li>
+                </ul>
+                    
+                <a href="phone#rePass" data-transition="slideup" data-icon=""><div class="forgott">Forgot Password?</div></a>
+                    
+                </div>
+                
+                <div class="footerButtons">
+                <div class="boton btGrey" id="btLoginMF">LOGIN MY ACCOUNT</div>
+                </div>
+                
+                
+        </div>
+        </div>
+        
+        
+        
+        <!-- Pantalla Olvide Password -->  
+        <div data-role="page" data-control-title="rePass"  data-url="rePass" id="rememberPass">
+        <div data-role="content" id="rePass">
+            
+                <div class="btArrow prev" id="btRePassHome"> <img src="images/arrPrev.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02">
+                RECOVER PASSWORD 
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                Enter the email address you used when you joined and we’ll send you instructions to reset your password.
+                </div>
+                
+                <div class="formRegister">
+                <input type="text" value="EMAIL" name="">
+                </div>
+                
+                <div class="footerButtons">
+                <div class="boton btGrey" id="btRePassRecover">RECOVER PASSWORD</div>
+                </div>
+                
+        </div>
+        </div>
+        
+        
+       
+        <!-- Pantalla seleccion tipo de album -->  
+        <div data-role="page" data-control-title="process_select" id="process_select" data-url="process_select">
+        <div data-role="content" id="bgselect">
+            
+                <div class="btArrow prev" id="btProcessBack"> <img src="images/arrPrev.png" alt=""> </div>
+                <div class="btArrow next" id="btHistory"> <img src="images/btTime.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02">
+                WHAT’S COOKING?
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                Swipe across the screen to select a photo format and start creating your masterpiece. 
+                </div>
+
+                
+                <div id="products">
+                    <ul id="listaproceso">
+                    <li><img id="0" src="images/products/prod01.png" alt=""></li>
+                    <li><img id="1" src="images/products/prod01b.png" alt=""></li>
+                    <li><img id="2" src="images/products/prod01c.png" alt=""></li>
+                    </ul>
+                </div>
+                
+                <div class="divPaginationDots">
+                    <ul id="marcadoresproceso">
+                    <li class="selected"></li>
+                    <li></li>
+                    <li></li>
+                    </ul>
+                </div>
+                
+                <div class="footerButtons">
+                <div class="boton btAzul" id="btCreateNewAlbum">CREATE NEW ALBUM</div>
+                </div>
+                
+                
+        </div>
+        </div>
+        
+    
+        
+        <!-- Pantalla seleccion decoracion -->  
+        <div data-role="page" data-control-title="process_decoration" id="process_decoration" data-url="process_decoration">
+        <div data-role="content" id="bgdecoration">
+            
+                <div class="btArrow prev" id="btDecoBack"> <img src="images/arrPrev.png" alt=""> </div></a>
+                <div class="btArrow next" id="btDecoSource"> <img src="images/arrNextOver.png" alt=""> </div></a>
+                
+                <div data-controltype="textblock" class="titular02">
+                A FEAST FOR THE EYES
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                Swipe to select a fabric to decorate your album
+                </div>
+                
+                <div id="decorations">
+                    <ul id="listadecoracion">
+                    <li><div id="decocont"><img id="0" src="images/decorations/deco01.png" alt=""></div></li>
+                    <li><div id="decocont"><img id="1" src="images/decorations/deco01b.png" alt=""></div></li>
+                    <li><div id="decocont"><img id="2" src="images/decorations/deco01c.png" alt=""></div></li>
+                    </ul>
+                </div>
+                
+                <div class="divPaginationDots">
+                    <ul id="marcadordecoracion">
+                    <li class="selected"></li>
+                    <li></li>
+                    <li></li>
+                    </ul>
+                </div>
+                
+        </div>
+        </div>
+        
+        
+        <!-- Pantalla seleccion marcos -->  
+        <div data-role="page" data-control-title="process_frames" id="process_frames" data-url="process_frames">
+        <div data-role="content" id="bgframes">
+            
+                <div class="btArrow prev" id="btFrameBack"> <img src="images/arrPrev.png" alt=""> </div></a>
+                <div class="btArrow next" id="btFrameSource"> <img src="images/arrNextOver.png" alt=""> </div></a>
+                
+                <div data-controltype="textblock" class="titular02">
+                NOW...THE CHERRY!
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                Swipe across the screen to select the frame that best suits your photograph. 
+                </div>
+                
+                <div id="decoframes">
+                    <ul id="listaframes">
+                    <li> <div id="decoframecont"> <img src="images/frames/frame01.png" alt=""> </div></li>
+                    <li> <div id="decoframecont"> <img src="images/frames/frame01b.png" alt=""></div></li>
+                    <li> <div id="decoframecont"> <img src="images/frames/frame01c.png" alt=""></div></li>
+                    </ul>
+                </div>
+                
+                <!--<span class="lblFrameType">Artic White</span> -->
+                
+                <div class="divPaginationDots">
+                    <ul id="marcadorframes">
+                    <li class="selected"></li>
+                    <li></li>
+                    <li></li>
+                    </ul>
+                </div>
+                
+                
+        </div>
+        </div>
+        
+        
+
+       <!-- Pantalla historico albumes -->  
+        <div data-role="page" data-control-title="process_history" id="process_history" data-url="process_history">
+        <div data-role="content" id="bgachievement">
+            
+                <div class="btArrow prev" id="btHistoryBack"> <img src="images/arrPrev.png" alt=""> </div></a>
+                
+                <div data-controltype="textblock" class="titular02">
+                YOUR ACHIEVEMENTS
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                Tap on any project to review, edit or delete 
+                </div>
+                
+                <div class="historyProducts">
+                    <ul>
+                    <li>
+                        <div class="optionsHy">
+                        <ul>
+                        <li><div class="btEdit"> <img src="images/btEdit.png" alt=""> </div></li>
+                        <li><div class="btDelete"> <img src="images/btDelete.png" alt=""> </div></li>
+                        </ul>
+                        </div>
+                        
+                        <img src="images/products/prod02.png" alt="">
+                        <span class="prodTitHy">Album title</span> 
+                    </li>
+                    <li>
+                         <div class="optionsHy">
+                         <ul>
+                         <li><div class="btEdit"> <img src="images/btEdit.png" alt=""> </div></li>
+                         <li><div class="btDelete"> <img src="images/btDelete.png" alt=""> </div></li>
+                         </ul>
+                         </div>
+                        
+                         <img src="images/products/prod01.png" alt="">
+                         <span class="prodTitHy">Album title</span>
+                     </li>
+                     <li>
+                         <div class="optionsHy">
+                         <ul>
+                         <li><div class="btEdit"> <img src="images/btEdit.png" alt=""> </div></li>
+                         <li><div class="btDelete"> <img src="images/btDelete.png" alt=""> </div></li>
+                         </ul>
+                         </div>
+                         
+                         <img src="images/products/prod01.png" alt="">
+                         <span class="prodTitHy">Album title</span>
+                     </li>
+                     </ul>
+                    
+                </div>
+                
+                
+        </div>
+        </div>
+        
+        
+        
+        <!-- Pantalla elegir origen fotos -->  
+        <div data-role="page" data-control-title="process_source" id="process_source" data-url="process_source">
+        <div data-role="content" id="bgsource">
+            
+                <div class="btArrow prev" id="btSourceBack"> <img src="images/arrPrev.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02">
+                ORGANIC PHOTO
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                Which pictures shall we explore <br>to create a photo set?  
+                </div>
+                
+                <div class="selectSource">
+                    <ul>
+                    <li id="btSourceFB"><img src="images/iconSource01.png" alt=""> <span class="lblSource">facebook </span></li>
+                    <li id="btSourceInsta"><img src="images/iconSource02.png" alt=""> <span class="lblSource">instragram </span></li>
+                    <li id="btSourcePhone"> <img src="images/iconSource03.png" alt=""> <span class="lblSource">iPhone </span></li>
+                    </ul>
+                </div>
+                
+        </div>
+        </div>      
+        
+        
+        
+
+        <!-- Pantalla landing editor -->  
+        <div data-role="page" data-control-title="creation_landing"  data-url="creation_landing" id="clanding">
+        <div data-role="content" id="creation_landing">
+            
+                    
+                <div class="whiteBox" id="btLandingContinue">
+                <span>SELECT A MINIMUM OF [30] PHOTOS TO CREATE YOUR ALBUM/BOX</span>
+                </div>
+                    
+            
+        </div>
+        </div>
+
+        
+        
+        
+        <!-- Pantalla Galeria Carrete -->  
+        <div data-role="page" data-control-title="creation_gallery" id="creation_gallery" data-url="creation_gallery">
+        <div data-role="content" id="fotoscarrete">
+            
+                <div class="btArrow prev" id="btCreationSource"><img src="images/arrPrev.png" alt=""></div>
+                <div class="btArrow next" id="btCreationEdit"> <img src="images/arrNextOver.png" alt=""></div>
+                <!--
+                <div class="gridGallery inline  ">
+                    <div class="img-grid">
+                        
+                        
+                        
+                        <div class="img-wrapper img-wrapper1">
+                        <div class="selectedPhoto"> <img src="images/iconSelectedPhoto.png" alt=""> </div>
+                            <div class="img-container">
+                                <img src="images/gallerys/gal01.jpg" alt="responsive image"/>
+                            </div>
+                        </div>
+                        
+                        <div class="img-wrapper img-wrapper1">
+                            <div class="img-container">
+                            <img src="images/gallerys/gal01.jpg" alt="responsive image"/>
+                            </div>
+                        </div>
+                        
+                        <div class="img-wrapper img-wrapper1">
+                            <div class="img-container">
+                            <img src="images/gallerys/gal01.jpg" alt="responsive image"/>
+                            </div>
+                        </div>
+                        
+                        <div class="img-wrapper img-wrapper1">
+                            <div class="img-container">
+                            <img src="images/gallerys/gal01.jpg" alt="responsive image"/>
+                            </div>
+                        </div>
+                        
+                        <div class="img-wrapper img-wrapper1">
+                            <div class="img-container">
+                            <img src="images/gallerys/gal01.jpg" alt="responsive image"/>
+                            </div>
+                        </div>
+                        
+                        <div class="img-wrapper img-wrapper1">
+                            <div class="img-container">
+                            <img src="images/gallerys/gal01.jpg" alt="responsive image"/>
+                            </div>
+                        </div>
+                        
+                        <div class="img-wrapper img-wrapper1">
+                            <div class="img-container">
+                            <img src="images/gallerys/gal01.jpg" alt="responsive image"/>
+                            </div>
+                        </div>
+                        
+                        <div class="img-wrapper img-wrapper1">
+                            <div class="img-container">
+                            <img src="images/gallerys/gal01.jpg" alt="responsive image"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="footerGallery">
+                    <div class="btGrid"> <img src="images/iconGridOver.PNG" alt=""> </div>
+                    <div class="btList"> <img src="images/iconList.jpg" alt=""> </div>
+                    <div class="infoGallery">Selected Pictures 14 of 30</div>
+                </div>
+                -->
+                
+<div id="fillertop"></div>  
+       <div id="fotos">
+
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p02.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p03.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p04.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+
+
+
+      
+           <div class="contenedorpic" style="background: url(images/gallerys/gal01.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic"  style="background: url(images/gallerys/p01.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p02.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p03.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p04.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+
+
+
+      
+           <div class="contenedorpic" style="background: url(images/gallerys/gal01.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic"  style="background: url(images/gallerys/p01.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p02.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p03.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p04.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+
+
+
+      
+           <div class="contenedorpic" style="background: url(images/gallerys/gal01.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic"  style="background: url(images/gallerys/p01.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p02.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p03.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p04.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+
+
+
+      
+           <div class="contenedorpic" style="background: url(images/gallerys/gal01.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic"  style="background: url(images/gallerys/p01.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p02.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p03.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p04.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+
+
+
+      
+           <div class="contenedorpic" style="background: url(images/gallerys/gal01.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic"  style="background: url(images/gallerys/p01.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p02.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p03.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+      
+      <div class="contenedorpic" style="background: url(images/gallerys/p04.jpg)">
+      <div class="checkboxpic selectedpiclist"></div>
+      </div>
+
+
+
+      
+     
+        
+            </div>                  
+                        <div id="fillerbottom"></div>
+
+
+                
+                
+    <div class="footerGallery">
+                  <div class="btGrid" id="btGalleryGrid">  </div>
+                    <div class="btList btListSelect" id="btGalleryList"> </div>
+                    <div class="infoGallery" id="selectStat">Selected Pictures <span id="selectedpics">0</span> of 10</div>
+                </div>
+                
+                
+                
+                
+        </div>
+        </div>
+        
+        <!-- DUMMY SCREEN -->  
+        <div data-role="page" data-control-title="creation_testsc" id="creation_testsc" data-url="creation_testsc">
+        <div data-role="content">
+            
+               <!-- <div class="btArrow prev" id="btEditBack"> <img src="images/arrPrev.png" alt=""> </div>
+                <div class="btArrow next" id="btEditTitle"> <img src="images/arrNextOver.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02hor">
+                EDIT PHOTOS TEST
+                </div>
+                
+                <ul id="receivedphotos">
+               
+                    <li><canvas id="testpic"></canvas></li>
+                    
+                    
+                    
+                </ul>
+                -->
+                
+        </div>
+        </div>
+        
+        
+        
+        <!-- Seleccionar foto a editar *PENDING REMAKE* -->  
+        <div data-role="page" data-control-title="creation_edit" id="creation_edit" data-url="creation_edit">
+            <div data-role="content" id="fsFix2">
+            
+            <div class="mod90button">
+                <div class="btArrow prev btMod" id="btEditBack"> <img src="images/arrPrev.png" alt=""> </div>
+                <div data-controltype="textblock" class="titular02hor mod90title">EDIT PHOTOS</div>
+                <div class="btArrow next btMod" id="btEditTitle"> <img src="images/arrNextOver.png" alt=""> </div>
+            </div>
+                
+
+                
+                
+                
+                <div class="book">
+                <div class="doblez"></div>
+                <ul>
+                    
+                        <!-- pagina Izquierda -->
+                        <li class="leftSlide">
+                        
+                            <div class="offPage" id="veloIzq" style="display:none"><span id="txtIzq">PAGE 2</span></div>
+                            
+                            <div class="optionsPage">
+                            <div class="btFull btEditFullScreen"> <img src="images/fullPhoto.png" alt=""> </div>
+                            <div class="arrUpPage" id="arrowUp1"> <img src="images/arrUp.png" alt=""> </div>
+                            <div class="arrDownPage" id="arrowDown1"> <img src="images/arrDown.png" alt=""> </div>
+                            </div>
+                            
+                            <div id="imgIzq" style="background-image: url(images/albumtext.png)"></div>
+                            <!--<img src="images/gallerys/default.jpg" alt="responsive image" id="imgIzq"/>-->
+                        </li>
+                        
+                        <!-- pagina derecha -->
+                        <li class="rightSlide">
+                            <div class="offPage" id="veloDer"> <span id="txtDer">PAGE 1</span> </div>
+                            
+                            <div class="optionsPage">
+                            <div class="btFull btEditFullScreen"> <img src="images/fullPhoto.png" alt=""> </div>
+                            <div class="arrUpPage" id="arrowUp2"> <img src="images/arrUp.png" alt=""> </div>
+                            <div class="arrDownPage" id="arrowDown2"> <img src="images/arrDown.png" alt=""> </div>
+                            </div>
+                            
+                            <div id="imgDer" style="background-image: url(images/albumtext.png)"></div>
+                            <!--<img src="images/gallerys/default.jpg" alt="responsive image" id="imgDer"/>-->
+                        </li>
+                        
+                </ul>
+                </div>
+                
+               
+               
+        </div>
+        </div>
+        
+        
+        
+        <!-- Editor fotos pantalla completa *PENDING REMAKE* -->  
+        <div data-role="page" data-control-title="creation_full" id="creation_full" data-url="creation_full">
+        <div data-role="content" id="fsFix">
+            
+                <div class="toolbarFS">
+                    <div class="btFull2" id="btFullScreen"> <img src="images/fullPhoto.png" alt=""> </div>
+                    <div class="btMagic" id="wandBt"><img src="images/magicWand.png"></div>
+                    <div class="btDeleteFull" id="btDel"> <img src="images/btDelete.png" alt=""> </div>
+                    <!--
+                    <div class="arrUpPage"> <img src="images/arrUp.png" alt=""> </div>
+                    <div class="arrDownPage"> <img src="images/arrDown.png" alt=""> </div>
+                    -->
+                </div>
+            
+                <div class="fullImage">
+                    <img id="fullScPic" />
+                    <div class="borderEffect">&nbsp;</div>
+                </div>
+                
+                  
+                
+        </div>
+        </div>
+        
+        
+        
+        
+        <!-- Pantalla vista preliminar -->  
+        <div data-role="page" data-control-title="creation_title" id="creation_title" data-url="creation_title">
+            <div data-role="content" id="bgtitle">
+                <div class="btArrow prev" id="btTitleBack"> <img src="images/arrPrev.png" alt=""> </div>
+                <div data-controltype="textblock" class="titular02">
+                    TITLE AND PREVIEW
+                </div>
+                <div data-controltype="textblock" class="subtitular02">
+                    Add a tittle an preview if is all as you like it
+                </div>
+                <div class="formRegister">
+                    <input type="text" value="ADD TITLE" name="">
+                </div>
+                <div class="miniPreview">
+                    <a href="phone#creation_preview" data-transition="slidedown" data-icon=""><div class="btPreview"> <img src="images/btLupa.png" alt=""> </div></a>
+                    <img src="images/products/prod02.png" alt="">
+                </div>
+                <div class="footerButtons">
+                    <div class="boton btAzul" id="btTitleSave">SAVE MY ALBUM</div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <!-- Pantalla preview fotos album -->  
+        <div data-role="page" data-control-title="creation_preview" id="creation_preview" data-url="creation_preview">
+        <div data-role="content">
+            
+                <div class="btArrow prev" id="btPreviewBack"> <img src="images/arrPrev.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02hor">
+                PREVIEW PHOTOS
+                </div>
+                
+                <div class="book">
+                <div class="doblez"></div>
+                <ul>
+                    
+                        <!-- pagina Izquierda -->
+                        <li class="leftSlide">
+                            <img src="images/gallerys/gal01.jpg" alt="responsive image"/>
+                        </li>
+                        
+                        <!-- pagina derecha -->
+                        <li class="rightSlide">
+                            <img src="images/gallerys/gal01.jpg" alt="responsive image"/>
+                        </li>
+                </ul>
+                </div>
+                
+        </div>
+        </div>
+        
+        
+        
+        <!-- Pantalla final titulo album -->  
+        <div data-role="page" data-control-title="creation_saved" id="creation_saved" data-url="creation_saved">
+        <div data-role="content" id="bgcreation">
+            
+                <div class="btArrow prev" id="btSavedBack"> <img src="images/arrPrev.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02">
+                ALBUM TITLE HERE
+                </div>
+                
+                <div class="miniPreview">
+                <img src="images/products/prod02.png" alt="">
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                Share and enjoy with friends
+                    <div class="btnsShare">
+                    <ul>
+                    <li><div class="btShare01"> <img src="images/shareIcon01.png" alt=""> </div></li>
+                    <li><div class="btShare02"> <img src="images/shareIcon02.png" alt=""> </div></li>
+                    </ul>
+                    </div>
+                </div>
+                
+                <div class="footerButtons">
+                    <ul>
+                    <li class="boton btGrey" id="btSavedPreview">PREVIEW</li>
+                    <li class="sepFooter"> <img src="images/dot.png" alt=""> </li>
+                    <li class="boton btAzul" id="btSavedBuy">BUY NOW</li>
+                    </ul>
+                </div>
+                
+                
+        </div>
+        </div>
+        
+        
+        
+        <!-- Resumen del Pedido -->  
+        <div data-role="page" data-control-title="order"  data-url="order" id="orderresume">
+        <div data-role="content" id="order">
+            
+                <div class="btArrow prev" id="btOrderBack"> <img src="images/arrPrev.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02">
+                YOUR ORDER
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                Please review your order.  Just tap to edit.
+                </div>
+                
+                <div class="formOder">
+                    <table>
+                        
+                        <tr>
+                        <td> <span>PHOTOS</span><input type="text" value="27" name="" class="formOderinput" data-role="none" ></td>
+                        </tr>
+                        
+                        <tr>
+                        <td><span>FORMAT</span><input type="text" value="ALBUM" name="" class="formOderinput" data-role="none" ></td>
+                        </tr>
+                        
+                        <tr>
+                        <td><span>SIZE</span><select name="" class="formOderinputD" data-role="none" >
+                        <option value="">BIG</option>
+                        <option value="">SMALL</option>
+                        <option value="">MEDIUM</option>
+                        <option value="">WALLET SIZE/PASSPORT</option>
+                        </select>
+                        </td>
+                        </tr>
+                        
+                        <tr>
+                        <td><span>PATTERN</span><select name="" class="formOderinputD" data-role="none" >
+                        <option value="">CLOUDY SKY</option>
+                        <option value="">ORIENT STYLE</option>
+                        <option value="">HALLOWEEN</option>
+                        <option value="">CHERRY</option>
+                        </select>
+                        </td>
+                        </tr>
+                        
+                        <tr>
+                        <td><span>QUANTITY</span> <input type="text" value="3" name="" class="formOderinput" data-role="none" ></td>
+                        </tr>  
+                        
+                        <tr>
+                        <td id="finalpricemod"><span>TOTAL</span><input type="text" value="54&euro;" name="" class="formOderinputTotal" data-role="none" ></td>
+                        </tr> 
+                                                
+                    </table>
+                     
+                </div>
+                
+                    
+                    
+                <div class="infoOrder">
+                *Tax and EU delivery included
+                </div> 
+                
+                <div class="footerButtons">
+                <div class="boton btGrey" id="btOrderContinue">CONTINUE</div>
+                </div>
+                
+                
+        </div>
+        </div>
+        
+        
+        
+        <!-- Pantalla datos personales pedido -->  
+        <div data-role="page" data-control-title="address"  data-url="address" id="addressresume">
+        <div data-role="content" id="address">
+            
+                <div class="btArrow prev" id="btAddressBack"> <img src="images/arrPrev.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02">
+                CHAUD DEVANT!
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                Indulge yourself or please someone you love.
+                </div>
+                
+                <div class="formRegister">
+                    <input type="text" value="NOMBRE" name="">
+                    <input type="text" value="DIRECCIÓN 1" name="">
+                    <input type="text" value="DIRECCIÓN 2" name="">
+                    <input type="text" value="CÓDIGO POSTAL" name="">
+                    <input type="text" value="CIUDAD" name="">
+                    <input type="text" value="PAÍS" name="">
+                    <input type="text" value="CHOOSE PASSWORD" name="">
+                    <input type="text" value="EMAIL" name="">
+                </div>
+                
+                <div class="footerButtons">
+                <div class="boton btGrey" id="btAddressContinue">CONTINUE</div>
+                </div>
+                
+                
+        </div>
+        </div>
+        
+        
+        
+        <!-- Pantalla tipo de pagos -->  
+        <div data-role="page" data-control-title="payment"  data-url="payment" id="paymentresume">
+        <div data-role="content" id="payment">
+            
+                <div class="btArrow prev" id="btPayBack"> <img src="images/arrPrev.png" alt=""> </div>
+                
+                <div data-controltype="textblock" class="titular02">
+                PAYMENT METHOD 
+                </div>
+                
+                <div data-controltype="textblock" class="subtitular02">
+                How would you like to pay? 
+                </div>
+                
+                <div class="payButtons">
+                    <ul>
+                    <li><img src="images/iconPayPal.png" alt=""> <span class="lblPay">Paypal </span></li>
+                    <li><img src="images/iconCard.png" alt=""> <span class="lblPay">Card </span></li>
+                    </ul>
+                </div>
+                
+                <div class="txtPayment">
+                For optimal security, Mille-feuille does not have access to your payment details. All money transactions are handled by either Adyen®  or Paypal®, established leaders in electronic payment solutions. 
+                </div>
+                
+                <div class="footerButtons">
+                <div class="boton btAzul" id="btPayFinish">PAY NOW</div>
+                </div>
+                
+                
+        </div>
+        </div>
+        
+        
+        
+        <!-- Pantalla final -->  
+        <div data-role="page" data-control-title="finish"  data-url="finish" id="finishscreen">
+        <div data-role="content" id="finish">
+            
+                <div class="btArrow next" id="btFinish"> <img src="images/arrNext.png" alt=""> </div>
+                
+                <div class="finalMessage">
+                    <div class="miniLogo"> <img src="images/miniLogo.png" alt=""> </div>
+                    <div data-controltype="textblock" class="titular02">CONGRATULATIONS! YOUR DESSERT IS ON ITS WAY</div>
+                    <div data-controltype="textblock" class="subtitular02"> Your order will be confirmed by email imminently and delivered in the next 7 days. </div>
+                </div>
+                
+                
+        </div>
+        </div>
+       
+        
+        
+        
+
+        <!-- LOADING? -->
+        <div class="ui-loader ui-corner-all ui-body-a ui-loader-default">
+        <span class="ui-icon ui-icon-loading"></span><h1>loading</h1>
+        </div>
+
+        
+        <script type="text/javascript" src="cordova.js"></script>
+       
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+        
+        <script type="text/javascript">
+
+            var _idFB = '';
+            var _name = '';
+            var _surname = '';
+            var _response = '';
+
+            function loginFB() {
+                console.log('logando fb');    
+
+
+                    // Additional initialization code such as adding Event Listeners goes here
+
+
+                    FB.getLoginStatus(function (response) {
+                        if (response.status === 'connected') {
+                            console.log("conectado!");
+
+                            var _idFB = response.authResponse.userID;
+
+                            FB.api('/' + _idFB + '?fields=id,name', function (response) {
+                                _response = response;
+                                _name = response.name.split(" ")[0];
+                                _surname = response.name.split(" ")[1];
+                                navegaSeccion("#process_select", "slideup");
+                            });
+
+                            //var uid = response.authResponse.userID;
+                            //var accessToken = response.authResponse.accessToken;
+                        } else if (response.status === 'not_authorized') {
+                            console.log("no autorizado!");
+                            FB.login(function (response) {
+                                if (response.authResponse) {
+                                    // The person logged into your app                
+                                    _idFB = response.authResponse.userID;
+                                    _name = response.authResponse.first_name;
+
+                                    FB.api('/' + _idFB + '?fields=id,name', function (response) {
+                                        _response = response;
+                                        _name = response.name.split(" ")[0];
+                                        _surname = response.name.split(" ")[1];
+                                        navegaSeccion("#process_select", "slideup");
+                                    });
+
+                                } else {
+                                    // The person cancelled the login dialog
+                                    //console.log("Ha cancelado.¿Recargo?")
+                                }
+                            });
+                        } else {
+                            // the user isn't logged in to Facebook.
+                            hazLogin();
+                            //console.log("no conectado a FB!");
+                        }
+                    });
+
+
+
+
+                    FB.Canvas.setAutoGrow();
+              
+
+            }
+			
+			
+		
+
+
+          /*  function hazLogin() {
+                FB.login(function (response) {
+
+                    if (response.authResponse) {
+                        // The person logged into your app                
+                        _idFB = response.authResponse.userID;
+                        _name = response.authResponse.first_name;
+
+                        FB.api('/' + _idFB + '?fields=id,name', function (response) {
+                            _response = response;
+                            _name = response.name.split(" ")[0];
+                            _surname = response.name.split(" ")[1];
+                            navegaSeccion("#process_select", "slideup");
+                        });
+
+                    } else {
+                        // The person cancelled the login dialog
+                        //console.log("Ha cancelado.¿Recargo?")
+                    }
+                }
+        );
+            }
+
+           
+                console.log('fb cargado');
+                // init the FB JS SDK
+                FB.init({
+                    appId: '382088901918989',                        // App ID from the app dashboard
+                    status: true,                                 // Check Facebook Login status
+                    xfbml: true,                                  // Look for social plugins on the page
+                    frictionlessRequests: true
+                 });*/
+
+          
+
+		</script>
+
+</body>
+</html>

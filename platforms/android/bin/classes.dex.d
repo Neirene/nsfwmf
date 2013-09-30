@@ -1,0 +1,23 @@
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes.dex : \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\coolappz\MilleFeuilleAPPv3\MilleFeuilleAPPv3.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\BuildConfig.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\MilleFeuilleAPPv3.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R$attr.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R$drawable.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R$layout.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R$string.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R$xml.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$1.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$2.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$1.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$2.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$3.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$4.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$5.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$InAppBrowserClient.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$InAppChromeClient.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\org\apache\cordova\splashscreen\SplashScreen.class \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\dexedLibs\cordova-3.0.0-92bd2ff3ffbb77e8f2d5d3d1b0d570a8.jar \

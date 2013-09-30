@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'DINEngschriftLTAlternateRegular';
+    src: url('lt_11441.eot');
+    src: url('lt_11441.eot') format('embedded-opentype'),
+         url('lt_11441.woff') format('woff'),
+         url('lt_11441.ttf') format('truetype'),
+         url('lt_11441.svg#DINEngschriftLTAlternateRegular') format('svg');
+}

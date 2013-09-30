@@ -1,0 +1,19 @@
+/* DIN */
+@font-face {
+    font-family: 'DINEngschriftLTAlternateRegular';
+    src: url('../fonts/din/lt_11441.eot');
+    src: url('../fonts/din/lt_11441.eot') format('embedded-opentype'),
+         url('../fonts/din/lt_11441.woff') format('woff'),
+         url('../fonts/din/lt_11441.ttf') format('truetype'),
+         url('../fonts/din/lt_11441.svg#DINEngschriftLTAlternateRegular') format('svg');
+}
+
+/* HAAS */
+@font-face {
+    font-family: 'HaasGrotDisp45Light';
+    src: url('../fonts/haas/neuehaasgrotdisp-45light.eot');
+    src: url('../fonts/haas/neuehaasgrotdisp-45light.eot') format('embedded-opentype'),
+         url('../fonts/haas/neuehaasgrotdisp-45light.woff') format('woff'),
+         url('../fonts/haas/neuehaasgrotdisp-45light.ttf') format('truetype'),
+         url('../fonts/haas/neuehaasgrotdisp-45light.svg#HaasGrotDisp45Light') format('svg');
+}
