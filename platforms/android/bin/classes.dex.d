@@ -1,10 +1,23 @@
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes.dex : \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuille\BuildConfig.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuille\MilleFeuille.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuille\R$attr.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuille\R$drawable.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuille\R$layout.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuille\R$string.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuille\R$xml.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\classes\com\funciona\MilleFeuille\R.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\dexedLibs\cordova-3.0.0-92bd2ff3ffbb77e8f2d5d3d1b0d570a8.jar \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes.dex : \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\BuildConfig.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\MilleFeuille.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R$attr.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R$drawable.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R$layout.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R$string.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R$xml.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuilleAPPv3\R.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\device\Device$1.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\device\Device.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$1.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$2.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$1.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$2.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$3.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$4.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$5.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$InAppBrowserClient.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppChromeClient.class \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\dexedLibs\cordova-3.0.0-e6b7b46f51af4ceb80d3eb04b06b6a5d.jar \

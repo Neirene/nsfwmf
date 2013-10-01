@@ -1,2 +1,2 @@
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\bin\AndroidManifest.xml : \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\AndroidManifest.xml \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\AndroidManifest.xml : \
+C:\Users\Administrator\Documents\NetBeansProjects\MILLEFEUILLE\platforms\android\AndroidManifest.xml \

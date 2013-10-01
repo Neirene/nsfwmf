@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.funciona.MilleFeuille" version="1.0.0">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.funciona.MilleFeuilleAPPv3" version="1.0.0">
     <name>MilleFeuille</name>
     <description>Cordova Application</description>
-    <author email="info@com.coolappz" href="http://www.coolappz.com">Administrador</author>
+    <author email="info@com.coolappz" href="http://www.coolappz.com">Administrator</author>
+    
+    <feature name="InAppBrowser">
+    <param name="android-package" value="org.apache.cordova.InAppBrowser" />
+</feature>
+    
     <access origin="*"/>
     <preference name="fullscreen" value="true"/>
     <preference name="webviewbounce" value="true"/>
-    <content src="index.html"/>
 </widget>
