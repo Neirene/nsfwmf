@@ -1,4 +1,4 @@
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\gen\com\funciona\MilleFeuilleAPPv3\R.java \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\gen\com\funciona\MilleFeuille\R.java \
  : C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\res\drawable\icon.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\res\drawable-hdpi\icon.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\res\drawable-hdpi\ic_launcher.png \

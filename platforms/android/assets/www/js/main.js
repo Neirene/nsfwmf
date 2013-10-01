@@ -43,7 +43,7 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
         */
        
-        console.log('Received Event: ' + id);
+        trace('Received Event: ' + id);
     }
 };
 
@@ -76,7 +76,7 @@ $(document).ready(function(){
         
         /////////////////////////TOUCH EVENTS//////////////////////////////////////
         
-  $( init );
+ /* $( init );
 
  function init() {
   document.addEventListener("touchstart", touchHandler, true);
@@ -100,10 +100,10 @@ $(document).ready(function(){
    simulatedEvent.initMouseEvent(type, true, true, window, 1,
                       first.screenY, first.screenX,
                       first.clientY, first.clientX, false,
-                      false, false, false, 0/*left*/, null);
+                      false, false, false, 0, null);
   first.target.dispatchEvent(simulatedEvent); 
   event.preventDefault();
-   }
+   }*/
         
         
         
@@ -261,7 +261,7 @@ function iniciarDOM(){
 ************************************/
 
 $(document).bind('touchmove', function(e){
-e.preventDefault();           
+    e.preventDefault();           
 });
 
 
@@ -275,8 +275,9 @@ var areaaccion;
 var idlista;
 var idmarcador;
 
-function mainslides (areaaccion,idlista,idmarcador) {
-           
+function mainslides (areaaccion,idlista,idmarcador,funcionCallBack) {
+    
+
 /* Configuracion Slides */
 var velscroll = 180;
 var easingtype = "swing";
@@ -308,7 +309,14 @@ $(areaaccion).on("swiperight", righthandler);
 		var destino = newIndex * -tamanolista;
 		indice = newIndex;
 		
-		$(idlista).animate({marginLeft: destino, opacity: "1"},velscroll,easingtype,function() {});
+		$(idlista).animate({marginLeft: destino, opacity: "1"},
+                           velscroll,
+                           easingtype,
+                           function(){
+                                if (funcionCallBack){
+                                    funcionCallBack(indice);
+                                }
+                           });
 																																					
 		
 	//Los marcadores de posicion y numero de elementos																
@@ -330,9 +338,14 @@ $(areaaccion).on("swiperight", righthandler);
 		var destino = newIndex * -tamanolista;
 		indice = newIndex;
 
-		$(idlista).animate({marginLeft: destino, opacity: "1"},velscroll,easingtype,function() {});
+		$(idlista).animate({marginLeft: destino, opacity: "1"},velscroll,easingtype,
+                           function(){
+                            if (funcionCallBack){
+                                funcionCallBack(indice);
+                            }
+                           });
 		
-                
+        
 		$(idmarcador).find('li').removeClass("selected").eq(indice).addClass("selected");
 	
         e.preventDefault();
@@ -481,7 +494,7 @@ function recuperarListaFotosFB() {
 	
 	//recupera las fotos del usuario
 
-    $("#fotos").html("LOADING");
+   $("#fotos").html("<div class='loadingOverlay'>LOADING</div>");
 
 
     var url_base = "https://graph.facebook.com/me/photos/";
@@ -600,7 +613,7 @@ function activarZonaFotosFalso() {
 
     navegaSeccion("#creation_gallery", "slideup");
 
-    $("#fotos").html("LOADING");
+    $("#fotos").html("<div class='loadingOverlay'>LOADING</div>");
 
 
 
@@ -628,7 +641,7 @@ function activarZonaFotosFalso() {
 
 function recuperarListaFotosIG() {
 
-    $("#fotos").html("LOADING");
+    $("#fotos").html("<div class='loadingOverlay'>LOADING</div>");
 
 
 
@@ -757,7 +770,7 @@ function convertirCanvas () {
  
         //miFoto.canvas = canvas;
         
-        console.log(fotosfull);
+        trace(fotosfull);
 
                 
         
@@ -796,15 +809,15 @@ function cropCanvas() {
    
    
    
-   console.log("Imagen: "+queImagen);
-   console.log("Source X Pos: "+sourceX);
-   console.log("Source Y Pos: "+sourceY);
-   console.log("Source Width: "+sourceWidth);
-   console.log("Source Height: "+sourceHeight);
-   console.log("Destination X: "+destX);
-   console.log("Destination Y: "+destY);
-   console.log("Destination Width: "+destWidth);
-   console.log("Destination Height: "+destHeight);
+   trace("Imagen: "+queImagen);
+   trace("Source X Pos: "+sourceX);
+   trace("Source Y Pos: "+sourceY);
+   trace("Source Width: "+sourceWidth);
+   trace("Source Height: "+sourceHeight);
+   trace("Destination X: "+destX);
+   trace("Destination Y: "+destY);
+   trace("Destination Width: "+destWidth);
+   trace("Destination Height: "+destHeight);
    
      
    context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight/*, destX, destY, destWidth, destHeight*/);
@@ -844,13 +857,7 @@ Pantalla de introduccion/home
 ************************************/
 $(document).delegate("#welcomearea", "pageshow", function () {
 
-    $("#debugm").off("tap").on("tap", function (e) {
 
-        e.preventDefault();
-        e.stopPropagation();
-        testnavi();
-
-    });
 
     $("#btLogin").off("tap").on("tap", function (e) {
 
@@ -868,8 +875,8 @@ $(document).delegate("#welcomearea", "pageshow", function () {
 
     });
 
-    $("#swipejump a").off().on("swipeleft", pagejump);
-    $("#swipejump a").on("swiperight", pagejump);
+    $("#swipejump ").off().on("swipeleft", pagejump);
+    $("#swipejump ").on("swiperight", pagejump);
 
     function pagejump(e) {
         e.preventDefault();
@@ -1120,7 +1127,8 @@ $(document).delegate("#loginaccess", "pageshow", function () {
 Pantalla de Olvide Password
 ************************************/
 $(document).delegate("#rememberPass", "pageshow", function () {
-
+    var RePassField = $("#recoveryEmail").val();
+    var RePassVal = "EMAIL";
 
     $("#btRePassRecover").off("tap").on("tap", function (e) {
 
@@ -1137,6 +1145,36 @@ $(document).delegate("#rememberPass", "pageshow", function () {
         navegaSeccion("#loginaccess", "slide", true);
 
     });
+    
+    
+    $("#recoveryEmail").focus(function() {
+       
+       //if (idField == loginIdVal) {
+           $("#recoveryEmail").val("");
+       //}
+        $("body").offset({top:0});
+
+    });
+    
+    $("#recoveryEmail").blur(function() {
+
+       if (RePassField == "" || RePassField == RePassVal){
+           $("#recoveryMail").val(RePassVal);       }
+       else {
+           RePassVal = $("#recoveryEmail").val();
+           
+       }
+       $(document).scrollTop(0);
+    });
+    
+    $("#recoveryEmail").focus(function() {
+
+       $("#recoveryEmail").val("");
+
+       
+
+    });
+    
 
 });
 
@@ -1145,8 +1183,13 @@ Pantalla de seleccion tipo producto
 ************************************/
 $(document).delegate("#process_select", "pageshow", function () {
 
+    var tipoProducto = ["CREATE A NEW ALBUM","CREATE PHOTO FRAME","PRINT YOUR PHOTOS"];
+                     
     //slides
-    mainslides("#process_select", "#listaproceso", "#marcadoresproceso");
+    mainslides("#process_select", "#listaproceso", "#marcadoresproceso",function(index){
+               trace("elige producto:"+index);
+              $("#btCreateNewAlbum").text(tipoProducto[index]);
+    });
 
 
     $("#btHistory").off("tap").on("tap", function (e) {
@@ -1168,9 +1211,8 @@ $(document).delegate("#process_select", "pageshow", function () {
     //objeto global que contiene todos los datos del pedido
     var datosPedido = {};
     datosPedido.tipoPedido = -1;
-
-    var tipoproducto = new Array();
-        tipoProducto = ["CREATE A NEW ALBUM","CREATE PHOTO FRAME","PRINT YOUR PHOTOS"];
+ 
+   
 
     $("#btCreateNewAlbum").off().on("tap", function (e) {
 
@@ -1179,8 +1221,7 @@ $(document).delegate("#process_select", "pageshow", function () {
 
             
             if ($(value).hasClass("selected")) {
-
-                jQuery("#btCreateNewAlbum").text(tipoProducto[index]);
+          
                 
                 datosPedido.tipoPedido = index;
             }
@@ -1195,16 +1236,21 @@ $(document).delegate("#process_select", "pageshow", function () {
             case 0:
                 //album
                 destino = "#process_decoration";
-                break;
+                                    
+                                break;
 
             case 1:
                 //marco
-                destino = "#process_frames";  
+                destino = "#process_frames";
+                                   
+
                 break;
 
             case 2:
                 //fotos
                 destino = "#process_source";
+                                  
+
                 break;
 
         }
@@ -1369,8 +1415,8 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 
         if(fotosfinales > numeroFotos){
             
-            console.log("has seleccionado 10");
-            console.log("Final checkpoint!");
+            trace("has seleccionado 10");
+            trace("Final checkpoint!");
              
             //navegaSeccion("#creation_edit","slide");
         
@@ -1413,7 +1459,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
            // recojofotos(); // envio fotos a las variables globales
         
 	}else{
-            console.log("Seleciona al menos 10!");
+            trace("Seleciona al menos 10!");
             
             
         }
@@ -1518,7 +1564,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
 
         fi++;
-        console.log(fi);
+        trace(fi);
         if (fi >= fotosfull.length) {
             fi = 0;
         }
@@ -1545,7 +1591,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
         //fsCanvas(fotosfull[fi]);
         $("#fullScPic").css("top","0","left","0");
-        console.log(fi);
+        trace(fi);
 
 
         e.preventDefault();
@@ -1557,7 +1603,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
 
         fi++;
-        console.log(fi);
+        trace(fi);
         if (fi >= fotosfull.length) {
             fi = 0;
         }
@@ -1584,7 +1630,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
         //fsCanvas(fotosfull[fi]);
         $("#fullScPic").css("top","0","left","0");
-        console.log(fi);
+        trace(fi);
 
 
         e.preventDefault();
@@ -1598,17 +1644,19 @@ $(document).delegate("#creation_edit", "pageshow", function () {
     function paginaDerecha() {
         if (paginasFull[pi] != fi)
             paginasFull[pi] = fi;
-        console.log("pi antes de pinchar: " + pi);
+        trace("pi antes de pinchar: " + pi);
         pi--;
-        console.log("pi desués de pinchar: " + pi);
+        trace("pi desués de pinchar: " + pi);
 
         if (pi < 0) {
             pi = paginasFull.length - 1;
         }
         fi = paginasFull[pi];
         if (pi % 2 == 1) {
+                   
+                    // $(".book").animate({"top","80px"})
             //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
-            console.log("cambiamos páginas");
+            trace("cambiamos páginas");
             $('#veloDer').fadeOut();
             $('#veloIzq').fadeIn();
             $('#txtDer').text('Page ' + parseInt(pi));
@@ -1618,7 +1666,8 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         }
         else {
-            console.log("no cambiamos páginas");
+                   //  $(".book").animate({"top":"-80px"})
+            trace("no cambiamos páginas");
             $('#veloDer').fadeIn();
             $('#veloIzq').fadeOut();
             $('#txtIzq').text('Page ' + parseInt(pi));
@@ -1632,15 +1681,17 @@ $(document).delegate("#creation_edit", "pageshow", function () {
     function paginaIzquierda() {
         if (paginasFull[pi] != fi)
             paginasFull[pi] = fi; //fotosfull[fi];
-        console.log("pi antes de pinchar: " + pi);
+        trace("pi antes de pinchar: " + pi);
         pi++;
-        console.log("pi después de pinchar: " + pi);
+        trace("pi después de pinchar: " + pi);
 
         if (pi > paginasFull.length - 1) {
             pi = 0;
         }
         fi = paginasFull[pi];
         if (pi % 2 == 0) {
+                    // $(".book").animate({"top","-80px"})
+
             //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
             $('#txtDer').text('Page ' + parseInt(pi + 1));
             $('#txtIzq').text('Page ' + parseInt(pi));
@@ -1650,6 +1701,8 @@ $(document).delegate("#creation_edit", "pageshow", function () {
             $("#imgIzq").css("background-image","url("+ fotosfull[paginasFull[pi]] + ")");
         }
         else {
+                    // $(".book").animate({"top","80px"})
+
             $('#txtIzq').text('Page ' + parseInt(pi + 1));
             $('#txtDer').text('Page ' + parseInt(pi));
             $('#veloDer').fadeOut();
@@ -1663,9 +1716,9 @@ $(document).delegate("#creation_edit", "pageshow", function () {
     $("#pagIzq").off("tap").on("tap", function (e) {
         if (paginasFull[pi] != fi)
             paginasFull[pi] = fi;
-        console.log("pi antes de pinchar: " + pi);
+        trace("pi antes de pinchar: " + pi);
         pi--;
-        console.log("pi desués de pinchar: " + pi);
+        trace("pi desués de pinchar: " + pi);
 
         if (pi < 0) {
             pi = paginasFull.length - 1;
@@ -1673,7 +1726,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         fi = paginasFull[pi];
         if (pi % 2 == 1) {
             //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
-            console.log("cambiamos páginas");
+            trace("cambiamos páginas");
             $('#veloDer').fadeOut();
             $('#veloIzq').fadeIn();
             $('#txtDer').text('Page ' + parseInt(pi));
@@ -1683,7 +1736,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         }
         else {
-            console.log("no cambiamos páginas");
+            trace("no cambiamos páginas");
             $('#veloDer').fadeIn();
             $('#veloIzq').fadeOut();
             $('#txtIzq').text('Page ' + parseInt(pi));
@@ -1698,9 +1751,9 @@ $(document).delegate("#creation_edit", "pageshow", function () {
     $("#pagDer").off("tap").on("tap", function (e) {
         if (paginasFull[pi] != fi)
             paginasFull[pi] = fi; //fotosfull[fi];
-        console.log("pi antes de pinchar: " + pi);
+        trace("pi antes de pinchar: " + pi);
         pi++;
-        console.log("pi después de pinchar: " + pi);
+        trace("pi después de pinchar: " + pi);
 
         if (pi > paginasFull.length - 1) {
             pi = 0;
@@ -1758,10 +1811,7 @@ $(document).delegate("#creation_full", "pageshow", function () {
     
 
     $("#wandBt").off("tap").on("tap", function (e) {
-        
-
-        
-        
+                
         
         if (filter >= 4) {
             filter = 0;
@@ -1805,7 +1855,7 @@ $(document).delegate("#creation_full", "pageshow", function () {
 
             e.preventDefault();
             e.stopPropagation();
-    cropCanvas();
+                   cropCanvas();
         });
 
 
@@ -2029,7 +2079,7 @@ function loginUser() {
         url: site_URL+'ws.asmx/login',
         success: function (data) {
             //trace(data);
-            console.log(data);
+            trace(data);
             if (data.d.resultado == "OK") {
                 logado = true;
                 _userID = $('#txtUserNameMF').val();
@@ -2040,7 +2090,7 @@ function loginUser() {
             }
         },
         error: function (e) {
-            console.log('error: ' + e);
+            trace('error login: ' + e);
         }
     });
 

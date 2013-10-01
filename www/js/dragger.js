@@ -14,49 +14,52 @@ var __queContainer;
 function startMovimiento(queImg,queContainer){
     __queImg = queImg;
     __queContainer = queContainer;
-    
-    console.log(__queImg,__queContainer);
-    $(document).on("mousedown",iniciarMovimiento);
+   
+    trace("inicio el movimiento")
+   
+    $(document).on("vmousedown",iniciarMovimiento);
 }
 
 function stopMovimiento(){
     
- $(document).off("mousedown");
+ $(document).off("vmousedown");
 }
 
 function iniciarMovimiento(e){
-    e.preventDefault();
-    e.stopPropagation();
+    trace("inicio movimiento en "+e.pageX+"**"+e.pageY);
         //calcula el punto en todo el documento donde se ha clicado
-	__posX = e.offsetX;
-	__posY = e.offsetY;
+	__posX = e.pageX;
+	__posY = e.pageY;
 	
-        //calcula el punto actual donde esta ubicada la imagen en el documento
+     //calcula el punto actual donde esta ubicada la imagen en el documento
 	__posXImg = __queImg.position().left;
 	__posYImg = __queImg.position().top;
 	
-	$(document).on("mousemove",moverImagen);
-	$(document).on("mouseup", finMovimiento);
+	$(document).on("vmousemove",moverImagen);
+	$(document).on("vmouseup", finMovimiento);
 	
+    e.preventDefault();
+    e.stopPropagation();
 }
 
 
 function finMovimiento(e){
-    console.log("finMovimiento ",e.offsetX);
-	$(document).off("mousemove");
-	$(document).off("mouseup");
+   // trace("finMovimiento ",e.offsetX);
+	$(document).off("vmousemove");
+	$(document).off("vmouseup");
 }
 
 function moverImagen(e){
-        console.log("moverImagen ",e.offsetX);
-	var distX = e.offsetX - __posX;
-	var distY = e.offsetY + __posY;
+    trace("moverImagen :" + e.pageX +"**"+ e.pageY);
+	var distX = e.pageX - __posX;
+	var distY = e.pageY - __posY;
 
        //ubicacion futura de la imagen
-	var fImgX = Math.round(__posYImg - distX); 
-	var fImgY = Math.round(__posXImg - distY);
-/*
-            if(fImgX < 0) {
+	var fImgX = __posXImg - distX;
+	var fImgY = __posYImg + distY;
+
+    
+    /*if(fImgX < 0) {
                 fImgX = 0;
             }
             
@@ -80,12 +83,12 @@ function moverImagen(e){
 
         if(fImgY < -heightImagen+heightContenedor) {
               fImgY = -heightImagen+heightContenedor;
-          } /*  
-  */          
-        console.log(fImgY,fImgX);    
-            
+          } 
+ 
+       // trace(fImgY,fImgX);*/
+            __queImg.css({top:fImgX,left:fImgY});
         
-	__queImg.css({top:fImgX,left:fImgY});
+	//__queImg.css({top:fImgX,left:fImgY});
         
 
 }

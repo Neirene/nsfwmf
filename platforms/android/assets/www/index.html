@@ -6,28 +6,29 @@
         
 
 <!-- METAS & MOBILE SETTINGS PRELOAD -->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><base href=".">
-<meta charset="utf-8">
-<meta name="viewport" content="target-densitydpi=medium-dpi, width=320" />
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--ios-->
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
 
-<!-- SCRIPTS PRELOAD -->        
+<!--android-->
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=320, height=480">
+
+
+<!-- SCRIPTS PRELOAD -->
 <script src="js/jquery-1.9.1.min.js"></script>
 <script src="js/jquery.mobile-1.3.1.min.js"></script>
 <script src="js/jquery-ui-1.10.3.custom.js"></script>
-<script src="js/jquery.ui.touch-punch.min"></script>
 
 
-<script type="text/javascript" src="js/tokenig.js"></script>
 <script src="js/main.js"></script>
 <script src="js/dragger.js"></script>
 
-<!-- LIBRERIAS PIXTATIX (Editor Full Screen) -->
+ <!--LIBRERIAS PIXTATIX (Editor Full Screen)
 <script type="text/javascript" src="js/pixastic.core.js"></script>
 <script type="text/javascript" src="js/actions/brightness.js"></script>
 <script type="text/javascript" src="js/actions/hsl.js"></script>
-<script type="text/javascript" src="js/actions/invert.js"></script>
+<script type="text/javascript" src="js/actions/invert.js"></script>-->
 
 
 
@@ -43,7 +44,7 @@
 <body class="ui-mobile-viewport">
 
         <!-- Pantalla de Inicio -->  
-        <div data-role="page" data-control-title="Splash" id="splash"   data-url="splash" tabindex="0">
+        <div data-role="page" data-control-title="Splash" id="splash" data-url="splash" tabindex="0">
         <div data-role="content" class="ui-content" role="main">
             
          <!--<a data-role="button" data-transition="slideup" data-theme="h" href="phone#welcome" class="ui-btn ui-btn-up-h ui-shadow ui-btn-corner-all"> -->
@@ -314,7 +315,7 @@
                 </div>
                 
                 <div class="formRegister">
-                <input type="text" value="EMAIL" name="">
+                <input type="text" value="EMAIL" name="" id="recoveryEmail">
                 </div>
                 
                 <div class="footerButtons">
@@ -1148,110 +1149,7 @@
             app.initialize();
         </script>
         
-        <script type="text/javascript">
-
-            var _idFB = '';
-            var _name = '';
-            var _surname = '';
-            var _response = '';
-
-            function loginFB() {
-                console.log('logando fb');    
-
-
-                    // Additional initialization code such as adding Event Listeners goes here
-
-
-                    FB.getLoginStatus(function (response) {
-                        if (response.status === 'connected') {
-                            console.log("conectado!");
-
-                            var _idFB = response.authResponse.userID;
-
-                            FB.api('/' + _idFB + '?fields=id,name', function (response) {
-                                _response = response;
-                                _name = response.name.split(" ")[0];
-                                _surname = response.name.split(" ")[1];
-                                navegaSeccion("#process_select", "slideup");
-                            });
-
-                            //var uid = response.authResponse.userID;
-                            //var accessToken = response.authResponse.accessToken;
-                        } else if (response.status === 'not_authorized') {
-                            console.log("no autorizado!");
-                            FB.login(function (response) {
-                                if (response.authResponse) {
-                                    // The person logged into your app                
-                                    _idFB = response.authResponse.userID;
-                                    _name = response.authResponse.first_name;
-
-                                    FB.api('/' + _idFB + '?fields=id,name', function (response) {
-                                        _response = response;
-                                        _name = response.name.split(" ")[0];
-                                        _surname = response.name.split(" ")[1];
-                                        navegaSeccion("#process_select", "slideup");
-                                    });
-
-                                } else {
-                                    // The person cancelled the login dialog
-                                    //console.log("Ha cancelado.¿Recargo?")
-                                }
-                            });
-                        } else {
-                            // the user isn't logged in to Facebook.
-                            hazLogin();
-                            //console.log("no conectado a FB!");
-                        }
-                    });
-
-
-
-
-                    FB.Canvas.setAutoGrow();
-              
-
-            }
-			
-			
-		
-
-
-          /*  function hazLogin() {
-                FB.login(function (response) {
-
-                    if (response.authResponse) {
-                        // The person logged into your app                
-                        _idFB = response.authResponse.userID;
-                        _name = response.authResponse.first_name;
-
-                        FB.api('/' + _idFB + '?fields=id,name', function (response) {
-                            _response = response;
-                            _name = response.name.split(" ")[0];
-                            _surname = response.name.split(" ")[1];
-                            navegaSeccion("#process_select", "slideup");
-                        });
-
-                    } else {
-                        // The person cancelled the login dialog
-                        //console.log("Ha cancelado.¿Recargo?")
-                    }
-                }
-        );
-            }
-
-           
-                console.log('fb cargado');
-                // init the FB JS SDK
-                FB.init({
-                    appId: '382088901918989',                        // App ID from the app dashboard
-                    status: true,                                 // Check Facebook Login status
-                    xfbml: true,                                  // Look for social plugins on the page
-                    frictionlessRequests: true
-                 });*/
-
-          
-
-		</script>
+        
 
 </body>
 </html>
