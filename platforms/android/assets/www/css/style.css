@@ -59,7 +59,7 @@ input { border-radius: 0px !important;}
 .btGrey { background-color: #333; }
 .btAzul { background-color: #4da0d2; }
 
-.blueBox {width: 18.7em;background-image: url(../images/blueDot.png);float: left;min-height: 379px;display: block;height: 23.3em;}
+.blueBox {background-image: url(../images/blueDot.png);float: left;min-height: 379px;display: block;width:91%;height: 91%;margin: 4%;}
 .btArrow { width: 100%; max-width: 67px; position: fixed; top: 0px; margin: 3%;  z-index: 8000;}
 .prev { left: 0; text-align: left;}
 .next { right: 0; text-align: right;}
@@ -96,18 +96,20 @@ input { border-radius: 0px !important;}
 }
 .divPaginationDotsdeco {width: 96%;text-align: center;padding: 2%;bottom: 14%;left: 0;margin-top: 6%;margin-bottom: 1%;position: absolute;}
 
-#listaabout {list-style-type: none;}
-#contenedorabout {overflow: hidden;height: 25.1em;width: 18.4em;}
 
+.contenedorabout {overflow: hidden;visibility: hidden;position: relative;height: 25.1em;width: 18.4em;}
+.listaabout {overflow: hidden;position: relative;}
+.listaabout > div {float:left;width:100%;position: relative;}
 
-#listaabout li{list-style-type: none;float: left;position: relative;margin: 0px;display: block;padding: 0px;}
+//#listaabout li{list-style-type: none;float: left;position: relative;margin: 0px;display: block;padding: 0px;}
 
 
 .divPaginationDots li {padding-left: 0.5%;display: inline-table;background-color: #444;border-radius: 50%;padding: 1%;margin-left: 1.5% !important;margin: 2%;margin-right: 1.5% !important;}
 .divPaginationDots .selected { background-color: #fff;}
 
-
-
+.transferArrow {overflow: hidden;visibility: hidden;position: relative;}
+.arrowContainer {overflow: hidden;position: relative;}
+.arrowContainer > div {float:left;width:100%;position: relative;}
 
 /* register */  
 #register  {background-image: url(../images/bg02.jpg);  min-height: 600px; background-repeat: no-repeat; background-size: cover;}
@@ -121,7 +123,7 @@ input { border-radius: 0px !important;}
 
 
 /* login  */  
-#login,  #access, #rePass  {background-image: url(../images/bg02.jpg);  min-height: 600px; background-repeat: no-repeat; background-size: cover;}
+#login,  #access, #rePass  {background-image: url(../images/bg02.jpg);  min-height: 480px; background-repeat: no-repeat; background-size: cover;}
 .formLogin	{ width: 97%; padding: 2%; padding-top: 20%;}
 .forgott { padding: 6%; width: 88%; text-align: center;}
 .buttonIcon {  width: 100%; float: left;  margin-bottom: 4%;  margin-top: 4%;}
@@ -149,11 +151,11 @@ input { border-radius: 0px !important;}
 */
 #process_select, #process_history, #process_decoration, #process_frames  { min-height: 979px;}
 
-#products {width: 18.4em;height: 13.4em;position: relative;overflow: hidden;}
-#products ul {list-style-type: none;margin: 0px;padding: 0px;position: relative;left: 0px;top: 0px;
-}
-#products li {float: left; margin: 5px;}
-#products img {height: 12.9em; width: 17.7em;}
+.products {overflow: hidden;visibility: hidden;position: relative;width: 18.4em;height: 13.4em;}
+.listaproceso {overflow: hidden;position: relative;}
+.listaproceso > div {float:left;width:100%;position: relative;}
+
+.products img {height: 80%; width: 80%;}
 
 #process_frames .divPaginationDots, #process_decoration .divPaginationDots { bottom: 5% !important;}
 #process_select .divPaginationDots { bottom: 12% !important;}
@@ -175,18 +177,18 @@ input { border-radius: 0px !important;}
 .btDelete img {}
 
 /* TODO: CHECK THIS*/
-#decoframes { width: 330%; overflow: hidden; float: left;}
-#decoframes li { list-style-type: none; float: left;  width: 29.9%;}
+.decoframes {overflow: hidden;visibility: hidden;position: relative; width: 330%;}
+.listaframes{overflow: hidden;position: relative;}
+.listaframes > div {float:left;width:100%;position: relative;}
 
-
-#decoframecont { display: block; width: 100%; margin: 0px; list-style-type: none; }
+#decoframecont { display: block; width: 30%; height:30%; margin: 0px; list-style-type: none; }
 #decoframecont span{ display: none; }
-#decoframecont img { width: 89%;}
+#decoframecont img { width: 100%;}
 
-#decorations {width: 18.4em;overflow: hidden;height: 17em;}
-
-
-
+.decorations {overflow: hidden;visibility: hidden;position: relative;width: 18.4em;height: 17em;}
+.listadecoracion {overflow: hidden;position: relative;}
+.listadecoracion > div {float:left;width:100%;position: relative;}
+.listadecoracion img{height:70%;width:70%}
 
 
 #decorations ul {margin: 0px;padding: 0px;list-style-type: none;}

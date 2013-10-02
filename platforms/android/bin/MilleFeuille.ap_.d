@@ -30,6 +30,7 @@ C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\M
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\index.html \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\js \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\php \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\plugins \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\res \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\spec \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\css\jquery.mobile.structure-1.3.1.css \
@@ -149,6 +150,7 @@ C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\M
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\js\main.js \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\js\pixastic.core.js \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\js\pixastic.jquery.js \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\js\swipetest.js \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\js\tokenig.js \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\js\actions\blend.js \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\js\actions\blur.js \
@@ -183,6 +185,12 @@ C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\M
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\js\actions\unsharpmask.js \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\php\crossdomain.xml \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\php\proxy.php \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\plugins\org.apache.cordova.device \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\plugins\org.apache.cordova.inappbrowser \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\plugins\org.apache.cordova.device\www \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\plugins\org.apache.cordova.device\www\device.js \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\plugins\org.apache.cordova.inappbrowser\www \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\plugins\org.apache.cordova.inappbrowser\www\InAppBrowser.js \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\res\icon \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\res\screen \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MilleFeuilleAPPv3\platforms\android\assets\www\res\icon\android \

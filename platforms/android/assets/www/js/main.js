@@ -34,14 +34,11 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-      /*
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-        */
+ 
+     if (parseFloat(window.device.version) === 7.0) {
+          //document.body.style.marginTop = "20px";
+          $(".btArrow").css("top","25px");
+    }
        
         trace('Received Event: ' + id);
     }
@@ -67,12 +64,13 @@ F U N C I O N E S      G L O B A L E S
  **************************/
 
 $(document).ready(function(){
-	iniciarDOM();
+
+    iniciarDOM();
            
         $soporteFotoThu = $($("#fotos .contenedorpic")[0]);
         $soportecanvas = $($("#fullImage")[0]);
         
-        //$("fullScPic").draggable();
+      
         
         /////////////////////////TOUCH EVENTS//////////////////////////////////////
         
@@ -855,7 +853,7 @@ $(document).delegate("#splash", "pageshow", function () {
 /************************************
 Pantalla de introduccion/home
 ************************************/
-$(document).delegate("#welcomearea", "pageshow", function () {
+$(document).delegate("#welcomearea", "pageshow", function (e) {
 
 
 
@@ -874,7 +872,7 @@ $(document).delegate("#welcomearea", "pageshow", function () {
         navegaSeccion("#logintype", "slideup");
 
     });
-
+/*
     $("#swipejump ").off().on("swipeleft", pagejump);
     $("#swipejump ").on("swiperight", pagejump);
 
@@ -884,14 +882,25 @@ $(document).delegate("#welcomearea", "pageshow", function () {
         navegaSeccion("#aboutus", "slide");
 
     }
+*/
+
+    Swipe(document.getElementById("slideArrowLink"),{continuous:false,stopPropagation:true,transitionEnd: function() {
+
+            navegaSeccion("#aboutus", "slide");
+            
+            }
+     });
 
 
+  
+  e.preventDefault();
+e.stopPropagation();
 });
 
 /************************************
 Pantalla de "acerca de"
 ************************************/
-$(document).delegate("#aboutus", "pageshow", function (e) {
+$(document).delegate("#aboutus", "pageshow", function () {
 
     //navegacion
 
@@ -914,8 +923,20 @@ $(document).delegate("#aboutus", "pageshow", function (e) {
 
 
     //slides
-    mainslides("#about01", "#listaabout", "#marcadoresabout");
+    //mainslides("#about01", "#listaabout", "#marcadoresabout");
+    Swipe(document.getElementById("sliderAbout"),{continuous:false,stopPropagation:true,callback: function(pos) {
 
+            var i = checkAbout.length;
+            while (i--) {
+              checkAbout[i].className = ' ';
+            }
+            checkAbout[pos].className = 'selected';
+
+            }
+     });
+
+
+    var checkAbout = document.getElementById('marcadoresabout').getElementsByTagName('li');
 
 
 });
@@ -1182,15 +1203,15 @@ $(document).delegate("#rememberPass", "pageshow", function () {
 Pantalla de seleccion tipo producto
 ************************************/
 $(document).delegate("#process_select", "pageshow", function () {
-
+    
     var tipoProducto = ["CREATE A NEW ALBUM","CREATE PHOTO FRAME","PRINT YOUR PHOTOS"];
                      
     //slides
-    mainslides("#process_select", "#listaproceso", "#marcadoresproceso",function(index){
+   /* mainslides("#process_select", "#listaproceso", "#marcadoresproceso",function(index){
                trace("elige producto:"+index);
               $("#btCreateNewAlbum").text(tipoProducto[index]);
     });
-
+*/
 
     $("#btHistory").off("tap").on("tap", function (e) {
 
@@ -1217,13 +1238,13 @@ $(document).delegate("#process_select", "pageshow", function () {
     $("#btCreateNewAlbum").off().on("tap", function (e) {
 
         //recorre los elementos buscando el elegido
-        $.each($("#process_select #marcadoresproceso").children(), function (index, value) {
+        $.each($("#process_select #marcadoresproceso").children(), function (pos, value) {
 
             
             if ($(value).hasClass("selected")) {
           
                 
-                datosPedido.tipoPedido = index;
+                datosPedido.tipoPedido = pos;
             }
 
         });
@@ -1263,6 +1284,25 @@ $(document).delegate("#process_select", "pageshow", function () {
 
 
 
+
+    Swipe(document.getElementById("sliderProductType"),{continuous:false,stopPropagation:true,callback: function(pos) {
+
+            var i = checkType.length;
+            while (i--) {
+              checkType[i].className = ' ';
+            }
+            checkType[pos].className = 'selected';
+            
+             $("#btCreateNewAlbum").text(tipoProducto[pos]);
+             
+             
+            }
+     });
+
+
+    var checkType = document.getElementById('marcadoresproceso').getElementsByTagName('li');
+
+
 });
 
 /************************************
@@ -1288,7 +1328,24 @@ $(document).delegate("#process_decoration", "pageshow", function () {
 
 
     //slides
-    mainslides("#process_decoration", "#listadecoracion", "#marcadordecoracion");
+  //  mainslides("#process_decoration", "#listadecoracion", "#marcadordecoracion");
+  
+  
+      Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
+
+            var i = checkDeco.length;
+            while (i--) {
+              checkDeco[i].className = ' ';
+            }
+            checkDeco[pos].className = 'selected';
+         
+             
+             
+            }
+     });
+
+
+    var checkDeco = document.getElementById('marcadordecoracion').getElementsByTagName('li');
 
 
 });
@@ -1316,7 +1373,22 @@ $(document).delegate("#process_frames", "pageshow", function () {
 
 
     //slides
-    mainslides("#process_frames", "#listaframes", "#marcadorframes");
+    //mainslides("#process_frames", "#listaframes", "#marcadorframes");
+
+
+    Swipe(document.getElementById("sliderFrames"),{continuous:false,stopPropagation:true,callback: function(pos) {
+
+            var i = checkFrames.length;
+            while (i--) {
+              checkFrames[i].className = ' ';
+            }
+            checkFrames[pos].className = 'selected';
+
+            }
+     });
+
+
+    var checkFrames = document.getElementById('marcadorframes').getElementsByTagName('li');
 
 
 

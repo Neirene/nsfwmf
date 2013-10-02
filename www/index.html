@@ -12,17 +12,20 @@
 <meta name="format-detection" content="telephone=no" />
 
 <!--android-->
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=320, height=480">
+<meta name="viewport" content="width=320px,height=480px, initial-scale=1, maximum-scale=1, user-scalable=1">
 
 
 <!-- SCRIPTS PRELOAD -->
 <script src="js/jquery-1.9.1.min.js"></script>
 <script src="js/jquery.mobile-1.3.1.min.js"></script>
 <script src="js/jquery-ui-1.10.3.custom.js"></script>
+<script src="js/jquery.easing.min.js"></script>
 
+<script src="js/swipetest.js"></script>
+<script src="js/dragger.js"></script>
 
 <script src="js/main.js"></script>
-<script src="js/dragger.js"></script>
+
 
  <!--LIBRERIAS PIXTATIX (Editor Full Screen)
 <script type="text/javascript" src="js/pixastic.core.js"></script>
@@ -75,9 +78,12 @@
                 </div>
             
                 <!--
-                
-                -->
                 <div id="swipejump"><a href="phone#about01" data-controltype="image" data-transition="slideup" class="btMultiArrows"><img class="multiArrows" src="images/multiArrows.png" alt=""></a></div>
+                -->
+                
+                <div class="transferarrow" id="slideArrowLink">
+                    <div class="arrowContainer"><div><img class="multiArrows" src="images/multiArrows.png" alt=""></div></div>
+                </div>
                 
                 
                 <div class="footerButtons">
@@ -98,10 +104,10 @@
         <div data-role="page" data-control-title="about01" id="aboutus"  data-url="about01" data-next="about02">
         <div data-role="content" id="about01">
             
-                <div id="contenedorabout">
+                <div class="contenedorabout" id="sliderAbout">
                 
-                    <ul id="listaabout">
-                    <li>
+                    <div class="listaabout">
+                    <div>
                         <div class="blueBox">
                             
                             <div data-controltype="textblock" class="titular02">
@@ -118,8 +124,8 @@
                             </div>
                             
                         </div>    
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                         <div class="blueBox">
                             
                             <div data-controltype="textblock" class="titular02">
@@ -135,8 +141,8 @@
                             </div>
                             
                         </div>
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                          <div class="blueBox">
                              
                             <div data-controltype="textblock" class="titular02">
@@ -157,8 +163,8 @@
                             </div>
                              
                          </div>
-                    </li>
-                    </ul>    
+                    </div>
+                    </div>    
                     
                 </div>
 
@@ -343,12 +349,12 @@
                 </div>
 
                 
-                <div id="products">
-                    <ul id="listaproceso">
-                    <li><img id="0" src="images/products/prod01.png" alt=""></li>
-                    <li><img id="1" src="images/products/prod01b.png" alt=""></li>
-                    <li><img id="2" src="images/products/prod01c.png" alt=""></li>
-                    </ul>
+                <div class="products" id="sliderProductType">
+                    <div class="listaproceso">
+                    <div><img  src="images/products/prod01.png" alt=""></div>
+                    <div><img  src="images/products/prod01b.png" alt=""></div>
+                    <div><img  src="images/products/prod01c.png" alt=""></div>
+                    </div>
                 </div>
                 
                 <div class="divPaginationDots">
@@ -384,12 +390,12 @@
                 Swipe to select a fabric to decorate your album
                 </div>
                 
-                <div id="decorations">
-                    <ul id="listadecoracion">
-                    <li><div id="decocont"><img id="0" src="images/decorations/deco01.png" alt=""></div></li>
-                    <li><div id="decocont"><img id="1" src="images/decorations/deco01b.png" alt=""></div></li>
-                    <li><div id="decocont"><img id="2" src="images/decorations/deco01c.png" alt=""></div></li>
-                    </ul>
+                <div class="decorations" id="sliderDeco">
+                    <div class="listadecoracion">
+                    <div><img id="0" src="images/decorations/deco01.png" alt=""></div>
+                    <div><img id="1" src="images/decorations/deco01b.png" alt=""></div>
+                    <div><img id="2" src="images/decorations/deco01c.png" alt=""></div>
+                    </div>
                 </div>
                 
                 <div class="divPaginationDots">
@@ -419,12 +425,12 @@
                 Swipe across the screen to select the frame that best suits your photograph. 
                 </div>
                 
-                <div id="decoframes">
-                    <ul id="listaframes">
-                    <li> <div id="decoframecont"> <img src="images/frames/frame01.png" alt=""> </div></li>
-                    <li> <div id="decoframecont"> <img src="images/frames/frame01b.png" alt=""></div></li>
-                    <li> <div id="decoframecont"> <img src="images/frames/frame01c.png" alt=""></div></li>
-                    </ul>
+                <div class="decoframes" id="sliderFrames">
+                    <div class="listaframes">
+                    <div> <div id="decoframecont"> <img src="images/frames/frame01.png" alt=""> </div></div>
+                    <div> <div id="decoframecont"> <img src="images/frames/frame01b.png" alt=""></div></div>
+                    <div> <div id="decoframecont"> <img src="images/frames/frame01c.png" alt=""></div></div>
+                    </div>
                 </div>
                 
                 <!--<span class="lblFrameType">Artic White</span> -->
