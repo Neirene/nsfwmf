@@ -70,6 +70,10 @@ $(document).ready(function(){
         $soporteFotoThu = $($("#fotos .contenedorpic")[0]);
         $soportecanvas = $($("#fullImage")[0]);
         
+        //libro pantalla creation_edit
+        
+        $soportePagIzq = $("#pagIzqSlider .swipe-wrapTest");
+        $soportePagDer = $("#pagDerSlider .swipe-wrapTest");
       
         
         /////////////////////////TOUCH EVENTS//////////////////////////////////////
@@ -1599,7 +1603,23 @@ var pi = 0;
 
 
 $(document).delegate("#creation_edit", "pageshow", function () {
+    
+    $soportePagIzq.html('');
+    $soportePagDer.html('');
+    
+for (i=1;i<fotosFull.length;i++) {
+    var miImagen = $("<div></div>").addClass("imgIzq").css("background-image","url("+fotosFull[i]+")");
+    $soportePagIzq.append(miImagen);
+    
+     $soportePagDer.append(miImagen);
+    
+    
+    }
+    
 
+
+SwipeV(document.getElementById("pagDerSlider"),{direction:'y',continuous:true,stopPropagation:true,callback: function(pos){trace("posIzq: "+pos);}});
+SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',continuous:true,stopPropagation:true,callback: function(pos){trace("posDer: "+pos);}});
 
 //navigator.screenOrientation.set('portrait');
     $("#btEditBack").off("tap").on("tap", function (e) {
@@ -1631,7 +1651,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         $("body").css({backgroundColor:"black",backgroundImage:""}).fadeIn();
 
     });
-
+/*
     $("#arrowUp1").off("tap").on("tap", function (e) {
 
 
@@ -1643,9 +1663,9 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         $("#imgIzq").css("background-image","url("+  fotosfull[fi] + ")");
         $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
-        //fsCanvas(fotosfull[fi]);
+        
         $("#fullScPic").css("top","0","left","0");
-        //$("#fullScPic").css("background-image","url("+fotosfull[fi]+")");
+        
 
         e.preventDefault();
         e.stopPropagation();
@@ -1709,81 +1729,58 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         e.stopPropagation();
 
     });
-    
-    $('.book').on("swipeup", paginaIzquierda);
-    $('.book').on("swipedown", paginaDerecha);
+  */  
+    $('.book').on("swipeup", function(){cambiarPag(-1)});
+    $('.book').on("swipedown", function(){cambiarPag(1)});
 
-    function paginaDerecha() {
+    function cambiarPag(direccion) {
         if (paginasFull[pi] != fi)
             paginasFull[pi] = fi;
         trace("pi antes de pinchar: " + pi);
-        pi--;
+       if(direccion > 0) { 
+            pi++
+       }else{   
+            pi--;
+        }
+        
+        
         trace("pi desués de pinchar: " + pi);
 
         if (pi < 0) {
             pi = paginasFull.length - 1;
         }
+        if (pi > paginasFull.length - 1) {
+            pi = 0;
+        }
+        
         fi = paginasFull[pi];
         if (pi % 2 == 1) {
                    
-                    // $(".book").animate({"top","80px"})
+        //$(".book").animate({"margin-top","80px"});
             //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
-            trace("cambiamos páginas");
+           /* trace("cambiamos páginas");
             $('#veloDer').fadeOut();
             $('#veloIzq').fadeIn();
             $('#txtDer').text('Page ' + parseInt(pi));
             $('#txtIzq').text('Page ' + parseInt(pi + 1));
             $("#imgDer").css("background-image","url("+ fotosfull[paginasFull[pi]] + ")");
-            $("#imgIzq").css("background-image","url("+ fotosfull[paginasFull[pi - 1]] + ")");
+            $("#imgIzq").css("background-image","url("+ fotosfull[paginasFull[pi - 1]] + ")");*/
 
         }
         else {
                    //  $(".book").animate({"top":"-80px"})
-            trace("no cambiamos páginas");
+          /*  trace("no cambiamos páginas");
             $('#veloDer').fadeIn();
             $('#veloIzq').fadeOut();
             $('#txtIzq').text('Page ' + parseInt(pi));
-            $('#txtDer').text('Page ' + parseInt(pi + 1));
+            $('#txtDer').text('Page ' + parseInt(pi + 1));*/
         }
 
         e.preventDefault();
         e.stopPropagation();
     }
 
-    function paginaIzquierda() {
-        if (paginasFull[pi] != fi)
-            paginasFull[pi] = fi; //fotosfull[fi];
-        trace("pi antes de pinchar: " + pi);
-        pi++;
-        trace("pi después de pinchar: " + pi);
-
-        if (pi > paginasFull.length - 1) {
-            pi = 0;
-        }
-        fi = paginasFull[pi];
-        if (pi % 2 == 0) {
-                    // $(".book").animate({"top","-80px"})
-
-            //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
-            $('#txtDer').text('Page ' + parseInt(pi + 1));
-            $('#txtIzq').text('Page ' + parseInt(pi));
-            $('#veloDer').fadeIn();
-            $('#veloIzq').fadeOut();
-            $("#imgDer").css("background-image","url("+ fotosfull[paginasFull[parseInt(pi + 1)]] + ")");
-            $("#imgIzq").css("background-image","url("+ fotosfull[paginasFull[pi]] + ")");
-        }
-        else {
-                    // $(".book").animate({"top","80px"})
-
-            $('#txtIzq').text('Page ' + parseInt(pi + 1));
-            $('#txtDer').text('Page ' + parseInt(pi));
-            $('#veloDer').fadeOut();
-            $('#veloIzq').fadeIn();
-        }
-
-        e.preventDefault();
-        e.stopPropagation();
-    }
+ 
 
     $("#pagIzq").off("tap").on("tap", function (e) {
         if (paginasFull[pi] != fi)

@@ -78,14 +78,14 @@ input { border-radius: 0px !important;}
 
 
 /* welcome */
-#welcome  {background-image: url(../images/bg02.jpg);  min-height: 600px; background-repeat: no-repeat; background-size: cover;}
+#welcome  {background-image: url(../images/bg02.jpg);  min-height: 480px; background-repeat: no-repeat; background-size: cover;}
 .logoWelcome { width: 40%; height: auto; margin-top: 10%; max-width: 246px; margin-bottom: 43px; }
 .multiArrows {width: 20%; height: auto; max-width: 115px;}
 
 
 
 /* about */
-#about01, #about02, #about03, #about04 {background-image: url(../images/bg02.jpg);  min-height: 480px; background-repeat: no-repeat; background-size: cover;}
+#about01, #about02, #about03, #about04 {background-image: url(../images/bg02.jpg); min-height: 540px; background-repeat: no-repeat; background-position: center;background-size: cover;}
 .logoWelcome { width: 40%; height: auto; margin-top: 14%; max-width: 246px; margin-bottom: 30px; }
 .multiArrows {width: 20%; height: auto; max-width: 115px;padding: 3%;}
 .btMultiArrows {}
@@ -97,7 +97,7 @@ input { border-radius: 0px !important;}
 .divPaginationDotsdeco {width: 96%;text-align: center;padding: 2%;bottom: 14%;left: 0;margin-top: 6%;margin-bottom: 1%;position: absolute;}
 
 
-.contenedorabout {overflow: hidden;visibility: hidden;position: relative;height: 25.1em;width: 18.4em;}
+.contenedorabout {overflow: hidden;visibility: hidden;position: relative;width: 100%;}
 .listaabout {overflow: hidden;position: relative;}
 .listaabout > div {float:left;width:100%;position: relative;}
 
@@ -112,7 +112,7 @@ input { border-radius: 0px !important;}
 .arrowContainer > div {float:left;width:100%;position: relative;}
 
 /* register */  
-#register  {background-image: url(../images/bg02.jpg);  min-height: 600px; background-repeat: no-repeat; background-size: cover;}
+#register  {background-image: url(../images/bg02.jpg);  min-height: 540px; background-repeat: no-repeat; background-position: center;background-size: cover;}
 .formRegister	{ width: 80%; padding: 10%; padding-top: 0;}
 .conditions { padding: 6%; width: 88%;}
 .conditions li {float: left; width: 80%;}
@@ -123,7 +123,7 @@ input { border-radius: 0px !important;}
 
 
 /* login  */  
-#login,  #access, #rePass  {background-image: url(../images/bg02.jpg);  min-height: 480px; background-repeat: no-repeat; background-size: cover;}
+#login,  #access, #rePass  {background-image: url(../images/bg02.jpg);  min-height: 540px; background-repeat: no-repeat; background-position: center;background-size: cover;}
 .formLogin	{ width: 97%; padding: 2%; padding-top: 20%;}
 .forgott { padding: 6%; width: 88%; text-align: center;}
 .buttonIcon {  width: 100%; float: left;  margin-bottom: 4%;  margin-top: 4%;}
@@ -149,7 +149,7 @@ input { border-radius: 0px !important;}
 #bgcreation {background-image: url(../images/bg01.jpg) ; min-height: 979px; background-position: top; background-repeat: repeat-y; background-size: contain; }
 #bgachievement {background-image: url(../images/bg01.jpg) ; min-height: 979px; background-position: top; background-repeat: repeat-y; background-size: contain; }
 */
-#process_select, #process_history, #process_decoration, #process_frames  { min-height: 979px;}
+#process_select, #process_history, #process_decoration, #process_frames  { min-height: 540px;}
 
 .products {overflow: hidden;visibility: hidden;position: relative;width: 18.4em;height: 13.4em;}
 .listaproceso {overflow: hidden;position: relative;}
@@ -213,7 +213,7 @@ input { border-radius: 0px !important;}
 
 
 /* creation */
-#creation_landing {background-image: url(../images/bg03.jpg);  min-height: 600px; background-repeat: no-repeat; background-size: cover;}
+#creation_landing {background-image: url(../images/bg03.jpg);  min-height: 540px; background-repeat: no-repeat; background-size: cover;}
 .whiteBox { background-image: url(../images/whiteDot.png); float: left; width: 100%; height: 90%; margin: 0; min-height: 27em; position: relative; text-align: center;}
 .whiteBox span {color: #fff; font-family: 'DINEngschriftLTAlternateRegular'; position:absolute; width: 70%; text-align: center; margin-top: 60% !important; left: 0;margin: 15%;font-size: 1.75em;}
 
@@ -278,13 +278,13 @@ input { border-radius: 0px !important;}
 
 /* edit */
 #creation_edit {position:relative;min-height: 480px;min-width: 320px; background-position: initial initial; background-repeat: no-repeat no-repeat; background-size: cover;}
-.book { width: 155%; border: 3px solid #333; border-radius: 4px; background-color: #fff; position: relative;-webkit-transform:rotate(90deg); margin-left: -127px; margin-top: 120px;}
-.book li {width: 48%; float: left;max-height: 193px;overflow: hidden;position: relative;}
+.book { width: 176%; height: 240px; border: 3px solid #333; border-radius: 4px; background-color: #fff; position: relative;-webkit-transform:rotate(90deg); margin-left: -152px; margin-top: 174px;}
+.book li {width: 48%; /* height: 100%; */float: left;max-height: 218px;overflow: hidden;position: relative;}
 .leftSlide { margin: 2%; margin-right:0; }
 .rightSlide { margin: 2%; margin-left:0; }
 .book img {width: 100%; overflow-y: hidden; }
-.doblez {position: absolute; width: 146px; margin-left: 50%; left: -68px; height: 100%; background-image: url(../images/bgDoblez.png); background-position: center; background-repeat: repeat-y; z-index: 4000  }
-.optionsPage { width: 100%; position: absolute; z-index: 5000; left: 0; height: 196px;}
+.doblez {position: absolute; width: 146px; margin-left: 50%; left: -68px; height: 100%; background-image: url(../images/bgDoblez.png); background-position: center; background-repeat: repeat-y; z-index: 4000  ;pointer-events:none}
+.optionsPage { width: 100%; position: absolute; z-index: 5000; left: 0; height: 220px;pointer-events:none} //CHECK!!!
 .optionsPage2 { width: 100%; position: absolute; z-index: 5000; left: 0; top: 0; height: 97%;}
 .arrUpPage, .arrDownPage {position: absolute; width: 96%; text-align: center; max-height: 21px;padding: 2%;}
 .arrUpPage img, .arrDownPage img {height: 100%;width: auto;}
@@ -303,19 +303,42 @@ input { border-radius: 0px !important;}
 .offPage span {color: #fff; font-family: 'DINEngschriftLTAlternateRegular'; overflow: hidden; position:absolute; width: 70%; text-align: center; margin-top: 39% !important; left: 0;margin: 15%;font-size: 1.75em;}
 
 .mod90title { margin-top: 20px}
-.mod90button {width: 150%;position: absolute;margin-left: 20px;-webkit-transform: rotate(90deg); margin-top: 186px;}
+.mod90button {width: 165%;position: absolute;margin-left: 15px;-webkit-transform: rotate(90deg); margin-top: 230px;}
 .btMod {position:absolute}
 #disableOverflow{overflow-x: visible}
 
-#imgDer{width:320px;height:280px;background-position:center center;background-size:cover;background-repeat:no-repeat}
-#imgIzq{width:320px;height:280px;background-position:center center;background-size:cover;background-repeat:no-repeat}
+.imgDer{width:250px;height:250px;background-position:center center;background-size:cover;background-repeat:no-repeat;background-color:red}
+.imgIzq{width:250px;height:250px;background-position:center center;background-size:cover;background-repeat:no-repeat;background-color:red}
 
-#fsFix2{min-height: 454px}
+#fsFix2{min-height: 540px;overflow:hidden}
+
+/************************************
+pruebas carousel  BORRAR
+*************************************/
+
+.swipeTest {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+  height: 250px; /* some fixed slide swipe height */
+}
+.swipe-wrapTest {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrapTest > div {
+  float:left;
+  width:100%;
+  position: relative;
+}
+
+.contenedorPagDer {position:relative;width:250px;height:250px;background-color:#42698A;}
 
 
 
 
 
+/*************************************/
 
 /* full screen */
 #creation_full { min-height: 480px; min-width: 320px;margin-left: 0px }
@@ -323,8 +346,8 @@ input { border-radius: 0px !important;}
 //#creation_full .fullImage {  float: left;   width: 100%}
 
 @media (max-height:854px) {
-      .borderEffect { -webkit-box-shadow: inset 0px 0px 0px 4px rgba(255,255,255,0.8); /* -webkit-transform:rotate(90deg); */ width: 255px; height: 255px; /* background-color: rgb(189, 113, 113); */ position: absolute; top: 30px; left: 175px; /* margin-top: 220px; */ /* margin-left: 33px; */pointer-events:none}
-    #fsFix{min-height: 854px;padding:0px;width: 100%;overflow: hidden;}
+      .borderEffect { -webkit-box-shadow: 0px 0px 0px 110px rgba(255,255,255,0.1); /* -webkit-transform:rotate(90deg); */ width: 400px; height: 260px; /* background-color: rgb(189, 113, 113); */ position: absolute; top: 30px; left: 41px; /* margin-top: 220px; */ /* margin-left: 33px; */ border-style: dashed; border-color: white; border-width: 1px; pointer-events:none}
+    #fsFix{min-height: 540px;padding:0px;width: 100%;overflow: hidden;}
 }
 
 @media (max-height:480px) {
@@ -335,18 +358,18 @@ input { border-radius: 0px !important;}
 //#fsFix{min-height: 480px;padding:0px;width: 100%;overflow: hidden;}
 
 //.borderEffect { -webkit-box-shadow: inset 0px 0px 0px 4px rgba(255,255,255,0.8); -webkit-transform:rotate(90deg); width: 101%; height: 82%; background-color: rgb(29, 157, 197); position: absolute; top: 0; left: 0; margin-top: 137px;}
-.fullImage {  -webkit-transform:rotate(90deg);   background-color: black;  width: 480px;  height: 320px;  position: relative;  margin-left: -80px;  margin-top: 80px;  overflow: hidden;}
+.fullImage {  -webkit-transform:rotate(90deg);   background-color: rgb(62, 89, 119);  opacity: 0.9;  width: 540px;  height: 320px;  position: relative;  margin-left: -110px;  margin-top: 110px;  overflow: hidden;}
 
 .toolbarFS { width: 20%; position: absolute; z-index: 8000; margin-top: 10px }
 
-.btFull2 { width: 100%;  max-width: 67px;  }
-.btFull2 img {width: 60%; height: auto;-webkit-transform:rotate(90deg);}
+.btFull2 {position:absolute; top: 8px;left:0px ;width: 100%;  max-width: 67px; z-index:300 }
+.btFull2 img {width: 60%; height: auto;}
 
-.btMagic { width: 100%; max-width: 67px;  }
-.btMagic img {width: 60%; height: auto;-webkit-transform:rotate(90deg);}
+.btMagic {position:absolute; bottom: 0px;left: 0px; width: 100%; max-width: 67px;z-index:300  }
+.btMagic img {width: 60%; height: auto;}
 
-.btDeleteFull { width: 100%;   max-width: 67px;  }
-.btDeleteFull img {width: 60%; height: auto; -webkit-transform:rotate(90deg); }
+.btDeleteFull {position:absolute; bottom: 0px;left: 415px; width: 100%;   max-width: 67px; z-index:300 }
+.btDeleteFull img {width: 60%; height: auto; }
 
 #fullScPic {
     top:0px;
