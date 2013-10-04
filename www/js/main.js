@@ -805,8 +805,8 @@ function rellenarLibro() {
     
 
 
-SwipeV(document.getElementById("pagDerSlider"),{direction:'y',continuous:false,stopPropagation:true,callback: function(pos){trace("posIzq: "+pos);}});
-SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',continuous:false,stopPropagation:true,callback: function(pos){trace("posDer: "+pos);}});
+SwipeV(document.getElementById("pagDerSlider"),{direction:'y',disableScroll:true,speed:100,stopPropagation:true,callback: function(pos){trace("posIzq: "+pos );}});
+SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,speed:100,stopPropagation:true,callback: function(pos){trace("posDer: "+pos);}});
 
     
     

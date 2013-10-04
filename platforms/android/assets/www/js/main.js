@@ -747,7 +747,7 @@ var fotosElegidas;
 
 
 
-function convertirCanvas () {
+function convertirCanvas (id, urlFoto, soyUltimo) {
 
     
     var dataURL;
@@ -765,25 +765,52 @@ function convertirCanvas () {
             ctx.drawImage(img, 0, 0);
 
             dataURL = canvas.toDataURL(); 
-            fotosfull.push(dataURL)
+            fotosFull.push(dataURL);
+            
+            //
+            fotosFaltanConvertir--;
+            if( fotosFaltanConvertir <= 0) {
+                rellenarLibro(0);
+            }
+            
      };
      img.setAttribute('crossOrigin','anonymous');
-     img.src = "http://genericwebdomain.com/mille-feuille/proxy.php?URL="+miFoto.url;
+     img.src = "http://genericwebdomain.com/mille-feuille/proxy.php?URL="+urlFoto;
  
         //miFoto.canvas = canvas;
+    
         
-        trace(fotosfull);
-
-                
-        
-        var $dibujacanvas = $soportecanvas.clone();
-            $dibujacanvas.attr("id",miFoto.id);
-        
-           $("#testcv").append(miFoto.canvas);
-               
+       
 }
 
-var canvasFinal;
+function rellenarLibro() {
+    
+        trace("FotosFull: " + fotosFull.length)
+    
+    $soportePagIzq.html('');
+    $soportePagDer.html('');
+    
+    var cadena = "";
+    for (i=0;i<fotosFull.length;i++) {
+       // var miImagen = $("<div></div>").addClass("imgIzq").css("background-image","url("+fotosFull[i]+")");
+        var miImagen = "<div class='imgIzq' style='background-image:url("+ fotosFull[i] +")'></div>";
+        cadena += miImagen;
+    
+    
+    }
+    
+    $soportePagIzq.html("<div>"+cadena+"</div>");
+    $soportePagDer.html("<div>"+cadena+"</div>");
+     //$soportePagDer.html(cadena);
+    
+
+
+SwipeV(document.getElementById("pagDerSlider"),{direction:'y',continuous:false,stopPropagation:true,callback: function(pos){trace("posIzq: "+pos);}});
+SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',continuous:false,stopPropagation:true,callback: function(pos){trace("posDer: "+pos);}});
+
+    
+    
+}
 
 function cropCanvas() {
     
@@ -1473,6 +1500,9 @@ Pantalla Galeria Carrete
 ************************************/
 
 var miFoto = new Object();
+
+var fotosFaltanConvertir;
+
 $(document).delegate("#creation_gallery","pageshow",function(e) {
 
 
@@ -1498,7 +1528,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
         
             
             var elegidas = $("#fotos .contenedorpic .selectioncomplete").parent();
-            
+            fotosFaltanConvertir = elegidas.length;
             
             var urlelegidas;
             urlelegidas = new Array();
@@ -1508,9 +1538,10 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
             
             
             fotosElegidas = new Array();
+            fotosFull = new Array();
 
             
-            
+          
             for (i=0;i<elegidas.length;i++){
                 
                 var idFoto = $(elegidas[i]).attr("id");
@@ -1522,7 +1553,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
                miFoto.url = urlFotoLimpia;
                miFoto.canvas = null;
                
-
+               
                convertirCanvas(miFoto.id,miFoto.url);
                
                 fotosElegidas.push(miFoto);
@@ -1590,7 +1621,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 /************************************
 Pantalla Seleccion/Edicion Fotos
 ************************************/
-var fotosfull = new Array();
+var fotosFull = new Array();
 //fotosfull = ["default.jpg", "p01.jpg", "p02.jpg", "p03.jpg", "gal01.jpg"];
 
 var paginasFull = new Array(10);
@@ -1604,22 +1635,8 @@ var pi = 0;
 
 $(document).delegate("#creation_edit", "pageshow", function () {
     
-    $soportePagIzq.html('');
-    $soportePagDer.html('');
-    
-for (i=1;i<fotosFull.length;i++) {
-    var miImagen = $("<div></div>").addClass("imgIzq").css("background-image","url("+fotosFull[i]+")");
-    $soportePagIzq.append(miImagen);
-    
-     $soportePagDer.append(miImagen);
-    
-    
-    }
-    
 
-
-SwipeV(document.getElementById("pagDerSlider"),{direction:'y',continuous:true,stopPropagation:true,callback: function(pos){trace("posIzq: "+pos);}});
-SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',continuous:true,stopPropagation:true,callback: function(pos){trace("posDer: "+pos);}});
+//rellenarLibro();
 
 //navigator.screenOrientation.set('portrait');
     $("#btEditBack").off("tap").on("tap", function (e) {
@@ -1630,7 +1647,7 @@ SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',continuous:true,st
         e.stopPropagation();
         navegaSeccion("#creation_gallery", "slidedown");
         
-        fotosfull = [];
+        fotosFull = [];
         
     });
 
@@ -1782,7 +1799,7 @@ SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',continuous:true,st
 
  
 
-    $("#pagIzq").off("tap").on("tap", function (e) {
+   /* $("#pagIzq").off("tap").on("tap", function (e) {
         if (paginasFull[pi] != fi)
             paginasFull[pi] = fi;
         trace("pi antes de pinchar: " + pi);
@@ -1800,8 +1817,8 @@ SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',continuous:true,st
             $('#veloIzq').fadeIn();
             $('#txtDer').text('Page ' + parseInt(pi));
             $('#txtIzq').text('Page ' + parseInt(pi + 1));
-            $("#imgDer").css("background-image","url("+ fotosfull[paginasFull[pi]] + ")");
-            $("#imgIzq").css("background-image","url("+ fotosfull[paginasFull[pi - 1]] + ")");
+            $("#imgDer").css("background-image","url("+ fotosFull[paginasFull[pi]] + ")");
+            $("#imgIzq").css("background-image","url("+ fotosFull[paginasFull[pi - 1]] + ")");
 
         }
         else {
@@ -1834,8 +1851,8 @@ SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',continuous:true,st
             $('#txtIzq').text('Page ' + parseInt(pi));
             $('#veloDer').fadeIn();
             $('#veloIzq').fadeOut();
-            $("#imgDer").css("background-image","url("+ fotosfull[paginasFull[parseInt(pi + 1)]]+")");
-            $("#imgIzq").css("background-image","url("+ fotosfull[paginasFull[pi]]+")");
+            $("#imgDer").css("background-image","url("+ fotosFull[paginasFull[parseInt(pi + 1)]]+")");
+            $("#imgIzq").css("background-image","url("+ fotosFull[paginasFull[pi]]+")");
         }
         else {
             $('#txtIzq').text('Page ' + parseInt(pi + 1));
@@ -1847,7 +1864,7 @@ SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',continuous:true,st
         e.preventDefault();
         e.stopPropagation();
 
-    });
+    });*/
 
 });
 
