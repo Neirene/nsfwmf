@@ -1793,6 +1793,8 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
     function cambiarPag(direccion) {
         $(".book").animate({top:"161px"},500);
+        $("#veloIzq").css("display","block");
+        $("#veloDer").css("display","block");
         if (paginasFull[pi] != fi)
             paginasFull[pi] = fi;
         trace("pi antes de pinchar: " + pi);
