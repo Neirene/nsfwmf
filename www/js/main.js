@@ -793,20 +793,40 @@ function rellenarLibro() {
     var cadena = "";
     for (i=0;i<fotosFull.length;i++) {
        // var miImagen = $("<div></div>").addClass("imgIzq").css("background-image","url("+fotosFull[i]+")");
-        var miImagen = "<div class='imgIzq' style='background-image:url("+ fotosFull[i] +")'></div>";
-        cadena += miImagen;
+        //var miImagen = "<div class='imgIzq' style='background-image:url("+ fotosFull[i] +")'></div>";
+            var miImagen = "<img src="+ fotosFull[i] +" />";
+        //cadena += miImagen;
     
-    
+        $soportePagIzq.append("<div>"+miImagen+"</div>");
+        $soportePagDer.append("<div>"+miImagen+"</div>");
     }
     
+    
+    
+
+    
+    
+    
+    /*
     $soportePagIzq.html("<div>"+cadena+"</div>");
     $soportePagDer.html("<div>"+cadena+"</div>");
+    */
      //$soportePagDer.html(cadena);
     
 
-
-SwipeV(document.getElementById("pagDerSlider"),{direction:'y',disableScroll:true,speed:100,stopPropagation:true,callback: function(pos){trace("posIzq: "+pos );}});
-SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,speed:100,stopPropagation:true,callback: function(pos){trace("posDer: "+pos);}});
+    SwipeV(document.getElementById("pagDerSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
+        trace("posIzq: "+pos); 
+        $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
+        
+        } 
+    });  
+    
+    SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
+        trace("posIzq: "+pos); 
+        $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
+        
+        } 
+    });
 
     
     
@@ -1634,7 +1654,7 @@ var pi = 0;
 
 
 $(document).delegate("#creation_edit", "pageshow", function () {
-    
+//SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){trace("posDer: "+pos); } });
 
 //rellenarLibro();
 
@@ -1668,6 +1688,27 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         $("body").css({backgroundColor:"black",backgroundImage:""}).fadeIn();
 
     });
+    
+    $("#veloIzq").off("tap").on("tap", function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        $("#veloDer").css("display","block")
+        $(this).css("display","none");
+        $(".book").animate({top:"282px"},500);
+
+    });   
+    
+    $("#veloDer").off("tap").on("tap", function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        $("#veloIzq").css("display","block")
+        $(this).css("display","none");
+        $(".book").animate({top:"11px"},500);
+
+    });   
+    
 /*
     $("#arrowUp1").off("tap").on("tap", function (e) {
 
@@ -1751,6 +1792,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
     $('.book').on("swipedown", function(){cambiarPag(1)});
 
     function cambiarPag(direccion) {
+        $(".book").animate({top:"161px"},500);
         if (paginasFull[pi] != fi)
             paginasFull[pi] = fi;
         trace("pi antes de pinchar: " + pi);
@@ -1758,7 +1800,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
             pi++
        }else{   
             pi--;
-        }
+        }+
         
         
         trace("pi desués de pinchar: " + pi);
@@ -1892,7 +1934,7 @@ $(document).delegate("#creation_full", "pageshow", function () {
         e.preventDefault();
         e.stopPropagation();
         navegaSeccion("#creation_edit", "fade");
-
+        
     });
     
 

@@ -42,6 +42,8 @@ function SwipeV(container, options) {
     var index = parseInt(options.startSlide, 10) || 0;
     var speed = options.speed || 300;
     var dir = options.direction || 'x';
+    var scrolling = false;
+    var scrolldelay = options.scrolldelay || 500;
     options.continuous = options.continuous !== undefined ? options.continuous : true;
 
     function setup() {
@@ -222,7 +224,7 @@ function SwipeV(container, options) {
     }
 
     function move(index, dist, speed) {
-
+       
         translate(index, dist, speed);
         slidePos[index] = dist;
 
@@ -350,6 +352,38 @@ function SwipeV(container, options) {
                 case 'mouseup':
                     offloadFn(this.end(event));
                     break;
+                case 'mousewheel':
+                    if (!scrolling) {
+                        scrolling = true;
+                        if (event.wheelDelta > 0) {
+                            next();
+                            window.setTimeout(function() {
+                                scrolling = false;
+                            }, scrolldelay);
+                        } else {
+                            prev();
+                            window.setTimeout(function() {
+                                scrolling = false;
+                            }, scrolldelay);
+                        }
+                    }
+                    break;
+                case 'DOMMouseScroll':
+                    if (!scrolling) {
+                        scrolling = true;
+                        if (event.detail < 0) {
+                            next();
+                            window.setTimeout(function() {
+                                scrolling = false;
+                            }, scrolldelay);
+                        } else {
+                            prev();
+                            window.setTimeout(function() {
+                                scrolling = false;
+                            }, scrolldelay);
+                        }
+                    }
+                    break;
                 case 'webkitTransitionEnd':
                 case 'msTransitionEnd':
                 case 'oTransitionEnd':
@@ -398,7 +432,6 @@ function SwipeV(container, options) {
                 event.preventDefault();
 
             // measure change in x and y
-            // ORIENTATION CHANGE MJ!
             delta = {
                 x: ey - start.y,
                 y: ex - start.x
@@ -485,14 +518,14 @@ function SwipeV(container, options) {
 
                 // determine if slide attempt is past start and end
                 var isPastBounds =
-                        !index && delta.y > 0                         // if first slide and slide AMOUNT is greater than 0
-                        || index == slides.length - 1 && delta.y < 0; // or if last slide and slide AMOUNT is less than 0
+                        !index && delta.y > 0 // if first slide and slide amt is greater than 0
+                        || index == slides.length - 1 && delta.y < 0; // or if last slide and slide amt is less than 0
 
                 if (options.continuous)
                     isPastBounds = false;
 
-// determine direction of swipe (true:right, false:left)
-                var direction = delta.y < 0;
+// determine direction of swipe (true:right, false:left)                                                                                     
+                var direction = delta.y > 0;
 
 // if not scrolling vertically
                 if (!isScrolling) {
@@ -660,8 +693,14 @@ function SwipeV(container, options) {
         // set touchstart event on element
         if (browser.touch) {
             element.addEventListener('touchstart', events, false);
-        } else if (options.enableMouse) {
-            element.addEventListener('mousedown', events, false);
+        } else if (options.enableMouse || options.enableScroll) {
+            if (options.enableMouse) {
+                element.addEventListener('mousedown', events, false);
+            }
+            if (options.enableScroll) {
+                element.addEventListener("mousewheel", events, false);
+                element.addEventListener("DOMMouseScroll", events, false);
+            }
         }
 
         if (browser.transitions) {
@@ -676,11 +715,25 @@ function SwipeV(container, options) {
         window.addEventListener('resize', events, false);
 
     } else {
-
+        //console.log("Fallback");
+        if (options.enableScroll) {
+            element.attachEvent("onmousewheel", function(event) {
+                if (event.wheelDelta > 0) {
+                    next();
+                    window.setTimeout(function() {
+                        scrolling = false;
+                    }, scrolldelay);
+                } else {
+                    prev();
+                    window.setTimeout(function() {
+                        scrolling = false;
+                    }, scrolldelay);
+                }
+            });
+        }
         window.onresize = function() {
             setup()
         }; // to play nice with old IE
-
     }
 
     // expose the Swipe API
@@ -772,9 +825,7 @@ function SwipeV(container, options) {
 
             }
             else {
-
                 window.onresize = null;
-
             }
 
         }
@@ -787,7 +838,7 @@ if (window.jQuery || window.Zepto) {
     (function($) {
         $.fn.SwipeV = function(params) {
             return this.each(function() {
-                $(this).data('SwipeV', new SwipeV($(this)[0], params));
+                $(this).data('Swipe', new SwipeV($(this)[0], params));
             });
         }
     })(window.jQuery || window.Zepto)

@@ -278,7 +278,7 @@ input { border-radius: 0px !important;}
 
 /* edit */
 #creation_edit {position:relative;min-height: 480px;min-width: 320px; background-position: initial initial; background-repeat: no-repeat no-repeat; background-size: cover;}
-.book { width: 176%; height: 240px; border: 3px solid #333; border-radius: 4px; background-color: #fff; position: relative;-webkit-transform:rotate(90deg); margin-left: -152px; margin-top: 174px;}
+.book { width: 176%; height: 240px; border: 3px solid #333; border-radius: 4px; background-color: #fff; position: relative;-webkit-transform:rotate(90deg); /* margin-left: -152px; */ top: 172px; left: -155px; /* margin-top: 174px; */}
 .book li {width: 48%; /* height: 100%; */float: left;max-height: 218px;overflow: hidden;position: relative;}
 .leftSlide { margin: 2%; margin-right:0; }
 .rightSlide { margin: 2%; margin-left:0; }
@@ -296,7 +296,7 @@ input { border-radius: 0px !important;}
 .arrLeftPage { top: 0;}
 .arrRightPage { bottom: 0;}
 
-.btFull { width: 100%; left: 0; text-align: left; max-width: 67px; position: absolute; top: 0px; margin: 3%;  z-index: 8000;}
+.btFull { width: 100%; left: 0; text-align: left; max-width: 67px; position: absolute; top: 0px; margin: 3%;  z-index: 5000}
 .btFull img {width: 60%; height: auto;}
 
 .offPage {position: absolute; background-image: url(../images/whiteDot.png); overflow: hidden; z-index: 8000; left: 0; height: 100%;}
@@ -307,8 +307,8 @@ input { border-radius: 0px !important;}
 .btMod {position:absolute}
 #disableOverflow{overflow-x: visible}
 
-.imgDer{width:250px;height:250px;background-position:center center;background-size:cover;background-repeat:no-repeat;background-color:red}
-.imgIzq{width:250px;height:250px;background-position:center center;background-size:cover;background-repeat:no-repeat;background-color:red}
+.imgDer{width:100%;height:100%;background-position:center center;background-size:cover;background-repeat:no-repeat;background-color:red}
+.imgIzq{width:100%;height:100%;background-position:center center;background-size:cover;background-repeat:no-repeat;background-color:red;}
 
 #fsFix2{min-height: 540px;overflow:hidden}
 
@@ -332,7 +332,7 @@ pruebas carousel  BORRAR
   position: relative;
 }
 
-.contenedorPagDer {position:relative;width:250px;height:250px;background-color:#42698A;}
+.contenedorSwipesEdit {position:relative;width:250px;height:250px;background-color:#42698A;}
 
 
 
@@ -358,7 +358,7 @@ pruebas carousel  BORRAR
 //#fsFix{min-height: 480px;padding:0px;width: 100%;overflow: hidden;}
 
 //.borderEffect { -webkit-box-shadow: inset 0px 0px 0px 4px rgba(255,255,255,0.8); -webkit-transform:rotate(90deg); width: 101%; height: 82%; background-color: rgb(29, 157, 197); position: absolute; top: 0; left: 0; margin-top: 137px;}
-.fullImage {  -webkit-transform:rotate(90deg);   background-color: rgb(62, 89, 119);  opacity: 0.9;  width: 540px;  height: 320px;  position: relative;  margin-left: -110px;  margin-top: 110px;  overflow: hidden;}
+.fullImage {  -webkit-transform:rotate(90deg);   background-color: rgb(62, 89, 119);  width: 540px;  height: 320px;  position: relative;  margin-left: -110px;  margin-top: 110px;  overflow: hidden;}
 
 .toolbarFS { width: 20%; position: absolute; z-index: 8000; margin-top: 10px }
 
