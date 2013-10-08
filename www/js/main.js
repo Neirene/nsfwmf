@@ -76,110 +76,7 @@ $(document).ready(function(){
         $soportePagDer = $("#pagDerSlider .swipe-wrapTest");
       
         
-        /////////////////////////TOUCH EVENTS//////////////////////////////////////
-        
- /* $( init );
-
- function init() {
-  document.addEventListener("touchstart", touchHandler, true);
-  document.addEventListener("touchmove", touchHandler, true);
-  document.addEventListener("touchend", touchHandler, true);
-  document.addEventListener("touchcancel", touchHandler, true);   
-  }
-  function touchHandler(event)
-  {
-  var touches = event.changedTouches,
-  first = touches[0],
-  type = "";
-  switch(event.type)
-  {
-  case "touchstart": type = "mousedown"; break;
-  case "touchmove":  type="mousemove"; break;        
-  case "touchend":   type="mouseup"; break;
-  default: return;
-  }
-  var simulatedEvent = document.createEvent("MouseEvent");
-   simulatedEvent.initMouseEvent(type, true, true, window, 1,
-                      first.screenY, first.screenX,
-                      first.clientY, first.clientX, false,
-                      false, false, false, 0, null);
-  first.target.dispatchEvent(simulatedEvent); 
-  event.preventDefault();
-   }*/
-        
-        
-        
-        
-        //////////////////////////SWIIPE TOP SWIPE DOWN/////////////////////////////
- 
- (function() {
-    var supportTouch = $.support.touch,
-            scrollEvent = "touchmove scroll",
-            touchStartEvent = supportTouch ? "touchstart" : "mousedown",
-            touchStopEvent = supportTouch ? "touchend" : "mouseup",
-            touchMoveEvent = supportTouch ? "touchmove" : "mousemove";
-    $.event.special.swipeupdown = {
-        setup: function() {
-            var thisObject = this;
-            var $this = $(thisObject);
-            $this.bind(touchStartEvent, function(event) {
-                var data = event.originalEvent.touches ?
-                        event.originalEvent.touches[ 0 ] :
-                        event,
-                        start = {
-                            time: (new Date).getTime(),
-                            coords: [ data.pageX, data.pageY ],
-                            origin: $(event.target)
-                        },
-                        stop;
-
-                function moveHandler(event) {
-                    if (!start) {
-                        return;
-                    }
-                    var data = event.originalEvent.touches ?
-                            event.originalEvent.touches[ 0 ] :
-                            event;
-                    stop = {
-                        time: (new Date).getTime(),
-                        coords: [ data.pageX, data.pageY ]
-                    };
-
-                    // prevent scrolling
-                    if (Math.abs(start.coords[1] - stop.coords[1]) > 10) {
-                        event.preventDefault();
-                    }
-                }
-                $this
-                        .bind(touchMoveEvent, moveHandler)
-                        .one(touchStopEvent, function(event) {
-                    $this.unbind(touchMoveEvent, moveHandler);
-                    if (start && stop) {
-                        if (stop.time - start.time < 1000 &&
-                                Math.abs(start.coords[1] - stop.coords[1]) > 30 &&
-                                Math.abs(start.coords[0] - stop.coords[0]) < 75) {
-                            start.origin
-                                    .trigger("swipeupdown")
-                                    .trigger(start.coords[1] > stop.coords[1] ? "swipeup" : "swipedown");
-                        }
-                    }
-                    start = stop = undefined;
-                });
-            });
-        }
-    };
-    $.each({
-        swipedown: "swipeupdown",
-        swipeup: "swipeupdown"
-    }, function(event, sourceEvent){
-        $.event.special[event] = {
-            setup: function(){
-                $(this).bind(sourceEvent, $.noop);
-            }
-        };
-    });
-
-})();
+     
         
 });
 
@@ -794,7 +691,7 @@ function rellenarLibro() {
     for (i=0;i<fotosFull.length;i++) {
        // var miImagen = $("<div></div>").addClass("imgIzq").css("background-image","url("+fotosFull[i]+")");
         //var miImagen = "<div class='imgIzq' style='background-image:url("+ fotosFull[i] +")'></div>";
-            var miImagen = "<img src="+ fotosFull[i] +" />";
+            var miImagen ="<img src="+ fotosFull[i] +"  />";
         //cadena += miImagen;
     
         $soportePagIzq.append("<div>"+miImagen+"</div>");
@@ -1685,7 +1582,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         e.preventDefault();
         e.stopPropagation();
         navegaSeccion("#creation_full","fade");
-        $("body").css({backgroundColor:"black",backgroundImage:""}).fadeIn();
+        
 
     });
     
@@ -1695,7 +1592,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         e.stopPropagation();
         $("#veloDer").css("display","block")
         $(this).css("display","none");
-        $(".book").animate({top:"282px"},500);
+        $(".book").animate({left:"120px"},500);
 
     });   
     
@@ -1705,7 +1602,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         e.stopPropagation();
         $("#veloIzq").css("display","block")
         $(this).css("display","none");
-        $(".book").animate({top:"11px"},500);
+        $(".book").animate({left:"-100px"},500);
 
     });   
     
@@ -1788,11 +1685,11 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
     });
   */  
-    $('.book').on("swipeup", function(){cambiarPag(-1)});
-    $('.book').on("swipedown", function(){cambiarPag(1)});
+    $('.book').on("swipeleft", function(){cambiarPag(-1)});
+    $('.book').on("swiperight", function(){cambiarPag(1)});
 
     function cambiarPag(direccion) {
-        $(".book").animate({top:"161px"},500);
+        $(".book").animate({left:"10px"},500);
         $("#veloIzq").css("display","block");
         $("#veloDer").css("display","block");
         if (paginasFull[pi] != fi)
@@ -1920,13 +1817,12 @@ var filter = 0;
 $(document).delegate("#creation_full", "pageshow", function () {
 
 
-
         var fullSizePic = $("#fullScPic").width();
         var containerFs = $("#fullImage").width();
         
         if(fullSizePic > containerFs) {
-            //ajustar al tamano del contenedor de la imagen!...
-            //$("#fullScPic").css({"width":"60%"});
+            
+            $("#fullScPic").css({"width":"60%"});
         }
 
     startMovimiento($("#fullScPic"),$(".fullImage"));

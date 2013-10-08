@@ -55,7 +55,7 @@ function moverImagen(e){
 	var distY = e.pageY - __posY;
 
        //ubicacion futura de la imagen
-	var fImgX = __posXImg - distX;
+	var fImgX = __posXImg + distX;
 	var fImgY = __posYImg + distY;
 
     
@@ -86,7 +86,7 @@ function moverImagen(e){
           } 
  
        // trace(fImgY,fImgX);*/
-            __queImg.css({top:fImgX,left:fImgY});
+            __queImg.css({top:fImgY,left:fImgX});
         
 	//__queImg.css({top:fImgX,left:fImgY});
         

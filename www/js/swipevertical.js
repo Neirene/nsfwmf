@@ -433,8 +433,8 @@ function SwipeV(container, options) {
 
             // measure change in x and y
             delta = {
-                x: ey - start.y,
-                y: ex - start.x
+                x: ex - start.x,
+                y: ey - start.y
             }
 
             // determine if scrolling test has run - one time test
