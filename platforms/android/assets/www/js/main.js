@@ -691,7 +691,7 @@ function rellenarLibro() {
     for (i=0;i<fotosFull.length;i++) {
        // var miImagen = $("<div></div>").addClass("imgIzq").css("background-image","url("+fotosFull[i]+")");
         //var miImagen = "<div class='imgIzq' style='background-image:url("+ fotosFull[i] +")'></div>";
-            var miImagen = "<img src="+ fotosFull[i] +" />";
+            var miImagen ="<img src="+ fotosFull[i] +"  />";
         //cadena += miImagen;
     
         $soportePagIzq.append("<div>"+miImagen+"</div>");
@@ -734,21 +734,22 @@ function cropCanvas() {
 	//corta la imagen
 	
    canvasFinal = document.createElement("canvas");
-   canvasFinal.height = 255;
-   canvasFinal.width = 255;
+   canvasFinal.height = 250;
+   canvasFinal.width = 415;
    var context = canvasFinal.getContext('2d');
-
+       
    
    $(".borderEffect").html(canvasFinal);
+   $(".completeSquare").html(canvasFinal);
    
    var queImagen = document.getElementById("fullScPic");
    //coordenadas de corte en la imagen grande
    var sourceX = Math.round($("#fullScPic").offset().left);
    var sourceY = Math.round($("#fullScPic").offset().top);
-   var sourceWidth = $(".borderEffect").width();
-   var sourceHeight = $(".borderEffect").height();
-   var destX = 380;
-   var destY = 220;
+   var sourceWidth = $(".fullImage").width();
+   var sourceHeight = $(".fullImage").height();
+   var destX = 0;
+   var destY = 0;
    var destWidth = sourceWidth;
    var destHeight = sourceHeight;
    
@@ -766,7 +767,7 @@ function cropCanvas() {
    trace("Destination Height: "+destHeight);
    
      
-   context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight/*, destX, destY, destWidth, destHeight*/);
+   context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
    
    canvasFinal.toDataURL();
     
@@ -1581,7 +1582,12 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+        $("#fullScPic").css("top","0px","left","0px");
+        $("#disabledEdit").css("display","none");
+        $("#btCompleteEdit").css("display","none");
+        $(".borderEffect").remove("canvas");
         navegaSeccion("#creation_full","fade");
+        
         
 
     });
@@ -1817,13 +1823,12 @@ var filter = 0;
 $(document).delegate("#creation_full", "pageshow", function () {
 
 
-
         var fullSizePic = $("#fullScPic").width();
         var containerFs = $("#fullImage").width();
         
         if(fullSizePic > containerFs) {
-            //ajustar al tamano del contenedor de la imagen!...
-            //$("#fullScPic").css({"width":"60%"});
+            
+            $("#fullScPic").css({"width":"80%"});
         }
 
     startMovimiento($("#fullScPic"),$(".fullImage"));
@@ -1878,13 +1883,37 @@ $(document).delegate("#creation_full", "pageshow", function () {
 
 
 
-    $("#btDel").off("tap").on("tap", function (e) {
+    $("#btCrop").off("tap").on("tap", function (e) {
 
             e.preventDefault();
             e.stopPropagation();
-                   cropCanvas();
+                   
+            $("#disabledEdit").css("display","block");
+            $("#btCompleteEdit").css("display","block");
+            
+            cropCanvas();
         });
 
+
+    $("#btCompleteEdit").off("tap").on("tap", function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        navegaSeccion("#creation_edit", "fade");
+        
+    });
+
+    $("#disabledEdit").off("tap").on("tap", function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        $("#disabledEdit").css("display","none");
+        $("#btCompleteEdit").css("display","none");
+        $(".borderEffect").remove("canvas");
+        ///BORAR CANVAS!!!!
+        
+        
+    });
 
 });
 

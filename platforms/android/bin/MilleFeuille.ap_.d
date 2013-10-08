@@ -78,8 +78,10 @@ C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\M
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\bgDoblez.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\blackDot.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\blueDot.png \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\btCrop.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\btDelete.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\btEdit.png \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\btEditComplete.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\btLupa.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\btTime.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\btTimeOver.png \

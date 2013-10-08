@@ -51,13 +51,14 @@ function finMovimiento(e){
 
 function moverImagen(e){
     trace("moverImagen :" + e.pageX +"**"+ e.pageY);
+    trace("--------------------------------------");
 	var distX = e.pageX - __posX;
 	var distY = e.pageY - __posY;
 
        //ubicacion futura de la imagen
 	var fImgX = __posXImg + distX;
 	var fImgY = __posYImg + distY;
-
+    trace("ubicacionImagen :" + fImgX +"**"+ fImgY);
     
     /*if(fImgX < 0) {
                 fImgX = 0;

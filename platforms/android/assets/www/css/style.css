@@ -308,7 +308,7 @@ input { border-radius: 0px !important;}
 #disableOverflow{overflow-x: visible}
 
 .imgDer{width:100%;height:100%;background-position:center center;background-size:cover;background-repeat:no-repeat;background-color:red}
-.imgIzq{width:100%;height:100%;background-position:center center;background-size:cover;background-repeat:no-repeat;background-color:red;}
+.imgIzq{width:250px;height:250px;background-position:center center;background-size:cover;background-repeat:no-repeat;background-color:red;}
 
 #fsFix2{min-height: 320px;overflow:hidden}
 
@@ -371,8 +371,11 @@ pruebas carousel  BORRAR
 .btMagic {position:absolute; bottom: 0px;left: 0px; width: 100%; max-width: 67px;z-index:300  }
 .btMagic img {width: 60%; height: auto;}
 
-.btDeleteFull {position:absolute; bottom: 0px;left: 415px; width: 100%;   max-width: 67px; z-index:300 }
-.btDeleteFull img {width: 60%; height: auto; }
+.btCropPic {position:absolute; bottom: 0px;left: 415px; width: 100%;   max-width: 67px; z-index:300 }
+.btCropPic img {width: 60%; height: auto; }
+
+.btCompleted {position:absolute; top: 8px;left:415px ;width: 100%;  max-width: 67px; z-index:2000;display:none }
+.btCompleted img {width: 60%; height: auto;}
 
 #fullScPic {
     top:0px;
@@ -381,8 +384,11 @@ pruebas carousel  BORRAR
     pointer-events:none;
     
 /*background-position: center center; background-size: contain;width:480px;height:320px*/}
-
-
+.disabledEdition {top:0px;left:0px;background-color:black;opacity:0.9;width:520px;height:320px;z-index: 1000;position: absolute;display:none}
+.completeMsg {position:absolute;top: 68px;left: 10px;color:white;width: 208px;}
+.completeSquare {position:absolute;top: 90px;left: 230px;color:white;width: 240px;height: 150px;border:1px solid white}
+.previewMsg {color:black;background-color:white;top: 70px;right: 53px;width: 60px;position: absolute;height: 19px;font-size: 95%;}
+.completeSquare canvas{width:100%;height:100%}
 
 
 /* preview */ 		
