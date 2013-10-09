@@ -680,6 +680,9 @@ function convertirCanvas (id, urlFoto, soyUltimo) {
        
 }
 
+var paginaIzq;
+var paginaDer;
+
 function rellenarLibro() {
     
         trace("FotosFull: " + fotosFull.length)
@@ -699,21 +702,12 @@ function rellenarLibro() {
     }
     
     
-    
-
-    
-    
-    
-    /*
-    $soportePagIzq.html("<div>"+cadena+"</div>");
-    $soportePagDer.html("<div>"+cadena+"</div>");
-    */
-     //$soportePagDer.html(cadena);
-    
+ 
 
     SwipeV(document.getElementById("pagDerSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
-        trace("posIzq: "+pos); 
+        trace("posDer: "+pos); 
         $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
+        paginaDer = pos;
         
         } 
     });  
@@ -721,6 +715,7 @@ function rellenarLibro() {
     SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
         trace("posIzq: "+pos); 
         $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
+        paginaIzq = pos;
         
         } 
     });
@@ -1321,9 +1316,6 @@ $(document).delegate("#process_frames", "pageshow", function () {
     });
 
 
-    //slides
-    //mainslides("#process_frames", "#listaframes", "#marcadorframes");
-
 
     Swipe(document.getElementById("sliderFrames"),{continuous:false,stopPropagation:true,callback: function(pos) {
 
@@ -1552,11 +1544,7 @@ var pi = 0;
 
 
 $(document).delegate("#creation_edit", "pageshow", function () {
-//SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){trace("posDer: "+pos); } });
 
-//rellenarLibro();
-
-//navigator.screenOrientation.set('portrait');
     $("#btEditBack").off("tap").on("tap", function (e) {
 
 
@@ -1583,8 +1571,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         e.preventDefault();
         e.stopPropagation();
         $("#fullScPic").css("top","0px","left","0px");
-        $("#disabledEdit").css("display","none");
-        $("#btCompleteEdit").css("display","none");
+
         $(".borderEffect").remove("canvas");
         navegaSeccion("#creation_full","fade");
         
@@ -1888,8 +1875,7 @@ $(document).delegate("#creation_full", "pageshow", function () {
             e.preventDefault();
             e.stopPropagation();
                    
-            $("#disabledEdit").css("display","block");
-            $("#btCompleteEdit").css("display","block");
+
             
             cropCanvas();
         });
@@ -1903,17 +1889,7 @@ $(document).delegate("#creation_full", "pageshow", function () {
         
     });
 
-    $("#disabledEdit").off("tap").on("tap", function (e) {
 
-        e.preventDefault();
-        e.stopPropagation();
-        $("#disabledEdit").css("display","none");
-        $("#btCompleteEdit").css("display","none");
-        $(".borderEffect").remove("canvas");
-        ///BORAR CANVAS!!!!
-        
-        
-    });
 
 });
 
