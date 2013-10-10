@@ -7,17 +7,4 @@ C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\M
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuille\R$string.class \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuille\R$xml.class \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\com\funciona\MilleFeuille\R.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\device\Device$1.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\device\Device.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$1.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$2.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$1.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$2.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$3.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$4.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3$5.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$3.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser$InAppBrowserClient.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppBrowser.class \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\classes\org\apache\cordova\inappbrowser\InAppChromeClient.class \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\bin\dexedLibs\cordova-3.0.0-2a2b376b38a3cf61c2a852509adbb042.jar \

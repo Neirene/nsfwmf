@@ -1,3 +1,23 @@
+//Globales
+
+
+//tipos de producto
+var esAlbum = false;
+var esCanvas = false;
+var esFoto = false;
+
+//cantidad fotos por producto
+var cantidadFotosCanvas = 1;
+var cantidadFotosAlbum = 10;
+var cantidadFotosSueltas = 5;
+
+
+//precio foto unitaria
+var precioFoto = 4;
+
+//totales
+var totalAlbum;
+
 
 /*******************************
 Variables web service (mover plz)
@@ -612,6 +632,8 @@ function representarFotos(){
                 
             if($(e.currentTarget).hasClass("COLOR")){
                $(e.currentTarget).removeClass("COLOR");
+              
+               
             }else {
                $(e.currentTarget).addClass("COLOR");
             }
@@ -621,6 +643,16 @@ function representarFotos(){
 
                 
                 var selectedlist = $(".selectioncomplete").length;
+             
+            if(selectedlist > numeroFotos){
+                $("#selectStat").css("color","red");
+            }else if(selectedlist < numeroFotos) {
+                $("#selectStat").css("color","grey");
+            }else if(selectedlist == numeroFotos) {
+                $("#selectStat").css("color","green");
+            }
+                
+             
                 $("#selectedpics").text(selectedlist);
                 fotosfinales = selectedlist;
 	
@@ -638,7 +670,7 @@ function representarFotos(){
  seleccionadas del carrete/IG/FB
 ************************************/
 
-var numeroFotos = 9;
+var numeroFotos;
 var fotosElegidas;
 
 
@@ -680,6 +712,7 @@ function convertirCanvas (id, urlFoto, soyUltimo) {
        
 }
 
+
 var paginaIzq;
 var paginaDer;
 
@@ -700,29 +733,32 @@ function rellenarLibro() {
         $soportePagIzq.append("<div>"+miImagen+"</div>");
         $soportePagDer.append("<div>"+miImagen+"</div>");
     }
-    
-    
- 
 
+
+    SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
+        trace("posIzq: "+pos); 
+        $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
+        
+        paginaIzq = pos;
+        
+        } 
+    });
+    
+    
     SwipeV(document.getElementById("pagDerSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
         trace("posDer: "+pos); 
         $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
+        
         paginaDer = pos;
         
         } 
     });  
     
-    SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
-        trace("posIzq: "+pos); 
-        $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
-        paginaIzq = pos;
-        
-        } 
-    });
-
-    
     
 }
+
+var listaCanvas = new Array();
+
 
 function cropCanvas() {
     
@@ -735,14 +771,16 @@ function cropCanvas() {
        
    
    $(".borderEffect").html(canvasFinal);
-   $(".completeSquare").html(canvasFinal);
+   
    
    var queImagen = document.getElementById("fullScPic");
    //coordenadas de corte en la imagen grande
-   var sourceX = Math.round($("#fullScPic").offset().left);
-   var sourceY = Math.round($("#fullScPic").offset().top);
+   var sourceX = -$("#fullScPic").offset().left;
+   var sourceY = -$("#fullScPic").offset().top;
    var sourceWidth = $(".fullImage").width();
    var sourceHeight = $(".fullImage").height();
+   
+    
    var destX = 0;
    var destY = 0;
    var destWidth = sourceWidth;
@@ -756,17 +794,48 @@ function cropCanvas() {
    trace("Source Y Pos: "+sourceY);
    trace("Source Width: "+sourceWidth);
    trace("Source Height: "+sourceHeight);
+   
+   
    trace("Destination X: "+destX);
    trace("Destination Y: "+destY);
    trace("Destination Width: "+destWidth);
    trace("Destination Height: "+destHeight);
    
-     
-   context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+     //Leyenda      (imageObj,   c.x,     c.y,      c.w,           c.h,          0, 0, canvas.width, canvas.height);
+   //context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
    
+context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+   
+   listaCanvas.push(canvasFinal);
    canvasFinal.toDataURL();
+   trace(listaCanvas[0]);
+}
+
+/**************************************
+ * pantallas de pedido
+ ***********************************/
+
+var totalFotosAlbum;
+var totalFotosCanvas;
+var totalFotosSueltas;
+function calcularPrecioFinal() {
+    
+if(esAlbum == true) {
+    totalFotosAlbum = fotosFull.length;
+    
+    totalAlbum = totalFotosAlbum * precioFoto;
+    
+    
+    $("#photoNumber").val(cantidadFotosAlbum);
+    $("#totalPrice").val(totalAlbum+"&euro;")
     
 }
+
+
+    
+    
+}
+
 
 
 /***********************************************************************
@@ -1200,22 +1269,38 @@ $(document).delegate("#process_select", "pageshow", function () {
 
             case 0:
                 //album
-                destino = "#process_decoration";
-                                    
-                                break;
+                destino = "#process_source";
+                
+                esAlbum = true;
+                esCanvas = false;
+                esFoto = false;
+                
+                numeroFotos = cantidadFotosAlbum;
+                $("#totalPics").text(cantidadFotosAlbum);
+                break;
 
             case 1:
                 //marco
                 destino = "#process_frames";
-                                   
-
+                
+                esAlbum = false;
+                esCanvas = true;
+                esFoto = false;  
+                
+                numeroFotos = cantidadFotosCanvas;
+                $("#totalPics").text(cantidadFotosCanvas);
                 break;
 
             case 2:
                 //fotos
                 destino = "#process_source";
-                                  
-
+                
+                esAlbum = false;
+                esCanvas = false;
+                esFoto = true;   
+                
+                numeroFotos = cantidadFotosSueltas;
+                $("#totalPics").text(cantidadFotosSueltas);
                 break;
 
         }
@@ -1258,16 +1343,16 @@ $(document).delegate("#process_decoration", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#process_select", "slide", true);
-
+        navegaSeccion("#creation_edit", "slidedown");
+        
     });
 
     $("#btDecoSource").off("tap").on("tap", function (e) {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#process_source", "slide");
-
+        navegaSeccion("#creation_title", "slideup");
+        
     });
 
 
@@ -1429,7 +1514,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
     $("#btCreationEdit").off("tap").on("tap",function(e){
         
 
-        if(fotosfinales > numeroFotos){
+        if(fotosfinales == numeroFotos){
             
             trace("has seleccionado 10");
             trace("Final checkpoint!");
@@ -1444,7 +1529,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
             urlelegidas = new Array();
             
            
-           idElegidas = new Array();
+            idElegidas = new Array();
             
             
             fotosElegidas = new Array();
@@ -1476,8 +1561,18 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
            // recojofotos(); // envio fotos a las variables globales
         
 	}else{
-            trace("Seleciona al menos 10!");
             
+            if(esAlbum == true) {
+                trace("debes seleccionar: " + cantidadFotosAlbum + " fotos para album");
+            }
+            
+            if(esCanvas == true) {
+                trace("debes seleccionar: " + cantidadFotosCanvas + " fotos para Canvas");
+            }
+            
+            if(esFoto == true) {
+                trace("debes seleccionar: " + cantidadFotosSueltas + " fotos para impresion");
+            }
             
         }
         
@@ -1562,7 +1657,13 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+        
+        if(esAlbum == true) {
+           navegaSeccion("#process_decoration", "slideup"); 
+        }else{
+        
         navegaSeccion("#creation_title", "slideup");
+        }
 
     });
 
@@ -1904,7 +2005,11 @@ $(document).delegate("#creation_title", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+        if(esAlbum == true) {
+        navegaSeccion("#process_decoration","slide");    
+        }else{
         navegaSeccion("#creation_edit", "slide", true);
+        }
 
     });
 
@@ -1963,6 +2068,8 @@ $(document).delegate("#creation_saved", "pageshow", function () {
         e.preventDefault();
         e.stopPropagation();
         navegaSeccion("#order", "slideup");
+        
+        calcularPrecioFinal();
 
     });
 
@@ -1993,7 +2100,6 @@ $(document).delegate("#orderresume", "pageshow", function () {
     $("#orderresume input").blur(function() {
         $(document).scrollTop(0);
     });
-
 
 });
 
@@ -2060,7 +2166,9 @@ $(document).delegate("#finishscreen", "pageshow", function () {
         e.preventDefault();
         e.stopPropagation();
         navegaSeccion("#welcome", "slide");
-
+        esAlbum = false;
+        esCanvas = false;
+        esFoto = false;
     });
 
 });

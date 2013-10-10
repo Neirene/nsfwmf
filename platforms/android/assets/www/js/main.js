@@ -1,3 +1,14 @@
+//Globales
+
+
+var esAlbum = false;
+
+var cantidadFotosCanvas;
+var cantidadFotosAlbum;
+var cantidadFotosSueltas;
+
+var precioFoto;
+
 
 /*******************************
 Variables web service (mover plz)
@@ -680,6 +691,10 @@ function convertirCanvas (id, urlFoto, soyUltimo) {
        
 }
 
+
+var paginaIzq;
+var paginaDer;
+
 function rellenarLibro() {
     
         trace("FotosFull: " + fotosFull.length)
@@ -697,37 +712,32 @@ function rellenarLibro() {
         $soportePagIzq.append("<div>"+miImagen+"</div>");
         $soportePagDer.append("<div>"+miImagen+"</div>");
     }
-    
-    
-    
 
-    
-    
-    
-    /*
-    $soportePagIzq.html("<div>"+cadena+"</div>");
-    $soportePagDer.html("<div>"+cadena+"</div>");
-    */
-     //$soportePagDer.html(cadena);
-    
 
-    SwipeV(document.getElementById("pagDerSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
-        trace("posIzq: "+pos); 
-        $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
-        
-        } 
-    });  
-    
     SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
         trace("posIzq: "+pos); 
         $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
         
+        paginaIzq = pos;
+        
         } 
     });
-
+    
+    
+    SwipeV(document.getElementById("pagDerSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
+        trace("posDer: "+pos); 
+        $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
+        
+        paginaDer = pos;
+        
+        } 
+    });  
     
     
 }
+
+var listaCanvas = new Array();
+
 
 function cropCanvas() {
     
@@ -740,14 +750,16 @@ function cropCanvas() {
        
    
    $(".borderEffect").html(canvasFinal);
-   $(".completeSquare").html(canvasFinal);
+   
    
    var queImagen = document.getElementById("fullScPic");
    //coordenadas de corte en la imagen grande
-   var sourceX = Math.round($("#fullScPic").offset().left);
-   var sourceY = Math.round($("#fullScPic").offset().top);
+   var sourceX = -$("#fullScPic").offset().left;
+   var sourceY = -$("#fullScPic").offset().top;
    var sourceWidth = $(".fullImage").width();
    var sourceHeight = $(".fullImage").height();
+   
+    
    var destX = 0;
    var destY = 0;
    var destWidth = sourceWidth;
@@ -761,17 +773,24 @@ function cropCanvas() {
    trace("Source Y Pos: "+sourceY);
    trace("Source Width: "+sourceWidth);
    trace("Source Height: "+sourceHeight);
+   
+   
    trace("Destination X: "+destX);
    trace("Destination Y: "+destY);
    trace("Destination Width: "+destWidth);
    trace("Destination Height: "+destHeight);
    
-     
-   context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+     //Leyenda      (imageObj,   c.x,     c.y,      c.w,           c.h,          0, 0, canvas.width, canvas.height);
+   //context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
    
+context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+   
+   listaCanvas.push(canvasFinal);
    canvasFinal.toDataURL();
-    
+   trace(listaCanvas[0]);
 }
+
+
 
 
 /***********************************************************************
@@ -1205,21 +1224,21 @@ $(document).delegate("#process_select", "pageshow", function () {
 
             case 0:
                 //album
-                destino = "#process_decoration";
-                                    
+                destino = "#process_source";
+                esAlbum = true;                
                                 break;
 
             case 1:
                 //marco
                 destino = "#process_frames";
-                                   
+                esAlbum = false;                
 
                 break;
 
             case 2:
                 //fotos
                 destino = "#process_source";
-                                  
+                esAlbum = false;                 
 
                 break;
 
@@ -1263,16 +1282,16 @@ $(document).delegate("#process_decoration", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#process_select", "slide", true);
-
+        navegaSeccion("#creation_edit", "slidedown");
+        
     });
 
     $("#btDecoSource").off("tap").on("tap", function (e) {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#process_source", "slide");
-
+        navegaSeccion("#creation_title", "slideup");
+        
     });
 
 
@@ -1567,7 +1586,13 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+        
+        if(esAlbum == true) {
+           navegaSeccion("#process_decoration", "slideup"); 
+        }else{
+        
         navegaSeccion("#creation_title", "slideup");
+        }
 
     });
 
@@ -1909,7 +1934,11 @@ $(document).delegate("#creation_title", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+        if(esAlbum == true) {
+        navegaSeccion("#process_decoration","slide");    
+        }else{
         navegaSeccion("#creation_edit", "slide", true);
+        }
 
     });
 
@@ -2065,7 +2094,7 @@ $(document).delegate("#finishscreen", "pageshow", function () {
         e.preventDefault();
         e.stopPropagation();
         navegaSeccion("#welcome", "slide");
-
+        esAlbum = false;
     });
 
 });
