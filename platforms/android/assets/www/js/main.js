@@ -1,13 +1,23 @@
 //Globales
 
 
+//tipos de producto
 var esAlbum = false;
+var esCanvas = false;
+var esFoto = false;
 
-var cantidadFotosCanvas;
-var cantidadFotosAlbum;
-var cantidadFotosSueltas;
+//cantidad fotos por producto
+var cantidadFotosCanvas = 1;
+var cantidadFotosAlbum = 10;
+var cantidadFotosSueltas = 5;
 
-var precioFoto;
+
+//precio foto unitaria
+var precioFoto = 4;
+var precioCanvas = 2.3;
+
+//totales
+var totalAlbum;
 
 
 /*******************************
@@ -86,7 +96,129 @@ $(document).ready(function(){
         $soportePagIzq = $("#pagIzqSlider .swipe-wrapTest");
         $soportePagDer = $("#pagDerSlider .swipe-wrapTest");
       
+        ////////////////////////////////////////////////////////////////////////////////////TOUCH EVENTS/////
         
+        
+(function ($) {
+    // Detect touch support
+    $.support.touch = 'ontouchend' in document;
+    // Ignore browsers without touch support
+    if (!$.support.touch) {
+    return;
+    }
+    var mouseProto = $.ui.mouse.prototype,
+        _mouseInit = mouseProto._mouseInit,
+        touchHandled;
+
+    function simulateMouseEvent (event, simulatedType) { //use this function to simulate mouse event
+    // Ignore multi-touch events
+        if (event.originalEvent.touches.length > 1) {
+        return;
+        }
+    event.preventDefault(); //use this to prevent scrolling during ui use
+
+    var touch = event.originalEvent.changedTouches[0],
+        simulatedEvent = document.createEvent('MouseEvents');
+    // Initialize the simulated mouse event using the touch event's coordinates
+    simulatedEvent.initMouseEvent(
+        simulatedType,    // type
+        true,             // bubbles                    
+        true,             // cancelable                 
+        window,           // view                       
+        1,                // detail                     
+        touch.screenX,    // screenX                    
+        touch.screenY,    // screenY                    
+        touch.clientX,    // clientX                    
+        touch.clientY,    // clientY                    
+        false,            // ctrlKey                    
+        false,            // altKey                     
+        false,            // shiftKey                   
+        false,            // metaKey                    
+        0,                // button                     
+        null              // relatedTarget              
+        );
+
+    // Dispatch the simulated event to the target element
+    event.target.dispatchEvent(simulatedEvent);
+    }
+    mouseProto._touchStart = function (event) {
+    var self = this;
+    // Ignore the event if another widget is already being handled
+    if (touchHandled || !self._mouseCapture(event.originalEvent.changedTouches[0])) {
+        return;
+        }
+    // Set the flag to prevent other widgets from inheriting the touch event
+    touchHandled = true;
+    // Track movement to determine if interaction was a click
+    self._touchMoved = false;
+    // Simulate the mouseover event
+    simulateMouseEvent(event, 'mouseover');
+    // Simulate the mousemove event
+    simulateMouseEvent(event, 'mousemove');
+    // Simulate the mousedown event
+    simulateMouseEvent(event, 'mousedown');
+    };
+
+    mouseProto._touchMove = function (event) {
+    // Ignore event if not handled
+    if (!touchHandled) {
+        return;
+        }
+    // Interaction was not a click
+    this._touchMoved = true;
+    // Simulate the mousemove event
+    simulateMouseEvent(event, 'mousemove');
+    };
+    mouseProto._touchEnd = function (event) {
+    // Ignore event if not handled
+    if (!touchHandled) {
+        return;
+    }
+    // Simulate the mouseup event
+    simulateMouseEvent(event, 'mouseup');
+    // Simulate the mouseout event
+    simulateMouseEvent(event, 'mouseout');
+    // If the touch interaction did not move, it should trigger a click
+    if (!this._touchMoved) {
+      // Simulate the click event
+      simulateMouseEvent(event, 'click');
+    }
+    // Unset the flag to allow other widgets to inherit the touch event
+    touchHandled = false;
+    };
+    mouseProto._mouseInit = function () {
+    var self = this;
+    // Delegate the touch handlers to the widget's element
+    self.element
+        .on('touchstart', $.proxy(self, '_touchStart'))
+        .on('touchmove', $.proxy(self, '_touchMove'))
+        .on('touchend', $.proxy(self, '_touchEnd'));
+
+    // Call the original $.ui.mouse init method
+    _mouseInit.call(self);
+    };
+})(jQuery);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
      
         
 });
@@ -623,6 +755,8 @@ function representarFotos(){
                 
             if($(e.currentTarget).hasClass("COLOR")){
                $(e.currentTarget).removeClass("COLOR");
+              
+               
             }else {
                $(e.currentTarget).addClass("COLOR");
             }
@@ -632,6 +766,16 @@ function representarFotos(){
 
                 
                 var selectedlist = $(".selectioncomplete").length;
+             
+            if(selectedlist > numeroFotos){
+                $("#selectStat").css("color","red");
+            }else if(selectedlist < numeroFotos) {
+                $("#selectStat").css("color","grey");
+            }else if(selectedlist == numeroFotos) {
+                $("#selectStat").css("color","green");
+            }
+                
+             
                 $("#selectedpics").text(selectedlist);
                 fotosfinales = selectedlist;
 	
@@ -649,7 +793,7 @@ function representarFotos(){
  seleccionadas del carrete/IG/FB
 ************************************/
 
-var numeroFotos = 9;
+var numeroFotos;
 var fotosElegidas;
 
 
@@ -736,6 +880,62 @@ function rellenarLibro() {
     
 }
 
+
+//relacion1
+  
+var relacion1;
+var relacion2;
+
+var altoEditor;
+var anchoEditor;
+var escalaFinal;
+
+var widthImagen = $("#fullScPic").width();
+var diff;
+function resizeEditorPic() {
+    $("#fullScPic").draggable({ addClasses: false });
+    relacion1 = $(".fullImage").width() / $(".fullImage").height();
+    relacion2 = $("#fullScPic").width() / $("#fullScPic").height();
+    
+    console.log(relacion1);
+    console.log(relacion2);
+    
+    //TRABAJAR AQUI
+        
+ if (relacion1 <= relacion2) {
+      //ajustamos imagen al ALTO
+      altoEditor = $(".fullImage").height();
+      anchoEditor = altoEditor * relacion2;
+      
+  }else{
+      //ajustamos imagen al ANCHO
+      diff = widthImagen - anchoEditor;
+     altoEditor = anchoEditor * relacion2;
+     anchoEditor = $(".fullImage").width();
+
+
+
+
+  }
+
+
+   escalaFinal =  anchoEditor / $("#fullScPic").width(); //disminuir tamano x2
+  
+  
+  $("#fullScPic").attr("width",anchoEditor);
+  $("#fullScPic").attr("height",altoEditor);
+  
+
+ 
+          $("#fullScPic").draggable({
+           axis: "x",
+           contaiment: [-diff,0,0,0]
+        });      
+    
+    
+    
+}
+
 var listaCanvas = new Array();
 
 
@@ -790,6 +990,49 @@ context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX,
    trace(listaCanvas[0]);
 }
 
+/**************************************
+ * pantallas de pedido
+ ***********************************/
+
+var totalFotosAlbum;
+var totalFotosCanvas;
+var totalFotosSueltas;
+function calcularPrecioFinal() {
+    
+    if(esAlbum == true) {
+        totalFotosAlbum = fotosFull.length;
+
+        totalAlbum = totalFotosAlbum * precioFoto;
+
+
+        $("#photoNumber").val(cantidadFotosAlbum);
+        $("#totalPrice").val(totalAlbum+"&euro;")
+
+    }
+
+    if(esCanvas == true) {
+        totalFotosCanvas = fotosFull.length;
+
+        totalCanvas = (totalFotosCanvas * precioFoto)*precioCanvas;
+
+
+        $("#photoNumber").val(cantidadFotosCanvas);
+        $("#totalPrice").val(totalCanvas+"&euro;")
+
+    }
+
+    if(esFoto == true) {
+        totalFotosSueltas = fotosFull.length;
+
+        totalFotos = totalFotosSueltas * precioFoto;
+
+
+        $("#photoNumber").val(cantidadFotosCanvas);
+        $("#totalPrice").val(totalFotos+"&euro;")
+
+    }    
+    
+}
 
 
 
@@ -840,17 +1083,7 @@ $(document).delegate("#welcomearea", "pageshow", function (e) {
         navegaSeccion("#logintype", "slideup");
 
     });
-/*
-    $("#swipejump ").off().on("swipeleft", pagejump);
-    $("#swipejump ").on("swiperight", pagejump);
 
-    function pagejump(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        navegaSeccion("#aboutus", "slide");
-
-    }
-*/
 
     Swipe(document.getElementById("slideArrowLink"),{continuous:false,stopPropagation:true,transitionEnd: function() {
 
@@ -1225,21 +1458,37 @@ $(document).delegate("#process_select", "pageshow", function () {
             case 0:
                 //album
                 destino = "#process_source";
-                esAlbum = true;                
-                                break;
+                
+                esAlbum = true;
+                esCanvas = false;
+                esFoto = false;
+                
+                numeroFotos = cantidadFotosAlbum;
+                $("#totalPics").text(cantidadFotosAlbum);
+                break;
 
             case 1:
                 //marco
                 destino = "#process_frames";
-                esAlbum = false;                
-
+                
+                esAlbum = false;
+                esCanvas = true;
+                esFoto = false;  
+                
+                numeroFotos = cantidadFotosCanvas;
+                $("#totalPics").text(cantidadFotosCanvas);
                 break;
 
             case 2:
                 //fotos
                 destino = "#process_source";
-                esAlbum = false;                 
-
+                
+                esAlbum = false;
+                esCanvas = false;
+                esFoto = true;   
+                
+                numeroFotos = cantidadFotosSueltas;
+                $("#totalPics").text(cantidadFotosSueltas);
                 break;
 
         }
@@ -1453,7 +1702,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
     $("#btCreationEdit").off("tap").on("tap",function(e){
         
 
-        if(fotosfinales > numeroFotos){
+        if(fotosfinales == numeroFotos){
             
             trace("has seleccionado 10");
             trace("Final checkpoint!");
@@ -1468,7 +1717,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
             urlelegidas = new Array();
             
            
-           idElegidas = new Array();
+            idElegidas = new Array();
             
             
             fotosElegidas = new Array();
@@ -1500,8 +1749,18 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
            // recojofotos(); // envio fotos a las variables globales
         
 	}else{
-            trace("Seleciona al menos 10!");
             
+            if(esAlbum == true) {
+                trace("debes seleccionar: " + cantidadFotosAlbum + " fotos para album");
+            }
+            
+            if(esCanvas == true) {
+                trace("debes seleccionar: " + cantidadFotosCanvas + " fotos para Canvas");
+            }
+            
+            if(esFoto == true) {
+                trace("debes seleccionar: " + cantidadFotosSueltas + " fotos para impresion");
+            }
             
         }
         
@@ -1556,7 +1815,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 Pantalla Seleccion/Edicion Fotos
 ************************************/
 var fotosFull = new Array();
-//fotosfull = ["default.jpg", "p01.jpg", "p02.jpg", "p03.jpg", "gal01.jpg"];
+ //fotosfull = ["default.jpg", "p01.jpg", "p02.jpg", "p03.jpg", "gal01.jpg"];
 
 var paginasFull = new Array(10);
 $(paginasFull).each(function (index) {
@@ -1837,18 +2096,17 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 Pantalla Foto FullScreen
 ************************************/
 var filter = 0;
+
+
 $(document).delegate("#creation_full", "pageshow", function () {
 
-
-        var fullSizePic = $("#fullScPic").width();
-        var containerFs = $("#fullImage").width();
         
-        if(fullSizePic > containerFs) {
-            
-            $("#fullScPic").css({"width":"80%"});
-        }
+resizeEditorPic();
 
-    startMovimiento($("#fullScPic"),$(".fullImage"));
+
+
+
+    //startMovimiento($("#fullScPic"),$(".fullImage"));
  
     $("#btFullScreen").off("tap").on("tap", function (e) {
 
@@ -1997,6 +2255,8 @@ $(document).delegate("#creation_saved", "pageshow", function () {
         e.preventDefault();
         e.stopPropagation();
         navegaSeccion("#order", "slideup");
+        
+        calcularPrecioFinal();
 
     });
 
@@ -2027,7 +2287,6 @@ $(document).delegate("#orderresume", "pageshow", function () {
     $("#orderresume input").blur(function() {
         $(document).scrollTop(0);
     });
-
 
 });
 
@@ -2095,6 +2354,8 @@ $(document).delegate("#finishscreen", "pageshow", function () {
         e.stopPropagation();
         navegaSeccion("#welcome", "slide");
         esAlbum = false;
+        esCanvas = false;
+        esFoto = false;
     });
 
 });

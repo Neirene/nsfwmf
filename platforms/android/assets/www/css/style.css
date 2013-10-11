@@ -381,7 +381,7 @@ pruebas carousel  BORRAR
     top:0px;
     left:0px;
     position: absolute;
-    pointer-events:none;
+    //pointer-events:none;
 }
 
 
