@@ -890,7 +890,7 @@ var altoEditor;
 var anchoEditor;
 var escalaFinal;
 
-var widthImagen = $("#fullScPic").width();
+//var widthImagen = $("#fullScPic").width();
 var diff;
 function resizeEditorPic() {
     $("#fullScPic").draggable({ addClasses: false });
@@ -909,10 +909,9 @@ function resizeEditorPic() {
       
   }else{
       //ajustamos imagen al ANCHO
-      diff = widthImagen - anchoEditor;
+      diff = $("#fullScPic").width(); - anchoEditor;
      altoEditor = anchoEditor * relacion2;
      anchoEditor = $(".fullImage").width();
-
 
 
 
@@ -929,7 +928,7 @@ function resizeEditorPic() {
  
           $("#fullScPic").draggable({
            axis: "x",
-           contaiment: [-diff,0,0,0]
+           contaiment: [diff,0,0,0]
         });      
     
     
@@ -1006,7 +1005,7 @@ function calcularPrecioFinal() {
 
 
         $("#photoNumber").val(cantidadFotosAlbum);
-        $("#totalPrice").val(totalAlbum+"&euro;")
+        $("#totalPrice").val(totalAlbum+"€")
 
     }
 
@@ -1017,7 +1016,7 @@ function calcularPrecioFinal() {
 
 
         $("#photoNumber").val(cantidadFotosCanvas);
-        $("#totalPrice").val(totalCanvas+"&euro;")
+        $("#totalPrice").val(totalCanvas+"€")
 
     }
 
@@ -1028,7 +1027,7 @@ function calcularPrecioFinal() {
 
 
         $("#photoNumber").val(cantidadFotosCanvas);
-        $("#totalPrice").val(totalFotos+"&euro;")
+        $("#totalPrice").val(totalFotos+"€")
 
     }    
     
@@ -2356,6 +2355,7 @@ $(document).delegate("#finishscreen", "pageshow", function () {
         esAlbum = false;
         esCanvas = false;
         esFoto = false;
+        fotosfinales = 0;
     });
 
 });

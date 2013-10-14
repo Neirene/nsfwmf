@@ -891,9 +891,12 @@ var anchoEditor;
 var escalaFinal;
 
 //var widthImagen = $("#fullScPic").width();
-var diff;
+
+
 function resizeEditorPic() {
-    $("#fullScPic").draggable({ addClasses: false });
+
+
+    
     relacion1 = $(".fullImage").width() / $(".fullImage").height();
     relacion2 = $("#fullScPic").width() / $("#fullScPic").height();
     
@@ -906,34 +909,40 @@ function resizeEditorPic() {
       //ajustamos imagen al ALTO
       altoEditor = $(".fullImage").height();
       anchoEditor = altoEditor * relacion2;
-      
+      console.log("aca?")
   }else{
       //ajustamos imagen al ANCHO
-      diff = $("#fullScPic").width(); - anchoEditor;
+     console.log("Aqui?");
+     
+     diff = anchoEditor - jQuery("#fullScPic").width();
+     
+     $("#fullScPic").draggable({
+     axis:'x',
+     containment: [-diff,0,0,0]
+     });      
+    
+     
+     
      altoEditor = anchoEditor * relacion2;
      anchoEditor = $(".fullImage").width();
-
+   
 
 
   }
 
 
    escalaFinal =  anchoEditor / $("#fullScPic").width(); //disminuir tamano x2
-  
+
   
   $("#fullScPic").attr("width",anchoEditor);
   $("#fullScPic").attr("height",altoEditor);
   
 
  
-          $("#fullScPic").draggable({
-           axis: "x",
-           contaiment: [diff,0,0,0]
-        });      
-    
-    
+
     
 }
+   
 
 var listaCanvas = new Array();
 
@@ -1005,7 +1014,7 @@ function calcularPrecioFinal() {
 
 
         $("#photoNumber").val(cantidadFotosAlbum);
-        $("#totalPrice").val(totalAlbum+"&euro;")
+        $("#totalPrice").val(totalAlbum+"€")
 
     }
 
@@ -1016,7 +1025,7 @@ function calcularPrecioFinal() {
 
 
         $("#photoNumber").val(cantidadFotosCanvas);
-        $("#totalPrice").val(totalCanvas+"&euro;")
+        $("#totalPrice").val(totalCanvas+"€")
 
     }
 
@@ -1027,7 +1036,7 @@ function calcularPrecioFinal() {
 
 
         $("#photoNumber").val(cantidadFotosCanvas);
-        $("#totalPrice").val(totalFotos+"&euro;")
+        $("#totalPrice").val(totalFotos+"€")
 
     }    
     
@@ -2355,6 +2364,7 @@ $(document).delegate("#finishscreen", "pageshow", function () {
         esAlbum = false;
         esCanvas = false;
         esFoto = false;
+        fotosfinales = 0;
     });
 
 });
