@@ -881,6 +881,25 @@ function rellenarLibro() {
 }
 
 
+function magicWandSet(filter) {
+    
+    console.log(filter);
+    
+Caman("#fullScPic", function () {
+    // If such an effect exists, use it:
+    if( filter in this){
+        //NOTE THIS IS THE LINE THAT I ADD FOR YOU:
+        this.revert();
+        this[filter]();
+        this.render();
+    }
+});
+    
+    
+}
+
+
+
 //relacion1
   
 var relacion1;
@@ -891,9 +910,12 @@ var anchoEditor;
 var escalaFinal;
 
 //var widthImagen = $("#fullScPic").width();
-var diff;
+
+
 function resizeEditorPic() {
-    $("#fullScPic").draggable({ addClasses: false });
+
+    $("#fullScPic").draggable({});
+/*
     relacion1 = $(".fullImage").width() / $(".fullImage").height();
     relacion2 = $("#fullScPic").width() / $("#fullScPic").height();
     
@@ -906,34 +928,40 @@ function resizeEditorPic() {
       //ajustamos imagen al ALTO
       altoEditor = $(".fullImage").height();
       anchoEditor = altoEditor * relacion2;
-      
+      console.log("aca?")
   }else{
       //ajustamos imagen al ANCHO
-      diff = $("#fullScPic").width(); - anchoEditor;
+     console.log("Aqui?");
+     imgHeight = $("#fullScPic").height();
+     diff = altoEditor - imgHeight;
+     
+     $("#fullScPic").draggable({
+     axis:'y',
+     containment: [0,diff,0,0]
+     });      
+    
+     
+     
      altoEditor = anchoEditor * relacion2;
      anchoEditor = $(".fullImage").width();
-
+   
 
 
   }
 
 
    escalaFinal =  anchoEditor / $("#fullScPic").width(); //disminuir tamano x2
-  
+
   
   $("#fullScPic").attr("width",anchoEditor);
   $("#fullScPic").attr("height",altoEditor);
   
-
+*/
  
-          $("#fullScPic").draggable({
-           axis: "x",
-           contaiment: [diff,0,0,0]
-        });      
-    
-    
+
     
 }
+   
 
 var listaCanvas = new Array();
 
@@ -1824,7 +1852,7 @@ $(paginasFull).each(function (index) {
 var fi = 0;
 var pi = 0;
 
-
+var pos;
 $(document).delegate("#creation_edit", "pageshow", function () {
 
     $("#btEditBack").off("tap").on("tap", function (e) {
@@ -1858,9 +1886,17 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+        
+        Caman("#fullScPic", fotosFull[pos] , function () {
+        // canvas START
+        this.render();
+        });
+
+
+        
         $("#fullScPic").css("top","0px","left","0px");
 
-        $(".borderEffect").remove("canvas");
+        
         navegaSeccion("#creation_full","fade");
         
         
@@ -2099,6 +2135,14 @@ var filter = 0;
 
 $(document).delegate("#creation_full", "pageshow", function () {
 
+Caman("#fullScPic", function () {
+  this.render();
+});
+
+$("#fullScPic").on("pinchout","#fullPicSc", function(event) {
+    $("#fullScPic").css("height","150%"); 
+});
+
         
 resizeEditorPic();
 
@@ -2119,7 +2163,7 @@ resizeEditorPic();
     $("#wandBt").off("tap").on("tap", function (e) {
                 
         
-        if (filter >= 4) {
+        if (filter >= 6) {
             filter = 0;
         }
         
@@ -2129,23 +2173,27 @@ resizeEditorPic();
             
     switch(filter) {
     case 1:
-        $("#fullScPic").css("-webkit-filter","grayscale(100%)");
+        magicWandSet("herMajesty");
     break;
     
     case 2:
-        $("#fullScPic").css("-webkit-filter","hue-rotate(120deg)");
+        magicWandSet("vintage");
     break;
     
     case 3:
-        $("#fullScPic").css("-webkit-filter","blur(10px)");
+        magicWandSet("sinCity");
     break;
     
     case 4:
-        $("#fullScPic").css("-webkit-filter","grayscale(0%)");
+        magicWandSet("lomo");
     break;
     
     case 5:
-        $("#fullScPic").pixastic("invert");
+        magicWandSet("pinhole");
+    break;
+
+    case 6:
+        magicWandSet("revert");
     break;
     }
 

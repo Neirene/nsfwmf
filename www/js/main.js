@@ -881,6 +881,38 @@ function rellenarLibro() {
 }
 
 
+function magicWandSet(filter) {
+
+    
+    console.log(filter);
+    
+// Listen to a single instance only
+c = Caman("#fullScPic");
+
+Caman.Event.listen(c, "processStart", function () {
+  console.log("Working!");
+});
+
+Caman.Event.listen(c, "renderFinished", function () {
+  console.log("Finished!");
+});    
+    
+    
+Caman("#fullScPic", function () {
+    // If such an effect exists, use it:
+    if( filter in this){
+        //NOTE THIS IS THE LINE THAT I ADD FOR YOU:
+        this.revert();
+        this[filter]();
+        this.render();
+    }
+});
+    
+    
+}
+
+
+
 //relacion1
   
 var relacion1;
@@ -895,8 +927,8 @@ var escalaFinal;
 
 function resizeEditorPic() {
 
-
-    
+    $("#fullScPic").draggable({});
+/*
     relacion1 = $(".fullImage").width() / $(".fullImage").height();
     relacion2 = $("#fullScPic").width() / $("#fullScPic").height();
     
@@ -913,12 +945,12 @@ function resizeEditorPic() {
   }else{
       //ajustamos imagen al ANCHO
      console.log("Aqui?");
-     
-     diff = anchoEditor - jQuery("#fullScPic").width();
+     imgHeight = $("#fullScPic").height();
+     diff = altoEditor - imgHeight;
      
      $("#fullScPic").draggable({
-     axis:'x',
-     containment: [-diff,0,0,0]
+     axis:'y',
+     containment: [0,diff,0,0]
      });      
     
      
@@ -937,7 +969,7 @@ function resizeEditorPic() {
   $("#fullScPic").attr("width",anchoEditor);
   $("#fullScPic").attr("height",altoEditor);
   
-
+*/
  
 
     
@@ -948,7 +980,19 @@ var listaCanvas = new Array();
 
 
 function cropCanvas() {
+
+Caman(".fullImage", function () {
+  // width, height, x, y
+  this.crop(500, 300);
+
+  // Still have to call render!
+  this.render();
+});
+
+
     
+    
+    /*   
 	//corta la imagen
 	
    canvasFinal = document.createElement("canvas");
@@ -996,6 +1040,8 @@ context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX,
    listaCanvas.push(canvasFinal);
    canvasFinal.toDataURL();
    trace(listaCanvas[0]);
+    
+    */
 }
 
 /**************************************
@@ -1833,7 +1879,7 @@ $(paginasFull).each(function (index) {
 var fi = 0;
 var pi = 0;
 
-
+var pos;
 $(document).delegate("#creation_edit", "pageshow", function () {
 
     $("#btEditBack").off("tap").on("tap", function (e) {
@@ -1867,9 +1913,17 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+        
+        Caman("#fullScPic", fotosFull[pos] , function () {
+        // canvas START
+        this.render();
+        });
+
+
+        
         $("#fullScPic").css("top","0px","left","0px");
 
-        $(".borderEffect").remove("canvas");
+        
         navegaSeccion("#creation_full","fade");
         
         
@@ -2108,6 +2162,17 @@ var filter = 0;
 
 $(document).delegate("#creation_full", "pageshow", function () {
 
+Caman("#fullScPic", function () {
+  this.render();
+});
+
+$("#fullScPic").on("pinchout","#fullPicSc", function(event) {
+    $("#fullScPic").css("height","150%"); 
+});
+
+$("#fullScPic").on("pinchin","#fullPicSc", function(event) {
+    $("#fullScPic").css("height","100%"); 
+});
         
 resizeEditorPic();
 
@@ -2128,7 +2193,7 @@ resizeEditorPic();
     $("#wandBt").off("tap").on("tap", function (e) {
                 
         
-        if (filter >= 4) {
+        if (filter >= 6) {
             filter = 0;
         }
         
@@ -2138,23 +2203,27 @@ resizeEditorPic();
             
     switch(filter) {
     case 1:
-        $("#fullScPic").css("-webkit-filter","grayscale(100%)");
+        magicWandSet("herMajesty");
     break;
     
     case 2:
-        $("#fullScPic").css("-webkit-filter","hue-rotate(120deg)");
+        magicWandSet("vintage");
     break;
     
     case 3:
-        $("#fullScPic").css("-webkit-filter","blur(10px)");
+        magicWandSet("sinCity");
     break;
     
     case 4:
-        $("#fullScPic").css("-webkit-filter","grayscale(0%)");
+        magicWandSet("lomo");
     break;
     
     case 5:
-        $("#fullScPic").pixastic("invert");
+        magicWandSet("pinhole");
+    break;
+
+    case 6:
+        magicWandSet("revert");
     break;
     }
 
