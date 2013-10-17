@@ -961,9 +961,27 @@ function resizeEditorPic() {
    
 
 var listaCanvas = new Array();
-
-
+var fotoMod;
+var foto64;
 function cropCanvas() {
+
+Caman("#fullScPic", function () {
+  // width, height, x, y
+  this.crop(300, 300,36,32);
+
+  // Still have to call render!
+  this.render(function(){
+      $("#fullScPic").draggable();
+  this.toBase64();
+  console.log(job);
+  fotoMod = this;
+  
+  //guardar imagen modificada en el lugar de la vieja en el array principal
+  //fotosFull.splice([pos],1,fotoMod)
+  
+  
+  });
+});
 
 
 
@@ -2136,18 +2154,17 @@ Pantalla Foto FullScreen
 ************************************/
 var filter = 0;
 
-var ias;
+
 $(document).delegate("#creation_full", "pageshow", function () {
 
 
 Caman("#fullScPic", function () {
-  this.render();
+  this.render(function(){$('#fullScPic').draggable();});
 });
 
-    ias = $('.fullImage').imgAreaSelect({ instance: true });
-    ias.setSelection(32, 36, 450, 290, false);
-    ias.setOptions({ show: true });
-    ias.update();
+  
+
+
 
 $("#fullScPic").on("pinchout","#fullPicSc", function(event) {
     $("#fullScPic").css("height","150%"); 
