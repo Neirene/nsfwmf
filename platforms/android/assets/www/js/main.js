@@ -199,24 +199,7 @@ $(document).ready(function(){
     };
 })(jQuery);
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
      
@@ -882,8 +865,19 @@ function rellenarLibro() {
 
 
 function magicWandSet(filter) {
+
     
     console.log(filter);
+    
+// Listen to a single instance only
+c = Caman("#fullScPic");
+
+Caman.Event.listen(c, "processStart", function () {
+  console.log("Working!");
+});
+
+
+    
     
 Caman("#fullScPic", function () {
     // If such an effect exists, use it:
@@ -891,7 +885,10 @@ Caman("#fullScPic", function () {
         //NOTE THIS IS THE LINE THAT I ADD FOR YOU:
         this.revert();
         this[filter]();
-        this.render();
+        this.render(function(){
+            
+            console.log("DONE!");
+        });
     }
 });
     
@@ -967,7 +964,21 @@ var listaCanvas = new Array();
 
 
 function cropCanvas() {
+
+Caman("#fullScPic", function () {
+  // width, height, x, y
+  this.crop(500, 300,32,36);
+
+  // Still have to call render!
+  this.render(function(){
+      $("#fullScPic").draggable();
+  });
+});
+
+
     
+    
+    /*   
 	//corta la imagen
 	
    canvasFinal = document.createElement("canvas");
@@ -1015,6 +1026,8 @@ context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX,
    listaCanvas.push(canvasFinal);
    canvasFinal.toDataURL();
    trace(listaCanvas[0]);
+    
+    */
 }
 
 /**************************************
@@ -2143,6 +2156,9 @@ $("#fullScPic").on("pinchout","#fullPicSc", function(event) {
     $("#fullScPic").css("height","150%"); 
 });
 
+$("#fullScPic").on("pinchin","#fullPicSc", function(event) {
+    $("#fullScPic").css("height","100%"); 
+});
         
 resizeEditorPic();
 

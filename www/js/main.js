@@ -199,24 +199,7 @@ $(document).ready(function(){
     };
 })(jQuery);
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
      
@@ -893,9 +876,7 @@ Caman.Event.listen(c, "processStart", function () {
   console.log("Working!");
 });
 
-Caman.Event.listen(c, "renderFinished", function () {
-  console.log("Finished!");
-});    
+
     
     
 Caman("#fullScPic", function () {
@@ -904,7 +885,10 @@ Caman("#fullScPic", function () {
         //NOTE THIS IS THE LINE THAT I ADD FOR YOU:
         this.revert();
         this[filter]();
-        this.render();
+        this.render(function(){
+            
+            console.log("DONE!");
+        });
     }
 });
     
@@ -981,13 +965,6 @@ var listaCanvas = new Array();
 
 function cropCanvas() {
 
-Caman(".fullImage", function () {
-  // width, height, x, y
-  this.crop(500, 300);
-
-  // Still have to call render!
-  this.render();
-});
 
 
     
@@ -2159,12 +2136,18 @@ Pantalla Foto FullScreen
 ************************************/
 var filter = 0;
 
-
+var ias;
 $(document).delegate("#creation_full", "pageshow", function () {
+
 
 Caman("#fullScPic", function () {
   this.render();
 });
+
+    ias = $('.fullImage').imgAreaSelect({ instance: true });
+    ias.setSelection(32, 36, 450, 290, false);
+    ias.setOptions({ show: true });
+    ias.update();
 
 $("#fullScPic").on("pinchout","#fullPicSc", function(event) {
     $("#fullScPic").css("height","150%"); 
