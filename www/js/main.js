@@ -1,5 +1,6 @@
 //Globales
 
+var fotoCaman;
 
 //tipos de producto
 var esAlbum = false;
@@ -823,8 +824,8 @@ var paginaIzq;
 var paginaDer;
 
 function rellenarLibro() {
-    
-        trace("FotosFull: " + fotosFull.length)
+
+    trace("FotosFull: " + fotosFull.length)
     
     $soportePagIzq.html('');
     $soportePagDer.html('');
@@ -840,6 +841,7 @@ function rellenarLibro() {
         $soportePagDer.append("<div>"+miImagen+"</div>");
     }
 
+    $("#fullScPic").attr("src", "" + fotosFull[0] + "");
 
     SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
         trace("posIzq: "+pos); 
@@ -882,7 +884,7 @@ Caman.Event.listen(c, "processStart", function () {
 Caman("#fullScPic", function () {
     // If such an effect exists, use it:
     if( filter in this){
-        //NOTE THIS IS THE LINE THAT I ADD FOR YOU:
+        
         this.revert();
         this[filter]();
         this.render(function(){
@@ -1908,11 +1910,22 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        
-        Caman("#fullScPic", fotosFull[pos] , function () {
-        // canvas START
-        this.render();
-        });
+ 
+ //PASO1: remover ID data-caman del canvas, PASO2: iniciar CAMAN de nuevo 
+ 
+    $("#fullScPic").removeAttr("data-caman-id");
+    
+   // trace("pos:"+pos);
+    
+    if ($(e.currentTarget).attr("data-id")=="derecha"){
+        miPagina = paginaDer;
+    }else{
+         miPagina = paginaIzq;
+    }
+
+    fotoCaman = Caman("#fullScPic", fotosFull[miPagina] , function () {      
+        this.render(function(){/*callback*/ });
+   });
 
 
         
@@ -2157,12 +2170,10 @@ var filter = 0;
 
 $(document).delegate("#creation_full", "pageshow", function () {
 
-
-Caman("#fullScPic", function () {
-  this.render(function(){$('#fullScPic').draggable();});
-});
-
-  
+        Caman("#fullScPic", fotosFull[pos] , function () {
+            
+            this.render(function(){/*callback*/ });
+        });
 
 
 
@@ -2186,6 +2197,7 @@ resizeEditorPic();
         e.preventDefault();
         e.stopPropagation();
         navegaSeccion("#creation_edit", "fade");
+        
         
     });
     
