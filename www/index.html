@@ -12,7 +12,7 @@
 <meta name="format-detection" content="telephone=no" />
 
 <!--android-->
-<meta name="viewport" content="width=320px,height=480px, initial-scale=1, maximum-scale=1, user-scalable=1">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=1">
 
 
 <!-- SCRIPTS PRELOAD -->
@@ -21,11 +21,11 @@
 <script src="js/jquery.mobile-1.3.1.min.js"></script>
 <script src="js/caman.full.min.js"></script>
 <script src="js/hammer.js"></script>
-<script src="js/jquery.Jcrop.js"></script>
+<!--<script src="js/jquery.Jcrop.js"></script>-->
 
 <script src="js/tokenig.js"></script>
-<script src="js/swipetest.js"></script>
-<script src="js/swipevertical.js"></script>
+<script src="js/swipe.js"></script>
+<!--<script src="js/swipevertical.js"></script>-->
 <script src="js/dragger.js"></script>
 
 <script src="js/main.js"></script>
@@ -750,14 +750,11 @@
       <div class="contenedorpic" style="background: url(images/gallerys/p04.jpg)">
       <div class="checkboxpic selectedpiclist"></div>
       </div>
-
-
-
-      
-     
-        
-            </div>                  
-                        <div id="fillerbottom"></div>
+     </div>                  
+   
+    <div id="fillerbottom"></div>
+    
+   <!-- <div id="tapaFotos"></div>-->
 
 
                 
@@ -1073,6 +1070,13 @@
         <!-- Pantalla datos personales pedido -->  
         <div data-role="page" data-control-title="address"  data-url="address" id="addressresume">
         <div data-role="content" id="address">
+        
+                <div class="ventanaUpload">
+                    <div class="cajaUpload">Uploading Pictures...</div>
+
+
+
+                </div>
             
                 <div class="btArrow prev" id="btAddressBack"> <img src="images/arrPrev.png" alt=""> </div>
                 

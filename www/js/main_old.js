@@ -96,6 +96,113 @@ $(document).ready(function(){
         
         $soportePagIzq = $("#pagIzqSlider .swipe-wrapTest");
         $soportePagDer = $("#pagDerSlider .swipe-wrapTest");
+      
+        ////////////////////////////////////////////////////////////////////////////////////TOUCH EVENTS/////
+        
+  /*      
+(function ($) {
+    // Detect touch support
+    $.support.touch = 'ontouchend' in document;
+    // Ignore browsers without touch support
+    if (!$.support.touch) {
+    return;
+    }
+    var mouseProto = $.ui.mouse.prototype,
+        _mouseInit = mouseProto._mouseInit,
+        touchHandled;
+
+    function simulateMouseEvent (event, simulatedType) { //use this function to simulate mouse event
+    // Ignore multi-touch events
+        if (event.originalEvent.touches.length > 1) {
+        return;
+        }
+    event.preventDefault(); //use this to prevent scrolling during ui use
+
+    var touch = event.originalEvent.changedTouches[0],
+        simulatedEvent = document.createEvent('MouseEvents');
+    // Initialize the simulated mouse event using the touch event's coordinates
+    simulatedEvent.initMouseEvent(
+        simulatedType,    // type
+        true,             // bubbles                    
+        true,             // cancelable                 
+        window,           // view                       
+        1,                // detail                     
+        touch.screenX,    // screenX                    
+        touch.screenY,    // screenY                    
+        touch.clientX,    // clientX                    
+        touch.clientY,    // clientY                    
+        false,            // ctrlKey                    
+        false,            // altKey                     
+        false,            // shiftKey                   
+        false,            // metaKey                    
+        0,                // button                     
+        null              // relatedTarget              
+        );
+
+    // Dispatch the simulated event to the target element
+    event.target.dispatchEvent(simulatedEvent);
+    }
+    mouseProto._touchStart = function (event) {
+    var self = this;
+    // Ignore the event if another widget is already being handled
+    if (touchHandled || !self._mouseCapture(event.originalEvent.changedTouches[0])) {
+        return;
+        }
+    // Set the flag to prevent other widgets from inheriting the touch event
+    touchHandled = true;
+    // Track movement to determine if interaction was a click
+    self._touchMoved = false;
+    // Simulate the mouseover event
+    simulateMouseEvent(event, 'mouseover');
+    // Simulate the mousemove event
+    simulateMouseEvent(event, 'mousemove');
+    // Simulate the mousedown event
+    simulateMouseEvent(event, 'mousedown');
+    };
+
+    mouseProto._touchMove = function (event) {
+    // Ignore event if not handled
+    if (!touchHandled) {
+        return;
+        }
+    // Interaction was not a click
+    this._touchMoved = true;
+    // Simulate the mousemove event
+    simulateMouseEvent(event, 'mousemove');
+    };
+    mouseProto._touchEnd = function (event) {
+    // Ignore event if not handled
+    if (!touchHandled) {
+        return;
+    }
+    // Simulate the mouseup event
+    simulateMouseEvent(event, 'mouseup');
+    // Simulate the mouseout event
+    simulateMouseEvent(event, 'mouseout');
+    // If the touch interaction did not move, it should trigger a click
+    if (!this._touchMoved) {
+      // Simulate the click event
+      simulateMouseEvent(event, 'click');
+    }
+    // Unset the flag to allow other widgets to inherit the touch event
+    touchHandled = false;
+    };
+    mouseProto._mouseInit = function () {
+    var self = this;
+    // Delegate the touch handlers to the widget's element
+    self.element
+        .on('touchstart', $.proxy(self, '_touchStart'))
+        .on('touchmove', $.proxy(self, '_touchMove'))
+        .on('touchend', $.proxy(self, '_touchEnd'));
+
+    // Call the original $.ui.mouse init method
+    _mouseInit.call(self);
+    };
+})(jQuery);
+        */
+
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
      
         
 });
@@ -151,18 +258,28 @@ function iniciarDOM(){
 			$(this).css("opacity",1);
 	});
 
+//////////////////////////////////////////////////
+
+
+   /*  $("boton btAzul").on("touchstart",function(){
+		//$(this).attr("data-opacidadInicial",$(this).css("opacity"));
+		$(this).css("opacity",0.5);
+	});
+	
+	$("boton btAzul").on("touchend",function(){
+			$(this).css("opacity",1);
+	});
+	
+	$("boton btAzul").on("touchcancel",function(){
+			//$(this).css("opacity",$(this).attr("data-opacidadInicial"));
+			$(this).css("opacity",1);
+	});*/
+
+
 
 }
 
-/************************************
- Cambio de Orientacion para iPhone
-*************************************/
 
-function cambioOrientacion(horizontal,vertical) {
-    //aqui!
-    
-    
-}
 
 
 /************************************
@@ -174,6 +291,98 @@ $(document).bind('touchmove', function(e){
 });
 
 
+/************************************
+Carrousel y Slides presentes en la 
+App
+************************************/
+
+/*Variables Globales Slides*/
+/*
+var areaaccion;
+var idlista;
+var idmarcador;
+
+function mainslides (areaaccion,idlista,idmarcador,funcionCallBack) {
+    
+
+// Configuracion Slides 
+var velscroll = 180;
+var easingtype = "swing";
+
+///VARIABLES DE CONTROL///
+//!Importante: No es necesario tocar estas//
+var tamanoelemento = $(idlista + " li");
+var tamanolista = $(tamanoelemento).outerWidth(true);
+
+var numItems = $(idlista).children().length;
+var indice = 0;	
+$(idlista).css({marginLeft: 0, opacity: "1"});																				
+$(idmarcador).find('li').removeClass("selected").eq(indice).addClass("selected");
+
+$(idlista).width(tamanolista*numItems + 100);
+
+//////////////////////
+    
+	
+$(areaaccion).off().on("swipeleft", lefthandler);
+$(areaaccion).on("swiperight", righthandler);
+	
+
+//Funciones llamadas por los eventos izquierda y derecha
+
+	function lefthandler(e) {
+		
+		var newIndex = (indice + 1) % numItems;
+		var destino = newIndex * -tamanolista;
+		indice = newIndex;
+		
+		$(idlista).animate({marginLeft: destino, opacity: "1"},
+                           velscroll,
+                           easingtype,
+                           function(){
+                                if (funcionCallBack){
+                                    funcionCallBack(indice);
+                                }
+                           });
+																																					
+		
+	//Los marcadores de posicion y numero de elementos																
+																				
+		$(idmarcador).find('li').removeClass("selected").eq(indice).addClass("selected");							
+	
+        e.preventDefault();
+        e.stopPropagation();
+																			
+	}																		
+	
+	
+	function righthandler(e) {	
+	
+		var newIndex = (indice - 1);
+		if (newIndex<0){
+			newIndex=numItems-1;	
+		}
+		var destino = newIndex * -tamanolista;
+		indice = newIndex;
+
+		$(idlista).animate({marginLeft: destino, opacity: "1"},velscroll,easingtype,
+                           function(){
+                            if (funcionCallBack){
+                                funcionCallBack(indice);
+                            }
+                           });
+		
+        
+		$(idmarcador).find('li').removeClass("selected").eq(indice).addClass("selected");
+	
+        e.preventDefault();
+        e.stopPropagation();
+		
+	}
+
+
+}
+*/
 
 
 /************************************
@@ -591,7 +800,7 @@ function convertirCanvas(objFoto) {
             //
             fotosFaltanConvertir--;
             if( fotosFaltanConvertir <= 0) {
-                rellenarAlbum();
+                rellenarLibro(0);
             }
             
      };
@@ -603,14 +812,53 @@ function convertirCanvas(objFoto) {
 }
 
 
-var paginaIzq = 0;
-var paginaDer = 0;
-var miSwipeIzquierda;
-var miSwipeDerecha;
+var paginaIzq=0;
+var paginaDer=0;
+
+/*function rellenarLibro() {
+
+    trace("FotosFull: " + fotosFull.length)
+    
+    $soportePagIzq.html('');
+    $soportePagDer.html('');
+    
+    var cadena = "";
+	
+	//se rellenan ambas páginas del libro
+    for (i=0;i<fotosFull.length;i++) {
+       // var miImagen = $("<div></div>").addClass("imgIzq").css("background-image","url("+fotosFull[i]+")");
+        //var miImagen = "<div class='imgIzq' style='background-image:url("+ fotosFull[i] +")'></div>";
+        var miImagen ="<img src="+ fotosFull[i] +"  />";
+        //cadena += miImagen;
+    
+        $soportePagIzq.append("<div>" + miImagen + "</div>");
+        $soportePagDer.append("<div>" + miImagen + "</div>");
+    }
 
 
+	//¿POR QUÉ RELLENAMOS ESTA IMAGEN??
+    $("#fullScPic").attr("src",  fotosFull[0] );
 
-function rellenarAlbum() {
+    SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
+       		trace("posIzq: "+pos); 
+       		$("#fullScPic").attr("src",  fotosFull[pos] );
+          	paginaIzq = pos;
+        
+        } 
+    });
+    
+    
+    SwipeV(document.getElementById("pagDerSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
+        		trace("posDer: "+pos); 
+      			$("#fullScPic").attr("src", "" + fotosFull[pos] + "");
+        		paginaDer = pos;
+        } 
+    });  
+    
+    
+}*/
+
+function rellenarLibro() {
 
     trace("fotosElegidas: " + fotosElegidas.length)
     
@@ -634,7 +882,7 @@ function rellenarAlbum() {
 	//¿POR QUÉ RELLENAMOS ESTA IMAGEN??
     $("#fullScPic").attr("src",  fotosElegidas[0].canvas );
 
-    miSwipeIzquierda = new Swipe(document.getElementById("pagIzqSlider"),{
+    miSwipe1 = new Swipe(document.getElementById("pagIzqSlider"),{
 		direction:'y',
 		disableScroll:true,
 		continuous:true,
@@ -644,13 +892,11 @@ function rellenarAlbum() {
        		trace("posIzq: "+pos+"**elem:"+elem); 
        		$("#fullScPic").attr("src",  fotosElegidas[pos].canvas );
           	paginaIzq = pos;
-			
-			paginasFull[numPagina] = pos;
         } 
     });
     
     
-     miSwipeDerecha = new Swipe(document.getElementById("pagDerSlider"),{
+     miSwipe2 = new Swipe(document.getElementById("pagDerSlider"),{
 		 direction:'y',
 		 disableScroll:true,
 		 continuous:true,
@@ -660,35 +906,8 @@ function rellenarAlbum() {
 			trace("posDer: "+pos); 
 			$("#fullScPic").attr("src",  fotosElegidas[pos].canvas );
 			paginaDer = pos;
-			
-			paginasFull[numPagina+1] = pos;
         }
     });  
-	
-	
-	//programar el cambio de página del libro
-	
-	paginasFull = new Array();
-	//preasignamos una foto para cada página
-	for (var i=0;i<fotosElegidas.length;i++){
-   		 paginasFull.push(i);
-	};
-	
-	//fi = 0;
-	numPagina = 0;
-	
-    $('.book').on("swipeleft", function(e){
-		cambiarPagina(1,e)
-		trace("cambia pág libro 1");
-	});
-    $('.book').on("swiperight", function(e){
-		cambiarPagina(-1,e);
-		trace("cambia pág libro 1");
-	});
-	
-	//ponerFotoAlbum(0, "izq");
-	//ponerFotoAlbum(1, "der");
-	
     
     
 }
@@ -741,7 +960,7 @@ var escalaFinal;
 
 function resizeEditorPic() {
 
-    $("#fullScPic").draggable();
+    $("#fullScPic").draggable({});
 /*
     relacion1 = $(".fullImage").width() / $(".fullImage").height();
     relacion2 = $("#fullScPic").width() / $("#fullScPic").height();
@@ -1622,7 +1841,6 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
                 
             }
             
-             cambiarOrientacion(horizontal);
              navegaSeccion("#creation_edit","slide");
             
             
@@ -1699,29 +1917,39 @@ Pantalla Seleccion/Edicion Fotos
 
 //paginasFull contiene un array con las posiciones de cada foto en el álbum
 var paginasFull = new Array();
-//var fi = 0;
-var numPagina = 0;
+$(paginasFull).each(function (index) {
+    paginasFull[index] = index;
+});
+
+var fi = 0;
+var pi = 0;
 //var pos;
 
 $(document).delegate("#creation_edit", "pageshow", function () {
 
     $("#btEditBack").off("tap").on("tap", function (e) {
+
+
+
         e.preventDefault();
         e.stopPropagation();
-        cambiarOrientacion(vertical);
         navegaSeccion("#creation_gallery", "slidedown");
+        
        // fotosFull = [];
 		fotosElegidas = [];
         
     });
 
     $("#btEditTitle").off("tap").on("tap", function (e) {
+
+
         e.preventDefault();
         e.stopPropagation();
-        cambiarOrientacion(vertical);
+        
         if(esAlbum == true) {
 			navegaSeccion("#process_decoration", "slideup"); 
         }else{
+        
 			navegaSeccion("#creation_title", "slideup");
         }
 
@@ -1731,11 +1959,13 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        cambiarOrientacion(horizontal);
-        
+ 
 		 //PASO1: remover ID data-caman del canvas, PASO2: iniciar CAMAN de nuevo 
 	 
 		$("#fullScPic").removeAttr("data-caman-id");
+		
+	   // trace("pos:"+pos);
+		
 		if ($(e.currentTarget).attr("data-id")=="derecha"){
 			miPagina = paginaDer;
 		}else{
@@ -1752,89 +1982,236 @@ $(document).delegate("#creation_edit", "pageshow", function () {
     });
     
     $("#veloIzq").off("tap").on("tap", function (e) {
+
         e.preventDefault();
         e.stopPropagation();
-        $("#veloDer").show();
-        $(this).hide();
+        $("#veloDer").css("display","block")
+        $(this).css("display","none");
         $(".book").animate({left:"120px"},500);
 
     });   
     
     $("#veloDer").off("tap").on("tap", function (e) {
+
         e.preventDefault();
         e.stopPropagation();
-        $("#veloIzq").show();
-        $(this).hide();
+        $("#veloIzq").css("display","block")
+        $(this).css("display","none");
         $(".book").animate({left:"-100px"},500);
 
     });   
+    
+/*
+    $("#arrowUp1").off("tap").on("tap", function (e) {
 
-});
 
-function ponerFotoAlbum(queIndiceFoto, tipo){
-	//MUESTRA LA FOTO ELEGIDA EN LA PÁGINA ELEGIDA
-	
-	switch(tipo){
-		case "izq":
-			miSwipeIzquierda.slide(queIndiceFoto,50);
-		break;
-		case "der":
-			miSwipeDerecha.slide(queIndiceFoto,50);
-		break;
-	}
-	//
-	
-}
-
-function lanzarAnimacionLibro(queDireccion){
-	//lanza una animación con efecto de pasar página para simular el efecto de paso de páginas.	
-	
-}
-
- function cambiarPagina(direccion,e) {
-	 
-		lanzarAnimacionLibro(direccion);
-		
-		//centramos el texto y mostramos las páginas
-        $(".book").animate({left:"10px"},500);
-        $("#veloIzq").show();
-        $("#veloDer").show();
-		
-        /*if (paginasFull[numPagina] != fi){
-            paginasFull[numPagina] = fi;
-		}*/
-        
-		trace("numPagina antes de pinchar: " + numPagina);
-		
-	    if(direccion > 0) { 
-			numPagina+=2
-	    }else{   
-			numPagina-=2;
-       	}
-        
-        trace("numPagina después de pinchar: " + numPagina);
-
-        if (numPagina < 0) {
-            numPagina = paginasFull.length - 2;
+        fi++;
+        trace(fi);
+        if (fi >= fotosfull.length) {
+            fi = 0;
         }
-        if (numPagina > paginasFull.length - 2) {
-            numPagina = 0;
-        }
+
+        $("#imgIzq").css("background-image","url("+  fotosfull[fi] + ")");
+        $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
         
-        //fi = paginasFull[numPagina];
-		//////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
-		trace("cambiamos páginas");
-	   
-	   	//mostramos páginas numeradas desde la 1
-		$('#txtDer').text('Page ' + parseInt(numPagina + 2));
-		$('#txtIzq').text('Page ' + parseInt(numPagina + 1));
-		
-		ponerFotoAlbum(paginasFull[numPagina], "izq");
-		ponerFotoAlbum(paginasFull[numPagina+1], "der");
+        $("#fullScPic").css("top","0","left","0");
+        
 
         e.preventDefault();
         e.stopPropagation();
-}
+
+    });
+
+    $("#arrowDown1").off("tap").on("tap", function (e) {
+
+        fi--;
+        if (fi <= 0) {
+            fi = fotosfull.length - 1;
+        }
+
+        $("#imgIzq").css("background-image","url("+  fotosfull[fi] + ")");
+        $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
+        //fsCanvas(fotosfull[fi]);
+        $("#fullScPic").css("top","0","left","0");
+        trace(fi);
+
+
+        e.preventDefault();
+        e.stopPropagation();
+
+    });
+
+    $("#arrowUp2").off("tap").on("tap", function (e) {
+
+
+        fi++;
+        trace(fi);
+        if (fi >= fotosfull.length) {
+            fi = 0;
+        }
+
+        $("#imgDer").css("background-image","url("+  fotosfull[fi] + ")");
+        $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
+        //fsCanvas(fotosfull[fi]);
+        $("#fullScPic").css("top","0","left","0");
+
+
+        e.preventDefault();
+        e.stopPropagation();
+
+    });
+
+    $("#arrowDown2").off("tap").on("tap", function (e) {
+
+        fi--;
+        if (fi <= 0) {
+            fi = fotosfull.length - 1;
+        }
+
+        $("#imgDer").css("background-image","url("+  fotosfull[fi] + ")");
+        $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
+        //fsCanvas(fotosfull[fi]);
+        $("#fullScPic").css("top","0","left","0");
+        trace(fi);
+
+
+        e.preventDefault();
+        e.stopPropagation();
+
+    });
+  */  
+    $('.book').on("swipeleft", function(e){
+		cambiarPag(-1,e)
+		trace("cambia pág libro -1");
+	});
+    $('.book').on("swiperight", function(e){
+		cambiarPag(1,e);
+		trace("cambia pág libro +1");
+	});
+
+    function cambiarPag(direccion,e) {
+		
+        $(".book").animate({left:"10px"},500);
+        $("#veloIzq").css("display","block");
+        $("#veloDer").css("display","block");
+        if (paginasFull[pi] != fi)
+            paginasFull[pi] = fi;
+        
+		trace("pi antes de pinchar: " + pi);
+		
+	    if(direccion > 0) { 
+			pi++
+	    }else{   
+			pi--;
+       	}
+        
+        
+        trace("pi desués de pinchar: " + pi);
+
+        if (pi < 0) {
+            pi = paginasFull.length - 1;
+        }
+        if (pi > paginasFull.length - 1) {
+            pi = 0;
+        }
+        
+        fi = paginasFull[pi];
+        if (pi % 2 == 1) {
+                   
+        //$(".book").animate({"margin-top","80px"});
+            //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
+           /* trace("cambiamos páginas");
+            $('#veloDer').fadeOut();
+            $('#veloIzq').fadeIn();
+            $('#txtDer').text('Page ' + parseInt(pi));
+            $('#txtIzq').text('Page ' + parseInt(pi + 1));
+            $("#imgDer").css("background-image","url("+ fotosfull[paginasFull[pi]] + ")");
+            $("#imgIzq").css("background-image","url("+ fotosfull[paginasFull[pi - 1]] + ")");*/
+
+        }
+        else {
+                   //  $(".book").animate({"top":"-80px"})
+          /*  trace("no cambiamos páginas");
+            $('#veloDer').fadeIn();
+            $('#veloIzq').fadeOut();
+            $('#txtIzq').text('Page ' + parseInt(pi));
+            $('#txtDer').text('Page ' + parseInt(pi + 1));*/
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+ 
+
+   /* $("#pagIzq").off("tap").on("tap", function (e) {
+        if (paginasFull[pi] != fi)
+            paginasFull[pi] = fi;
+        trace("pi antes de pinchar: " + pi);
+        pi--;
+        trace("pi desués de pinchar: " + pi);
+
+        if (pi < 0) {
+            pi = paginasFull.length - 1;
+        }
+        fi = paginasFull[pi];
+        if (pi % 2 == 1) {
+            //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
+            trace("cambiamos páginas");
+            $('#veloDer').fadeOut();
+            $('#veloIzq').fadeIn();
+            $('#txtDer').text('Page ' + parseInt(pi));
+            $('#txtIzq').text('Page ' + parseInt(pi + 1));
+            $("#imgDer").css("background-image","url("+ fotosFull[paginasFull[pi]] + ")");
+            $("#imgIzq").css("background-image","url("+ fotosFull[paginasFull[pi - 1]] + ")");
+
+        }
+        else {
+            trace("no cambiamos páginas");
+            $('#veloDer').fadeIn();
+            $('#veloIzq').fadeOut();
+            $('#txtIzq').text('Page ' + parseInt(pi));
+            $('#txtDer').text('Page ' + parseInt(pi + 1));
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+    });
+
+    $("#pagDer").off("tap").on("tap", function (e) {
+        if (paginasFull[pi] != fi)
+            paginasFull[pi] = fi; //fotosfull[fi];
+        trace("pi antes de pinchar: " + pi);
+        pi++;
+        trace("pi después de pinchar: " + pi);
+
+        if (pi > paginasFull.length - 1) {
+            pi = 0;
+        }
+        fi = paginasFull[pi];
+        if (pi % 2 == 0) {
+            //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
+            $('#txtDer').text('Page ' + parseInt(pi + 1));
+            $('#txtIzq').text('Page ' + parseInt(pi));
+            $('#veloDer').fadeIn();
+            $('#veloIzq').fadeOut();
+            $("#imgDer").css("background-image","url("+ fotosFull[paginasFull[parseInt(pi + 1)]]+")");
+            $("#imgIzq").css("background-image","url("+ fotosFull[paginasFull[pi]]+")");
+        }
+        else {
+            $('#txtIzq').text('Page ' + parseInt(pi + 1));
+            $('#txtDer').text('Page ' + parseInt(pi));
+            $('#veloDer').fadeOut();
+            $('#veloIzq').fadeIn();
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+    });*/
+
+});
 
 
 /************************************
@@ -1865,7 +2242,6 @@ $(document).delegate("#creation_full", "pageshow", function () {
 	
 			e.preventDefault();
 			e.stopPropagation();
-                        cambiarOrientacion(horizontal);
 			navegaSeccion("#creation_edit", "fade");
 			
 			
@@ -1954,7 +2330,6 @@ $(document).delegate("#creation_title", "pageshow", function () {
         if(esAlbum == true) {
        		 navegaSeccion("#process_decoration","slide");    
         }else{
-                cambiarOrientacion(horizontal);
       		 navegaSeccion("#creation_edit", "slide", true);
         }
 
