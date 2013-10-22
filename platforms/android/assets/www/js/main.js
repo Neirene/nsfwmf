@@ -1,5 +1,6 @@
 //Globales
 
+var fotoCaman;
 
 //tipos de producto
 var esAlbum = false;
@@ -18,6 +19,10 @@ var precioCanvas = 2.3;
 
 //totales
 var totalAlbum;
+
+var fotosFinales;
+
+var numFotoEditando = 0;
 
 
 /*******************************
@@ -55,25 +60,23 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
- 
-     if (parseFloat(window.device.version) === 7.0) {
-          //document.body.style.marginTop = "20px";
-          $(".btArrow").css("top","25px");
-    }
-       
-        trace('Received Event: ' + id);
+	//	if (parseFloat(window.device.version) === 7.0) {
+	//		//document.body.style.marginTop = "20px";
+	//		$(".btArrow").css("top","25px");
+	//	}
+      //  trace('Received Event: ' + id);
     }
 };
 
 
 
-
+/*
 function trace(queMsg){
     try{
         console.log(queMsg);
     }catch(err){}
 }
-
+*/
 
 /*********************************************************
 F U N C I O N E S      G L O B A L E S 
@@ -86,7 +89,7 @@ F U N C I O N E S      G L O B A L E S
 
 $(document).ready(function(){
 
-    iniciarDOM();
+   		iniciarDOM();
            
         $soporteFotoThu = $($("#fotos .contenedorpic")[0]);
         $soportecanvas = $($("#fullImage")[0]);
@@ -95,113 +98,6 @@ $(document).ready(function(){
         
         $soportePagIzq = $("#pagIzqSlider .swipe-wrapTest");
         $soportePagDer = $("#pagDerSlider .swipe-wrapTest");
-      
-        ////////////////////////////////////////////////////////////////////////////////////TOUCH EVENTS/////
-        
-        
-(function ($) {
-    // Detect touch support
-    $.support.touch = 'ontouchend' in document;
-    // Ignore browsers without touch support
-    if (!$.support.touch) {
-    return;
-    }
-    var mouseProto = $.ui.mouse.prototype,
-        _mouseInit = mouseProto._mouseInit,
-        touchHandled;
-
-    function simulateMouseEvent (event, simulatedType) { //use this function to simulate mouse event
-    // Ignore multi-touch events
-        if (event.originalEvent.touches.length > 1) {
-        return;
-        }
-    event.preventDefault(); //use this to prevent scrolling during ui use
-
-    var touch = event.originalEvent.changedTouches[0],
-        simulatedEvent = document.createEvent('MouseEvents');
-    // Initialize the simulated mouse event using the touch event's coordinates
-    simulatedEvent.initMouseEvent(
-        simulatedType,    // type
-        true,             // bubbles                    
-        true,             // cancelable                 
-        window,           // view                       
-        1,                // detail                     
-        touch.screenX,    // screenX                    
-        touch.screenY,    // screenY                    
-        touch.clientX,    // clientX                    
-        touch.clientY,    // clientY                    
-        false,            // ctrlKey                    
-        false,            // altKey                     
-        false,            // shiftKey                   
-        false,            // metaKey                    
-        0,                // button                     
-        null              // relatedTarget              
-        );
-
-    // Dispatch the simulated event to the target element
-    event.target.dispatchEvent(simulatedEvent);
-    }
-    mouseProto._touchStart = function (event) {
-    var self = this;
-    // Ignore the event if another widget is already being handled
-    if (touchHandled || !self._mouseCapture(event.originalEvent.changedTouches[0])) {
-        return;
-        }
-    // Set the flag to prevent other widgets from inheriting the touch event
-    touchHandled = true;
-    // Track movement to determine if interaction was a click
-    self._touchMoved = false;
-    // Simulate the mouseover event
-    simulateMouseEvent(event, 'mouseover');
-    // Simulate the mousemove event
-    simulateMouseEvent(event, 'mousemove');
-    // Simulate the mousedown event
-    simulateMouseEvent(event, 'mousedown');
-    };
-
-    mouseProto._touchMove = function (event) {
-    // Ignore event if not handled
-    if (!touchHandled) {
-        return;
-        }
-    // Interaction was not a click
-    this._touchMoved = true;
-    // Simulate the mousemove event
-    simulateMouseEvent(event, 'mousemove');
-    };
-    mouseProto._touchEnd = function (event) {
-    // Ignore event if not handled
-    if (!touchHandled) {
-        return;
-    }
-    // Simulate the mouseup event
-    simulateMouseEvent(event, 'mouseup');
-    // Simulate the mouseout event
-    simulateMouseEvent(event, 'mouseout');
-    // If the touch interaction did not move, it should trigger a click
-    if (!this._touchMoved) {
-      // Simulate the click event
-      simulateMouseEvent(event, 'click');
-    }
-    // Unset the flag to allow other widgets to inherit the touch event
-    touchHandled = false;
-    };
-    mouseProto._mouseInit = function () {
-    var self = this;
-    // Delegate the touch handlers to the widget's element
-    self.element
-        .on('touchstart', $.proxy(self, '_touchStart'))
-        .on('touchmove', $.proxy(self, '_touchMove'))
-        .on('touchend', $.proxy(self, '_touchEnd'));
-
-    // Call the original $.ui.mouse init method
-    _mouseInit.call(self);
-    };
-})(jQuery);
-        
-
-        
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
      
         
 });
@@ -227,7 +123,7 @@ function iniciarDOM(){
         
 ////////////////////////////////////////////////
 	
-        $(".btArrow").on("touchstart",function(){
+    $(".btArrow").on("touchstart",function(){
 		//$(this).attr("data-opacidadInicial",$(this).css("opacity"));
 		$(this).css("opacity",0.5);
 	});
@@ -243,7 +139,7 @@ function iniciarDOM(){
 
 ////////////////////////////////////////////////
 
-        $(".buttonIcon").on("touchstart",function(){
+    $(".buttonIcon").on("touchstart",function(){
 		//$(this).attr("data-opacidadInicial",$(this).css("opacity"));
 		$(this).css("opacity",0.5);
 	});
@@ -257,28 +153,18 @@ function iniciarDOM(){
 			$(this).css("opacity",1);
 	});
 
-//////////////////////////////////////////////////
-
-
-        $("boton btAzul").on("touchstart",function(){
-		//$(this).attr("data-opacidadInicial",$(this).css("opacity"));
-		$(this).css("opacity",0.5);
-	});
-	
-	$("boton btAzul").on("touchend",function(){
-			$(this).css("opacity",1);
-	});
-	
-	$("boton btAzul").on("touchcancel",function(){
-			//$(this).css("opacity",$(this).attr("data-opacidadInicial"));
-			$(this).css("opacity",1);
-	});
-
-
 
 }
 
+/************************************
+ Cambio de Orientacion para iPhone
+*************************************/
 
+function cambioOrientacion(tipo) {
+    //aqui!
+    
+    
+}
 
 
 /************************************
@@ -289,97 +175,6 @@ $(document).bind('touchmove', function(e){
     e.preventDefault();           
 });
 
-
-/************************************
-Carrousel y Slides presentes en la 
-App
-************************************/
-
-/*Variables Globales Slides*/
-var areaaccion;
-var idlista;
-var idmarcador;
-
-function mainslides (areaaccion,idlista,idmarcador,funcionCallBack) {
-    
-
-/* Configuracion Slides */
-var velscroll = 180;
-var easingtype = "swing";
-
-///VARIABLES DE CONTROL///
-//!Importante: No es necesario tocar estas//
-var tamanoelemento = $(idlista + " li");
-var tamanolista = $(tamanoelemento).outerWidth(true);
-
-var numItems = $(idlista).children().length;
-var indice = 0;	
-$(idlista).css({marginLeft: 0, opacity: "1"});																				
-$(idmarcador).find('li').removeClass("selected").eq(indice).addClass("selected");
-
-$(idlista).width(tamanolista*numItems + 100);
-
-//////////////////////
-    
-	
-$(areaaccion).off().on("swipeleft", lefthandler);
-$(areaaccion).on("swiperight", righthandler);
-	
-
-//Funciones llamadas por los eventos izquierda y derecha
-
-	function lefthandler(e) {
-		
-		var newIndex = (indice + 1) % numItems;
-		var destino = newIndex * -tamanolista;
-		indice = newIndex;
-		
-		$(idlista).animate({marginLeft: destino, opacity: "1"},
-                           velscroll,
-                           easingtype,
-                           function(){
-                                if (funcionCallBack){
-                                    funcionCallBack(indice);
-                                }
-                           });
-																																					
-		
-	//Los marcadores de posicion y numero de elementos																
-																				
-		$(idmarcador).find('li').removeClass("selected").eq(indice).addClass("selected");							
-	
-        e.preventDefault();
-        e.stopPropagation();
-																			
-	}																		
-	
-	
-	function righthandler(e) {	
-	
-		var newIndex = (indice - 1);
-		if (newIndex<0){
-			newIndex=numItems-1;	
-		}
-		var destino = newIndex * -tamanolista;
-		indice = newIndex;
-
-		$(idlista).animate({marginLeft: destino, opacity: "1"},velscroll,easingtype,
-                           function(){
-                            if (funcionCallBack){
-                                funcionCallBack(indice);
-                            }
-                           });
-		
-        
-		$(idmarcador).find('li').removeClass("selected").eq(indice).addClass("selected");
-	
-        e.preventDefault();
-        e.stopPropagation();
-		
-	}
-
-
-}
 
 
 
@@ -431,7 +226,7 @@ function conectarFacebook() {
 
 
         var queURL = e.url;
-		trace("estoy en la url:"+queURL);
+		//trace("estoy en la url:"+queURL);
 
         if (queURL.toLowerCase().indexOf(REDIRECT_URL_FB.toLowerCase()) == 0) {
             //ESTOY EN LA REDIRECT URL
@@ -452,7 +247,7 @@ function conectarFacebook() {
 				/*error_reason=user_denied
  				 &error=access_denied
  				 &error_description=The+user+denied+your+request.*/
-				 trace("ERROR DE LOGIN FB:"+objDevuelto.error_reason);
+				// trace("ERROR DE LOGIN FB:"+objDevuelto.error_reason);
                                  
             }
             ref.close();
@@ -465,49 +260,49 @@ function conectarFacebook() {
 function conectarFotosFacebook() {
     //abrimos la consola web de autenticaciÃ³n instagram
 
-if (_tokenFB == "") {
-
-    var ref = window.open('https://www.facebook.com/dialog/oauth?client_id=' + APP_ID_FB + '&redirect_uri=' + REDIRECT_URL_FB + '&response_type=token&scope=user_photos', '_blank');
-
-
-    ref.addEventListener('loadstop', function(e) {
-
-
-        var queURL = e.url;
-		trace("estoy en la url:"+queURL);
-
-        if (queURL.toLowerCase().indexOf(REDIRECT_URL_FB.toLowerCase()) == 0) {
-            //ESTOY EN LA REDIRECT URL
+	if (_tokenFB == "") {
+	
+		var ref = window.open('https://www.facebook.com/dialog/oauth?client_id=' + APP_ID_FB + '&redirect_uri=' + REDIRECT_URL_FB + '&response_type=token&scope=user_photos', '_blank');
+	
+	
+		ref.addEventListener('loadstop', function(e) {
+	
+	
+			var queURL = e.url;
+			//trace("estoy en la url:"+queURL);
+	
+			if (queURL.toLowerCase().indexOf(REDIRECT_URL_FB.toLowerCase()) == 0) {
+				//ESTOY EN LA REDIRECT URL
+				
+				//HAY QUE COMPROBAR SI HAY ERROR O VIENE EL TOKEN
+				
+				var objDevuelto = deserializarQueryString(e.url);
+	
+				if (!!objDevuelto.access_token) {
+					//VIENE EL TOKEN.
+	
+					_tokenFB = objDevuelto.access_token;
+	
+					navegaSeccion("#creation_gallery", "slideup");
+					recuperarListaFotosFB(/*ir a sigiente pantalla*/);
+				} else {
+					//ha cancelado o da error
+					/*error_reason=user_denied
+					 &error=access_denied
+					 &error_description=The+user+denied+your+request.*/
+					// trace("ERROR DE LOGIN FB:"+objDevuelto.error_reason);
+	
+				}
+				ref.close();
+	
+			}
 			
-			//HAY QUE COMPROBAR SI HAY ERROR O VIENE EL TOKEN
-			
-            var objDevuelto = deserializarQueryString(e.url);
-
-            if (!!objDevuelto.access_token) {
-				//VIENE EL TOKEN.
-
-                _tokenFB = objDevuelto.access_token;
-
-            navegaSeccion("#creation_gallery", "slideup");
-recuperarListaFotosFB(/*ir a sigiente pantalla*/);
-            } else {
-				//ha cancelado o da error
-				/*error_reason=user_denied
- 				 &error=access_denied
- 				 &error_description=The+user+denied+your+request.*/
-				 trace("ERROR DE LOGIN FB:"+objDevuelto.error_reason);
-
-            }
-            ref.close();
-
-        }
-        
-    });
-}else{   
- 
-navegaSeccion("#creation_gallery", "slideup");
-recuperarListaFotosFB(/*ir a sigiente pantalla*/);
-}
+		});
+	}else{   
+	 
+		navegaSeccion("#creation_gallery", "slideup");
+		recuperarListaFotosFB();
+	}
  
 }
 
@@ -545,7 +340,7 @@ function recuperarListaFotosFB() {
             }
 
 
-            //aquÃ­ ya ten
+            //
             representarFotos();
 
         },
@@ -553,7 +348,7 @@ function recuperarListaFotosFB() {
 
             
              for (var x in e){
-             	trace(x+"**"+e);   
+             //	trace(x+"**"+e);   
              }
         }
     });
@@ -714,56 +509,47 @@ function recuperarListaFotosIG() {
 }
 
 
-  var cn = $(".contenedorpic");
+//var cn = $(".contenedorpic");
+
 function representarFotos(){
 
-        $("#fotos").html("");
+	$("#fotos").html("");
 
 	for (var i=0;i<_listaFotos.length;i++){
-		
-                
-                var $miSoporte = $soporteFotoThu.clone();
-                $miSoporte.css("background","url("+_listaFotos[i].med+")");
-                $miSoporte.attr("id",_listaFotos[i].id);
-               
-                $("#fotos").append($miSoporte);
-
-		
+		var $miSoporte = $soporteFotoThu.clone();
+		$miSoporte.css("background","url("+_listaFotos[i].med+")");
+		$miSoporte.attr("id",_listaFotos[i].id);
+	   
+		$("#fotos").append($miSoporte);
+	
 	}
 	
 	$("#fotos .contenedorpic").off("tap").on("tap",function(e){ 
 	
-        
-                $(e.currentTarget).children(".checkboxpic").toggleClass("selectioncomplete");
+		$(e.currentTarget).children(".checkboxpic").toggleClass("selectioncomplete");
                 
-            if($(e.currentTarget).hasClass("COLOR")){
-               $(e.currentTarget).removeClass("COLOR");
-              
-               
-            }else {
-               $(e.currentTarget).addClass("COLOR");
-            }
+        if($(e.currentTarget).hasClass("COLOR")){
+			$(e.currentTarget).removeClass("COLOR");
+        }else {
+			$(e.currentTarget).addClass("COLOR");
+        }
                     
-
-           
-
-                
-                var selectedlist = $(".selectioncomplete").length;
+		var selectedlist = $(".selectioncomplete").length;
              
-            if(selectedlist > numeroFotos){
-                $("#selectStat").css("color","red");
-            }else if(selectedlist < numeroFotos) {
-                $("#selectStat").css("color","grey");
-            }else if(selectedlist == numeroFotos) {
-                $("#selectStat").css("color","green");
-            }
+		if(selectedlist > numeroFotos){
+			$("#selectStat").css("color","red");
+		}else if(selectedlist < numeroFotos) {
+			$("#selectStat").css("color","grey");
+		}else if(selectedlist == numeroFotos) {
+			$("#selectStat").css("color","green");
+		}
                 
              
-                $("#selectedpics").text(selectedlist);
-                fotosfinales = selectedlist;
+		$("#selectedpics").text(selectedlist);
+		fotosFinales = selectedlist;
 	
         
-	e.preventDefault();
+		e.preventDefault();
         e.stopPropagation();
 	});
 
@@ -782,7 +568,7 @@ var fotosElegidas;
 
 
 
-function convertirCanvas (id, urlFoto, soyUltimo) {
+function convertirCanvas(objFoto) {
 
     
     var dataURL;
@@ -800,67 +586,126 @@ function convertirCanvas (id, urlFoto, soyUltimo) {
             ctx.drawImage(img, 0, 0);
 
             dataURL = canvas.toDataURL(); 
-            fotosFull.push(dataURL);
+           // fotosFull.push(dataURL);
+		  // trace("meto canvas:"+dataURL+"**en:"+objFoto.id);
+            objFoto.canvas = dataURL;
             
             //
             fotosFaltanConvertir--;
             if( fotosFaltanConvertir <= 0) {
-                rellenarLibro(0);
+                rellenarAlbum();
             }
             
      };
      img.setAttribute('crossOrigin','anonymous');
-     img.src = "http://genericwebdomain.com/mille-feuille/proxy.php?URL="+urlFoto;
+     img.src = "http://genericwebdomain.com/mille-feuille/proxy.php?URL="+objFoto.url;
  
         //miFoto.canvas = canvas;
-    
-        
        
 }
 
 
-var paginaIzq;
-var paginaDer;
+var paginaIzq = 0;
+var paginaDer = 0;
+var miSwipeIzquierda;
+var miSwipeDerecha;
 
-function rellenarLibro() {
-    
-        trace("FotosFull: " + fotosFull.length)
+
+
+function rellenarAlbum() {
+
+   // trace("fotosElegidas: " + fotosElegidas.length)
     
     $soportePagIzq.html('');
     $soportePagDer.html('');
     
     var cadena = "";
-    for (i=0;i<fotosFull.length;i++) {
+	
+	//se rellenan ambas páginas del libro
+    for (i=0;i<fotosElegidas.length;i++) {
        // var miImagen = $("<div></div>").addClass("imgIzq").css("background-image","url("+fotosFull[i]+")");
         //var miImagen = "<div class='imgIzq' style='background-image:url("+ fotosFull[i] +")'></div>";
-            var miImagen ="<img src="+ fotosFull[i] +"  />";
+        var miImagen ="<img class='fotoAlbum_" + i + "' src="+ fotosElegidas[i].canvas +"  />";
         //cadena += miImagen;
     
-        $soportePagIzq.append("<div>"+miImagen+"</div>");
-        $soportePagDer.append("<div>"+miImagen+"</div>");
+        $soportePagIzq.append("<div>" + miImagen + "</div>");
+        $soportePagDer.append("<div>" + miImagen + "</div>");
     }
 
 
-    SwipeV(document.getElementById("pagIzqSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
-        trace("posIzq: "+pos); 
-        $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
-        
-        paginaIzq = pos;
-        
-        } 
+	//
+	ponerImagenFull(fotosElegidas[0].canvas);
+    
+    numFotoEditando = 0;
+
+    miSwipeIzquierda = new Swipe(document.getElementById("pagIzqSlider"),{
+		direction:'y',
+		disableScroll:true,
+		continuous:true,
+		speed:300,
+		stopPropagation:true,
+		callback: function(pos,elem){
+                   // trace("posIzq: "+pos+"**elem:"+elem); 
+                    
+					ponerImagenFull(fotosElegidas[pos].canvas);
+					
+					
+                    //paginaIzq = pos;
+                    paginasFull[numPagina] = pos;
+                    numFotoEditando = pos;
+                 } 
     });
     
     
-    SwipeV(document.getElementById("pagDerSlider"),{direction:'y',disableScroll:true,continuous:true,speed:300,stopPropagation:true,callback: function(pos){
-        trace("posDer: "+pos); 
-        $("#fullScPic").attr("src", "" + fotosFull[pos] + "");
-        
-        paginaDer = pos;
-        
-        } 
+     miSwipeDerecha = new Swipe(document.getElementById("pagDerSlider"),{
+		 direction:'y',
+		 disableScroll:true,
+		 continuous:true,
+		 speed:300,
+		 stopPropagation:true,
+		 callback: function(pos){
+			//trace("posDer: "+pos); 
+			ponerImagenFull(fotosElegidas[pos].canvas);
+			//paginaDer = pos;
+			numFotoEditando = pos;
+			paginasFull[numPagina+1] = pos;
+                 }
     });  
+	
+	
+	//programar el cambio de página del libro
+	
+	paginasFull = new Array();
+	//preasignamos una foto para cada página
+	for (var i=0;i<fotosElegidas.length;i++){
+   		 paginasFull.push(i);
+	};
+	
+	//fi = 0;
+	numPagina = 0;
+	
+    $('.book').off().on("swipeleft", function(e){
+		cambiarPagina(1,e)
+		//trace("cambia pág libro 1");
+	});
+    $('.book').on("swiperight", function(e){
+		cambiarPagina(-1,e);
+		//trace("cambia pág libro 1");
+	});
+	
+	//ponerFotoAlbum(0, "izq");
+	//ponerFotoAlbum(1, "der");
+	
     
     
+}
+
+function ponerImagenFull(queImg){
+
+	$("#fullScPic").attr("src", queImg);
+	$("#fullScPic").css("height","auto");
+	$("#fullScPic").css("width","auto");
+	
 }
 
 
@@ -869,28 +714,47 @@ function magicWandSet(filter) {
     
     console.log(filter);
     
-// Listen to a single instance only
-c = Caman("#fullScPic");
+	// Listen to a single instance only
+        
+	//hago  una copia de la imagen para aplicar filtros
+	 var canvasFinal = document.createElement("canvas");
+	 canvasFinal.height = $("#fullScPic").height();
+	 canvasFinal.width = $("#fullScPic").width();
+	 var context = canvasFinal.getContext('2d');
+	 
+	 var fotoOriginal =  fotosElegidas[numFotoEditando].canvas;
 
-Caman.Event.listen(c, "processStart", function () {
-  console.log("Working!");
-});
-
-
-    
-    
-Caman("#fullScPic", function () {
-    // If such an effect exists, use it:
-    if( filter in this){
-        //NOTE THIS IS THE LINE THAT I ADD FOR YOU:
-        this.revert();
-        this[filter]();
-        this.render(function(){
-            
-            console.log("DONE!");
-        });
-    }
-});
+	// var img = document.getElementById("fullScPic");
+	var img = new Image();
+	img.src = fotoOriginal;
+	
+	context.drawImage(img,0,0,$("#fullScPic").width()/escalaFinal,$("#fullScPic").height()/escalaFinal,0,0,$("#fullScPic").width(),$("#fullScPic").height());
+   
+   
+	var c = Caman(canvasFinal);
+	
+	Caman.Event.listen(c, "processStart", function () {
+	  console.log("Working!");
+	});
+	
+	
+		
+		
+	Caman(canvasFinal, function () {
+		// If such an effect exists, use it:
+		if( filter in this){
+			
+			this.revert();
+			this[filter]();
+			this.render(function(){
+				
+				console.log("DONE!");
+                               console.log(this.toBase64());
+                               $("#fullScPic").attr("src",this.toBase64());
+                               
+			});
+		}
+	});
     
     
 }
@@ -911,9 +775,8 @@ var escalaFinal;
 
 function resizeEditorPic() {
 
-    $("#fullScPic").draggable({});
-/*
-    relacion1 = $(".fullImage").width() / $(".fullImage").height();
+
+    relacion1 = $(".borderEffect").width() / $(".borderEffect").height();
     relacion2 = $("#fullScPic").width() / $("#fullScPic").height();
     
     console.log(relacion1);
@@ -923,88 +786,65 @@ function resizeEditorPic() {
         
  if (relacion1 <= relacion2) {
       //ajustamos imagen al ALTO
-      altoEditor = $(".fullImage").height();
+      altoEditor = $(".borderEffect").height();
       anchoEditor = altoEditor * relacion2;
       console.log("aca?")
   }else{
       //ajustamos imagen al ANCHO
      console.log("Aqui?");
-     imgHeight = $("#fullScPic").height();
-     diff = altoEditor - imgHeight;
-     
-     $("#fullScPic").draggable({
-     axis:'y',
-     containment: [0,diff,0,0]
-     });      
-    
-     
-     
-     altoEditor = anchoEditor * relacion2;
-     anchoEditor = $(".fullImage").width();
-   
-
+     //imgHeight = $("#fullScPic").height();
+     anchoEditor = $(".borderEffect").width();
+     altoEditor = anchoEditor * $("#fullScPic").height()/$("#fullScPic").width();
 
   }
 
-
-   escalaFinal =  anchoEditor / $("#fullScPic").width(); //disminuir tamano x2
+   escalaFinal =  anchoEditor / $("#fullScPic").width(); 
 
   
-  $("#fullScPic").attr("width",anchoEditor);
-  $("#fullScPic").attr("height",altoEditor);
+  $("#fullScPic").css("width",anchoEditor);
+  $("#fullScPic").css("height",altoEditor);
   
-*/
+  var miTop = $(".borderEffect").offset().top;
+  var miLeft = $(".borderEffect").offset().left;
+  
+  $("#fullScPic").offset({"top":miTop,"left":miLeft});
+  
  
-
     
 }
    
 
-var listaCanvas = new Array();
-
-
+//var listaCanvas = new Array();
+var fotoMod;
+var foto64;
 function cropCanvas() {
-
-Caman("#fullScPic", function () {
-  // width, height, x, y
-  this.crop(500, 300,32,36);
-
-  // Still have to call render!
-  this.render(function(){
-      $("#fullScPic").draggable();
-  });
-});
-
-
-    
-    
-    /*   
+   
 	//corta la imagen
 	
-   canvasFinal = document.createElement("canvas");
-   canvasFinal.height = 250;
-   canvasFinal.width = 415;
+   var canvasFinal = document.createElement("canvas");
+   canvasFinal.height = $(".borderEffect").height();
+   canvasFinal.width = $(".borderEffect").width();
    var context = canvasFinal.getContext('2d');
        
    
-   $(".borderEffect").html(canvasFinal);
+  // $(".borderEffect").html(canvasFinal);
    
    
    var queImagen = document.getElementById("fullScPic");
    //coordenadas de corte en la imagen grande
-   var sourceX = -$("#fullScPic").offset().left;
-   var sourceY = -$("#fullScPic").offset().top;
-   var sourceWidth = $(".fullImage").width();
-   var sourceHeight = $(".fullImage").height();
+   var sourceX = ($(".borderEffect").offset().left-$("#fullScPic").offset().left)/escalaFinal;
+   var sourceY = ($(".borderEffect").offset().top-$("#fullScPic").offset().top)/escalaFinal;
+   var sourceWidth = $(".borderEffect").width()/escalaFinal;
+   var sourceHeight = $(".borderEffect").height()/escalaFinal;
    
     
    var destX = 0;
    var destY = 0;
-   var destWidth = sourceWidth;
-   var destHeight = sourceHeight;
+   var destWidth = $(".borderEffect").width();
+   var destHeight =  $(".borderEffect").height();
    
    
-   
+   /*
    
    trace("Imagen: "+queImagen);
    trace("Source X Pos: "+sourceX);
@@ -1017,17 +857,40 @@ Caman("#fullScPic", function () {
    trace("Destination Y: "+destY);
    trace("Destination Width: "+destWidth);
    trace("Destination Height: "+destHeight);
-   
+   */
      //Leyenda      (imageObj,   c.x,     c.y,      c.w,           c.h,          0, 0, canvas.width, canvas.height);
    //context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
    
 context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
    
-   listaCanvas.push(canvasFinal);
-   canvasFinal.toDataURL();
-   trace(listaCanvas[0]);
+  // listaCanvas.push(canvasFinal);
+  
+  //var topCuadro = $(".borderEffect").offset().top;
+  //var leftCuadro = $(".borderEffect").offset().top
+  
+   $("#fullScPic").removeAttr("width");
+   $("#fullScPic").removeAttr("height");
+   $("#fullScPic").attr("src", canvasFinal.toDataURL());
+   $("#fullScPic").offset($(".borderEffect").offset());
+   
+   
+   stopMovimiento();
+   //salimos fuera de fullscreen al album
+   navegaSeccion("#creation_edit", "fade");
+   
+   actualizarFotoAlbum(canvasFinal.toDataURL());
+   
     
-    */
+    
+}
+
+function actualizarFotoAlbum(dataURL) {
+    
+   fotosElegidas[numFotoEditando].canvasModificado = dataURL;
+   $(".fotoAlbum_"+numFotoEditando).attr("src", dataURL);
+    
+    
+    
 }
 
 /**************************************
@@ -1040,7 +903,7 @@ var totalFotosSueltas;
 function calcularPrecioFinal() {
     
     if(esAlbum == true) {
-        totalFotosAlbum = fotosFull.length;
+        totalFotosAlbum = fotosElegidas.length;
 
         totalAlbum = totalFotosAlbum * precioFoto;
 
@@ -1051,7 +914,7 @@ function calcularPrecioFinal() {
     }
 
     if(esCanvas == true) {
-        totalFotosCanvas = fotosFull.length;
+        totalFotosCanvas = fotosElegidas.length;
 
         totalCanvas = (totalFotosCanvas * precioFoto)*precioCanvas;
 
@@ -1062,7 +925,7 @@ function calcularPrecioFinal() {
     }
 
     if(esFoto == true) {
-        totalFotosSueltas = fotosFull.length;
+        totalFotosSueltas = fotosElegidas.length;
 
         totalFotos = totalFotosSueltas * precioFoto;
 
@@ -1125,7 +988,7 @@ $(document).delegate("#welcomearea", "pageshow", function (e) {
     });
 
 
-    Swipe(document.getElementById("slideArrowLink"),{continuous:false,stopPropagation:true,transitionEnd: function() {
+    var miSwipe = new Swipe(document.getElementById("slideArrowLink"),{continuous:false,stopPropagation:true,transitionEnd: function() {
 
             navegaSeccion("#aboutus", "slide");
             
@@ -1165,7 +1028,7 @@ $(document).delegate("#aboutus", "pageshow", function () {
 
     //slides
     //mainslides("#about01", "#listaabout", "#marcadoresabout");
-    Swipe(document.getElementById("sliderAbout"),{continuous:false,stopPropagation:true,callback: function(pos) {
+    var miSwipe = new Swipe(document.getElementById("sliderAbout"),{continuous:false,stopPropagation:true,callback: function(pos) {
 
             var i = checkAbout.length;
             while (i--) {
@@ -1445,6 +1308,11 @@ Pantalla de seleccion tipo producto
 ************************************/
 $(document).delegate("#process_select", "pageshow", function () {
     
+    $("#debugScreen").off("tap").on("tap", function (e) {
+          $("#debugScreen").css("display","none");
+          });
+    
+    getProducts(); // wsMilleFeuille
     var tipoProducto = ["CREATE A NEW ALBUM","CREATE PHOTO FRAME","PRINT YOUR PHOTOS"];
                      
     //slides
@@ -1542,7 +1410,7 @@ $(document).delegate("#process_select", "pageshow", function () {
 
 
 
-    Swipe(document.getElementById("sliderProductType"),{continuous:false,stopPropagation:true,callback: function(pos) {
+   var miSwipe = new Swipe(document.getElementById("sliderProductType"),{continuous:false,stopPropagation:true,callback: function(pos) {
 
             var i = checkType.length;
             while (i--) {
@@ -1588,7 +1456,7 @@ $(document).delegate("#process_decoration", "pageshow", function () {
   //  mainslides("#process_decoration", "#listadecoracion", "#marcadordecoracion");
   
   
-      Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
+    var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
 
             var i = checkDeco.length;
             while (i--) {
@@ -1630,7 +1498,7 @@ $(document).delegate("#process_frames", "pageshow", function () {
 
 
 
-    Swipe(document.getElementById("sliderFrames"),{continuous:false,stopPropagation:true,callback: function(pos) {
+   var miSwipe = new Swipe(document.getElementById("sliderFrames"),{continuous:false,stopPropagation:true,callback: function(pos) {
 
             var i = checkFrames.length;
             while (i--) {
@@ -1741,11 +1609,11 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 
     $("#btCreationEdit").off("tap").on("tap",function(e){
         
-
-        if(fotosfinales == numeroFotos){
+		//trace("fotosFinales:"+fotosFinales+"**numfotos:"+numeroFotos);
+        if(fotosFinales == numeroFotos){
             
-            trace("has seleccionado 10");
-            trace("Final checkpoint!");
+          //  trace("has seleccionado 10");
+          //  trace("Final checkpoint!");
              
             //navegaSeccion("#creation_edit","slide");
         
@@ -1761,7 +1629,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
             
             
             fotosElegidas = new Array();
-            fotosFull = new Array();
+           // fotosFull = new Array();
 
             
           
@@ -1772,17 +1640,19 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
                 var urlFotoLimpia = urlFoto.substring(4,urlFoto.length-1);
                 
              
-               miFoto.id = idFoto;
-               miFoto.url = urlFotoLimpia;
-               miFoto.canvas = null;
-               
-               
-               convertirCanvas(miFoto.id,miFoto.url);
-               
-                fotosElegidas.push(miFoto);
+			   var miFoto = new Object();
+			   miFoto.id = idFoto;
+			   miFoto.url = urlFotoLimpia;
+			   miFoto.canvas = null;
+                           miFoto.canvasModificado = null;
+			   
+			   
+			   convertirCanvas(miFoto);
+			   fotosElegidas.push(miFoto);
                 
             }
             
+             cambioOrientacion("horizontal");
              navegaSeccion("#creation_edit","slide");
             
             
@@ -1791,15 +1661,15 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 	}else{
             
             if(esAlbum == true) {
-                trace("debes seleccionar: " + cantidadFotosAlbum + " fotos para album");
+              //  trace("debes seleccionar: " + cantidadFotosAlbum + " fotos para album");
             }
             
             if(esCanvas == true) {
-                trace("debes seleccionar: " + cantidadFotosCanvas + " fotos para Canvas");
+             //   trace("debes seleccionar: " + cantidadFotosCanvas + " fotos para Canvas");
             }
             
             if(esFoto == true) {
-                trace("debes seleccionar: " + cantidadFotosSueltas + " fotos para impresion");
+             //   trace("debes seleccionar: " + cantidadFotosSueltas + " fotos para impresion");
             }
             
         }
@@ -1854,43 +1724,35 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 /************************************
 Pantalla Seleccion/Edicion Fotos
 ************************************/
-var fotosFull = new Array();
+//var fotosFull = new Array();
  //fotosfull = ["default.jpg", "p01.jpg", "p02.jpg", "p03.jpg", "gal01.jpg"];
 
-var paginasFull = new Array(10);
-$(paginasFull).each(function (index) {
-    paginasFull[index] = 0;
-});
+//paginasFull contiene un array con las posiciones de cada foto en el álbum
+var paginasFull = new Array();
+//var fi = 0;
+var numPagina = 0;
+//var pos;
 
-var fi = 0;
-var pi = 0;
-
-var pos;
 $(document).delegate("#creation_edit", "pageshow", function () {
 
     $("#btEditBack").off("tap").on("tap", function (e) {
-
-
-
         e.preventDefault();
         e.stopPropagation();
+        cambioOrientacion("vertical");
         navegaSeccion("#creation_gallery", "slidedown");
-        
-        fotosFull = [];
+       // fotosFull = [];
+		fotosElegidas = [];
         
     });
 
     $("#btEditTitle").off("tap").on("tap", function (e) {
-
-
         e.preventDefault();
         e.stopPropagation();
-        
+        cambioOrientacion("vertical");
         if(esAlbum == true) {
-           navegaSeccion("#process_decoration", "slideup"); 
+			navegaSeccion("#process_decoration", "slideup"); 
         }else{
-        
-        navegaSeccion("#creation_title", "slideup");
+			navegaSeccion("#creation_title", "slideup");
         }
 
     });
@@ -1899,245 +1761,110 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+        cambioOrientacion("horizontal");
         
-        Caman("#fullScPic", fotosFull[pos] , function () {
-        // canvas START
-        this.render();
-        });
+		 //PASO1: remover ID data-caman del canvas, PASO2: iniciar CAMAN de nuevo 
+	 
+		$("#fullScPic").removeAttr("data-caman-id");
+		/*if ($(e.currentTarget).attr("data-id")=="derecha"){
+			miPagina = paginaDer;
+		}else{
+			 miPagina = paginaIzq;
+		}*/
+	
+	//	fotoCaman = Caman("#fullScPic", fotosElegidas[numFotoEditando].canvas , function () {      
+	//		this.render(function(){/*callback*/ });
+	//   });
 
-
-        
-        $("#fullScPic").css("top","0px","left","0px");
-
-        
+       // $("#fullScPic").css("top","0px","left","0px");
         navegaSeccion("#creation_full","fade");
-        
-        
 
     });
     
     $("#veloIzq").off("tap").on("tap", function (e) {
-
         e.preventDefault();
         e.stopPropagation();
-        $("#veloDer").css("display","block")
-        $(this).css("display","none");
+        $("#veloDer").show();
+        $(this).hide();
         $(".book").animate({left:"120px"},500);
 
     });   
     
     $("#veloDer").off("tap").on("tap", function (e) {
-
         e.preventDefault();
         e.stopPropagation();
-        $("#veloIzq").css("display","block")
-        $(this).css("display","none");
+        $("#veloIzq").show();
+        $(this).hide();
         $(".book").animate({left:"-100px"},500);
 
     });   
-    
-/*
-    $("#arrowUp1").off("tap").on("tap", function (e) {
-
-
-        fi++;
-        trace(fi);
-        if (fi >= fotosfull.length) {
-            fi = 0;
-        }
-
-        $("#imgIzq").css("background-image","url("+  fotosfull[fi] + ")");
-        $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
-        
-        $("#fullScPic").css("top","0","left","0");
-        
-
-        e.preventDefault();
-        e.stopPropagation();
-
-    });
-
-    $("#arrowDown1").off("tap").on("tap", function (e) {
-
-        fi--;
-        if (fi <= 0) {
-            fi = fotosfull.length - 1;
-        }
-
-        $("#imgIzq").css("background-image","url("+  fotosfull[fi] + ")");
-        $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
-        //fsCanvas(fotosfull[fi]);
-        $("#fullScPic").css("top","0","left","0");
-        trace(fi);
-
-
-        e.preventDefault();
-        e.stopPropagation();
-
-    });
-
-    $("#arrowUp2").off("tap").on("tap", function (e) {
-
-
-        fi++;
-        trace(fi);
-        if (fi >= fotosfull.length) {
-            fi = 0;
-        }
-
-        $("#imgDer").css("background-image","url("+  fotosfull[fi] + ")");
-        $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
-        //fsCanvas(fotosfull[fi]);
-        $("#fullScPic").css("top","0","left","0");
-
-
-        e.preventDefault();
-        e.stopPropagation();
-
-    });
-
-    $("#arrowDown2").off("tap").on("tap", function (e) {
-
-        fi--;
-        if (fi <= 0) {
-            fi = fotosfull.length - 1;
-        }
-
-        $("#imgDer").css("background-image","url("+  fotosfull[fi] + ")");
-        $("#fullScPic").attr("src", "" + fotosfull[fi] + "");
-        //fsCanvas(fotosfull[fi]);
-        $("#fullScPic").css("top","0","left","0");
-        trace(fi);
-
-
-        e.preventDefault();
-        e.stopPropagation();
-
-    });
-  */  
-    $('.book').on("swipeleft", function(){cambiarPag(-1)});
-    $('.book').on("swiperight", function(){cambiarPag(1)});
-
-    function cambiarPag(direccion) {
-        $(".book").animate({left:"10px"},500);
-        $("#veloIzq").css("display","block");
-        $("#veloDer").css("display","block");
-        if (paginasFull[pi] != fi)
-            paginasFull[pi] = fi;
-        trace("pi antes de pinchar: " + pi);
-       if(direccion > 0) { 
-            pi++
-       }else{   
-            pi--;
-        }+
-        
-        
-        trace("pi desués de pinchar: " + pi);
-
-        if (pi < 0) {
-            pi = paginasFull.length - 1;
-        }
-        if (pi > paginasFull.length - 1) {
-            pi = 0;
-        }
-        
-        fi = paginasFull[pi];
-        if (pi % 2 == 1) {
-                   
-        //$(".book").animate({"margin-top","80px"});
-            //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
-           /* trace("cambiamos páginas");
-            $('#veloDer').fadeOut();
-            $('#veloIzq').fadeIn();
-            $('#txtDer').text('Page ' + parseInt(pi));
-            $('#txtIzq').text('Page ' + parseInt(pi + 1));
-            $("#imgDer").css("background-image","url("+ fotosfull[paginasFull[pi]] + ")");
-            $("#imgIzq").css("background-image","url("+ fotosfull[paginasFull[pi - 1]] + ")");*/
-
-        }
-        else {
-                   //  $(".book").animate({"top":"-80px"})
-          /*  trace("no cambiamos páginas");
-            $('#veloDer').fadeIn();
-            $('#veloIzq').fadeOut();
-            $('#txtIzq').text('Page ' + parseInt(pi));
-            $('#txtDer').text('Page ' + parseInt(pi + 1));*/
-        }
-
-        e.preventDefault();
-        e.stopPropagation();
-    }
-
- 
-
-   /* $("#pagIzq").off("tap").on("tap", function (e) {
-        if (paginasFull[pi] != fi)
-            paginasFull[pi] = fi;
-        trace("pi antes de pinchar: " + pi);
-        pi--;
-        trace("pi desués de pinchar: " + pi);
-
-        if (pi < 0) {
-            pi = paginasFull.length - 1;
-        }
-        fi = paginasFull[pi];
-        if (pi % 2 == 1) {
-            //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
-            trace("cambiamos páginas");
-            $('#veloDer').fadeOut();
-            $('#veloIzq').fadeIn();
-            $('#txtDer').text('Page ' + parseInt(pi));
-            $('#txtIzq').text('Page ' + parseInt(pi + 1));
-            $("#imgDer").css("background-image","url("+ fotosFull[paginasFull[pi]] + ")");
-            $("#imgIzq").css("background-image","url("+ fotosFull[paginasFull[pi - 1]] + ")");
-
-        }
-        else {
-            trace("no cambiamos páginas");
-            $('#veloDer').fadeIn();
-            $('#veloIzq').fadeOut();
-            $('#txtIzq').text('Page ' + parseInt(pi));
-            $('#txtDer').text('Page ' + parseInt(pi + 1));
-        }
-
-        e.preventDefault();
-        e.stopPropagation();
-
-    });
-
-    $("#pagDer").off("tap").on("tap", function (e) {
-        if (paginasFull[pi] != fi)
-            paginasFull[pi] = fi; //fotosfull[fi];
-        trace("pi antes de pinchar: " + pi);
-        pi++;
-        trace("pi después de pinchar: " + pi);
-
-        if (pi > paginasFull.length - 1) {
-            pi = 0;
-        }
-        fi = paginasFull[pi];
-        if (pi % 2 == 0) {
-            //////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
-            $('#txtDer').text('Page ' + parseInt(pi + 1));
-            $('#txtIzq').text('Page ' + parseInt(pi));
-            $('#veloDer').fadeIn();
-            $('#veloIzq').fadeOut();
-            $("#imgDer").css("background-image","url("+ fotosFull[paginasFull[parseInt(pi + 1)]]+")");
-            $("#imgIzq").css("background-image","url("+ fotosFull[paginasFull[pi]]+")");
-        }
-        else {
-            $('#txtIzq').text('Page ' + parseInt(pi + 1));
-            $('#txtDer').text('Page ' + parseInt(pi));
-            $('#veloDer').fadeOut();
-            $('#veloIzq').fadeIn();
-        }
-
-        e.preventDefault();
-        e.stopPropagation();
-
-    });*/
 
 });
+
+function ponerFotoAlbum(queIndiceFoto, tipo){
+	//MUESTRA LA FOTO ELEGIDA EN LA PÁGINA ELEGIDA
+	
+	switch(tipo){
+		case "izq":
+			miSwipeIzquierda.slide(queIndiceFoto,50);
+		break;
+		case "der":
+			miSwipeDerecha.slide(queIndiceFoto,50);
+		break;
+	}
+	//
+	
+}
+
+function lanzarAnimacionLibro(queDireccion){
+	//lanza una animación con efecto de pasar página para simular el efecto de paso de páginas.	
+	
+}
+
+ function cambiarPagina(direccion,e) {
+	 
+		lanzarAnimacionLibro(direccion);
+		
+		//centramos el texto y mostramos las páginas
+        $(".book").animate({left:"10px"},500);
+        $("#veloIzq").show();
+        $("#veloDer").show();
+		
+        /*if (paginasFull[numPagina] != fi){
+            paginasFull[numPagina] = fi;
+		}*/
+        
+		//trace("numPagina antes de pinchar: " + numPagina);
+		
+	    if(direccion > 0) { 
+			numPagina+=2
+	    }else{   
+			numPagina-=2;
+       	}
+        
+       // trace("numPagina después de pinchar: " + numPagina);
+
+        if (numPagina < 0) {
+            numPagina = paginasFull.length - 2;
+        }
+        if (numPagina > paginasFull.length - 2) {
+            numPagina = 0;
+        }
+        
+        //fi = paginasFull[numPagina];
+		//////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
+		//trace("cambiamos páginas");
+	   
+	   	//mostramos páginas numeradas desde la 1
+		$('#txtDer').text('Page ' + parseInt(numPagina + 2));
+		$('#txtIzq').text('Page ' + parseInt(numPagina + 1));
+		
+		ponerFotoAlbum(paginasFull[numPagina], "izq");
+		ponerFotoAlbum(paginasFull[numPagina+1], "der");
+
+        e.preventDefault();
+        e.stopPropagation();
+}
 
 
 /************************************
@@ -2148,97 +1875,99 @@ var filter = 0;
 
 $(document).delegate("#creation_full", "pageshow", function () {
 
-Caman("#fullScPic", function () {
-  this.render();
-});
+       /* Caman("#fullScPic", fotosElegidas[pos].canvas , function () {
+            this.render(function(){ });
+        });*/
 
-$("#fullScPic").on("pinchout","#fullPicSc", function(event) {
-    $("#fullScPic").css("height","150%"); 
-});
+		/*$("#fullScPic").on("pinchout","#fullPicSc", function(event) {
+			$("#fullScPic").css("height","150%"); 
+		});
+		
+		$("#fullScPic").on("pinchin","#fullPicSc", function(event) {
+			$("#fullScPic").css("height","100%"); 
+		});*/
+				
+		resizeEditorPic();
 
-$("#fullScPic").on("pinchin","#fullPicSc", function(event) {
-    $("#fullScPic").css("height","100%"); 
-});
-        
-resizeEditorPic();
-
-
-
-
-    //startMovimiento($("#fullScPic"),$(".fullImage"));
- 
-    $("#btFullScreen").off("tap").on("tap", function (e) {
-
-        e.preventDefault();
-        e.stopPropagation();
-        navegaSeccion("#creation_edit", "fade");
-        
-    });
-    
-
-    $("#wandBt").off("tap").on("tap", function (e) {
-                
-        
-        if (filter >= 6) {
-            filter = 0;
-        }
-        
-        
-        
-            filter++;
-            
-    switch(filter) {
-    case 1:
-        magicWandSet("herMajesty");
-    break;
-    
-    case 2:
-        magicWandSet("vintage");
-    break;
-    
-    case 3:
-        magicWandSet("sinCity");
-    break;
-    
-    case 4:
-        magicWandSet("lomo");
-    break;
-    
-    case 5:
-        magicWandSet("pinhole");
-    break;
-
-    case 6:
-        magicWandSet("revert");
-    break;
-    }
-
-        e.preventDefault();
-        e.stopPropagation();
-
-
-    });
-
-
-
-    $("#btCrop").off("tap").on("tap", function (e) {
-
-            e.preventDefault();
-            e.stopPropagation();
-                   
-
-            
-            cropCanvas();
-        });
-
-
-    $("#btCompleteEdit").off("tap").on("tap", function (e) {
-
-        e.preventDefault();
-        e.stopPropagation();
-        navegaSeccion("#creation_edit", "fade");
-        
-    });
+		startMovimiento($("#fullScPic"),$(".borderEffect"));
+	 
+		$("#btFullScreen").off("tap").on("tap", function (e) {
+	
+			e.preventDefault();
+			e.stopPropagation();
+                        
+                        actualizarFotoAlbum($("#fullScPic").attr("src"));
+                        stopMovimiento();
+                        cambioOrientacion("horizontal");
+			navegaSeccion("#creation_edit", "fade");
+			
+			
+		});
+		
+	
+		$("#wandBt").off("tap").on("tap", function (e) {
+					
+			
+			if (filter >= 6) {
+				filter = 0;
+			}
+			
+			
+			
+				filter++;
+				
+		switch(filter) {
+		case 1:
+			magicWandSet("herMajesty");
+		break;
+		
+		case 2:
+			magicWandSet("vintage");
+		break;
+		
+		case 3:
+			magicWandSet("sinCity");
+		break;
+		
+		case 4:
+			magicWandSet("lomo");
+		break;
+		
+		case 5:
+			magicWandSet("pinhole");
+		break;
+	
+		case 6:
+			magicWandSet("revert");
+		break;
+		}
+	
+			e.preventDefault();
+			e.stopPropagation();
+	
+	
+		});
+	
+	
+	
+		$("#btCrop").off("tap").on("tap", function (e) {
+	
+				e.preventDefault();
+				e.stopPropagation();
+					   
+	
+				
+				cropCanvas();
+			});
+	
+	
+		$("#btCompleteEdit").off("tap").on("tap", function (e) {
+	
+			e.preventDefault();
+			e.stopPropagation();
+			navegaSeccion("#creation_edit", "fade");
+			
+		});
 
 
 
@@ -2256,9 +1985,10 @@ $(document).delegate("#creation_title", "pageshow", function () {
         e.preventDefault();
         e.stopPropagation();
         if(esAlbum == true) {
-        navegaSeccion("#process_decoration","slide");    
+       		 navegaSeccion("#process_decoration","slide");    
         }else{
-        navegaSeccion("#creation_edit", "slide", true);
+                cambioOrientacion("horizontal");
+      		 navegaSeccion("#creation_edit", "slide", true);
         }
 
     });
@@ -2419,7 +2149,7 @@ $(document).delegate("#finishscreen", "pageshow", function () {
         esAlbum = false;
         esCanvas = false;
         esFoto = false;
-        fotosfinales = 0;
+        fotosFinales = 0;
     });
 
 });
@@ -2453,7 +2183,7 @@ function registerUser() {
         },
         error: function (e) {
             $('#txtErrorRegister').html('An error has occured while registering your account.');
-            trace(e);
+           // trace(e);
         }
     });
 
@@ -2462,6 +2192,9 @@ function registerUser() {
 
 function loginUser() {
     var datos = { "user": $('#txtUserNameMF').val(), "password": $('#txtPassMF').val() };
+    
+    console.log($('#txtUserNameMF').val());
+    console.log($('#txtPassMF').val());
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -2469,23 +2202,68 @@ function loginUser() {
         data: JSON.stringify(datos),
         url: site_URL+'ws.asmx/login',
         success: function (data) {
+            $('#spanErrorLogin').html(data.d);
             //trace(data);
-            trace(data);
-            if (data.d.resultado == "OK") {
+            //trace(data);
+            if (data.d.indexOf("OK") >= 0) {
                 logado = true;
                 _userID = $('#txtUserNameMF').val();
             navegaSeccion("#process_select", "slideup");
+            
+          $("#debugMsg").html("");
+          $("#alertType").css("color","green");
+          $("#alertType").html("WS CONNECT SUCCESS!"); 
+          $("#debugScreen").css("display","block");
+          $("#debugMsg").text(data);
+            
             }
             else {
                 $('#spanErrorLogin').html('Wrong user ID or Password');
             }
         },
         error: function (e) {
-            trace('error login: ' + e);
+         //   trace('error login: ' + e);
         }
     });
 
 
 }
 
+function getProducts() {
+    
+    var datos = {};
+    
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(datos),
+        url: site_URL+'ws.asmx/recuperarPortadas',
+        success: function(data) {
+          
+          if(data.d.resultado == "OK") {
+          
+          $("#debugMsg").html("");
+          $("#alertType").css("color","green");
+          $("#alertType").html("WS CONNECT SUCCESS!"); 
+          $("#debugScreen").css("display","block");
+          $("#debugMsg").text(data.d.mensaje);
+          
+            }else{
+          $("#debugMsg").html("");
+          $("#alertType").css("color","red");
+          $("#alertType").html("ERROR ON REQUEST!"); 
+          $("#debugScreen").css("display","block");
+          $("#debugMsg").text(e); 
+          }
+          
+        },
+        error: function(e) {
+          //  trace("error: " + e);
+            
+
+            
+        }
+    });
+}
 

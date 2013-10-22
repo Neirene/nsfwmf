@@ -21,11 +21,10 @@
 <script src="js/jquery.mobile-1.3.1.min.js"></script>
 <script src="js/caman.full.min.js"></script>
 <script src="js/hammer.js"></script>
-<!--<script src="js/jquery.Jcrop.js"></script>-->
+
 
 <script src="js/tokenig.js"></script>
 <script src="js/swipe.js"></script>
-<!--<script src="js/swipevertical.js"></script>-->
 <script src="js/dragger.js"></script>
 
 <script src="js/main.js"></script>
@@ -36,7 +35,6 @@
 <link rel="stylesheet" href="css/jquery.mobile.structure-1.3.1.css">
 <link rel="stylesheet" href="css/text.css">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css" />
 
 </head>
 
@@ -516,7 +514,7 @@
                 </div>
                 
                 <div data-controltype="textblock" class="subtitular02">
-                Which pictures shall we explore <br>to create a photo set?  
+                    Which pictures shall we explore <br>to create a photo <span id="lblSourceD">set</span>?  
                 </div>
                 
                 <div class="selectSource">
@@ -817,7 +815,7 @@
                         <!-- pagina Izquierda -->
                         <li class="leftSlide">
                         
-                            <div class="offPage" id="veloIzq"><span id="txtIzq">PAGE 2</span></div>
+                            <div class="offPage" id="veloIzq"><span id="txtIzq">PAGE 1</span></div>
                             <div class="btFull btEditFullScreen" data-id="izquierda"> <img src="images/btEdit.png" alt=""> </div>
                             
                             
@@ -844,7 +842,7 @@
                         <!-- pagina derecha -->
                         <li class="rightSlide">
                             
-                            <div class="offPage" id="veloDer"> <span id="txtDer">PAGE 1</span> </div>
+                            <div class="offPage" id="veloDer"> <span id="txtDer">PAGE 2</span> </div>
                             <div class="btFull btEditFullScreen" data-id="derecha"> <img src="images/btEdit.png" alt=""> </div>
                             <div class="optionsPage">
                             
@@ -883,7 +881,7 @@
                 
                 <div class="fullImage" >
                     
-                    <img id="fullScPic"> <!-- Imagen-->
+                    <img id="fullScPic" /> <!-- Imagen-->
                     
                     <div class="btFull2" id="btFullScreen"> <img src="images/fullPhoto.png" alt=""> </div>
                     <div class="btCompleted" id="btCompleteEdit"> <img src="images/btEditComplete.png" alt=""> </div>
@@ -1177,6 +1175,10 @@
         </script>
         
         
-
+<!--DEBUG--->
+<div class="pantallaDebug" id="debugScreen">
+    <div class="mensajeError" id="debugMsg"></div>
+    <div><h2 id="alertType"></h2></div>
+</div>
 </body>
 </html>

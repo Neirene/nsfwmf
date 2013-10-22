@@ -23,6 +23,8 @@ function startMovimiento(queImg,queContainer){
 function stopMovimiento(){
     
  $(document).off("vmousedown");
+ $(document).off("vmousemove");
+ $(document).off("vmouseup");
 }
 
 function iniciarMovimiento(e){
@@ -60,20 +62,24 @@ function moverImagen(e){
 	var fImgY = __posYImg + distY;
     trace("ubicacionImagen :" + fImgX +"**"+ fImgY);
     
-    /*if(fImgX < 0) {
-                fImgX = 0;
-            }
+             
+        
+        var offsetX = $(".borderEffect").offset().left;
+        var offsetY = $(".borderEffect").offset().top;
             
-        if(fImgY < 0) {
-            fImgY = 0;
-        }            
+        if(fImgX > offsetX) {
+            fImgX = offsetX;
+        }
             
+        if(fImgY > offsetY) {
+            fImgY = offsetY;
+        } 
          
         var widthImagen = __queImg.width();
         var widthContenedor = __queContainer.width(); 
 
-        if(fImgX < -widthImagen+widthContenedor) {
-           fImgX = -widthImagen+widthContenedor;
+        if(fImgX < -widthImagen+widthContenedor+offsetX) {
+           fImgX = -widthImagen+widthContenedor+offsetX;
         }            
             
             
@@ -82,11 +88,11 @@ function moverImagen(e){
         var heightImagen = __queImg.height();
         var heightContenedor = __queContainer.height(); 
 
-        if(fImgY < -heightImagen+heightContenedor) {
-              fImgY = -heightImagen+heightContenedor;
+        if(fImgY < -heightImagen+heightContenedor+offsetY) {
+              fImgY = -heightImagen+heightContenedor+offsetY;
           } 
  
-       // trace(fImgY,fImgX);*/
+       // trace(fImgY,fImgX);
             __queImg.css({top:fImgY,left:fImgX});
         
 	//__queImg.css({top:fImgX,left:fImgY});
