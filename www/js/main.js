@@ -19,10 +19,29 @@ var precioCanvas = 2.3;
 
 //totales
 var totalAlbum;
-
 var fotosFinales;
-
 var numFotoEditando = 0;
+
+
+
+
+
+//objetoprincipal
+// "p" de "PEDIDO"
+
+var datosUsuario = new Object();
+   /* p.id;   //email
+    p.name;
+    p.address;
+    p.phone;
+    p.product;
+    p.decos;
+    p.quantity;
+    p.nPictures;
+    p.unitPrice;
+    p.totalPrice;*/
+    
+    
 
 
 /*******************************
@@ -242,8 +261,12 @@ function conectarFacebook() {
 				//VIENE EL TOKEN.
 
                 _tokenFB = objDevuelto.access_token;
+                
+                datosUsuario.id = _tokenFb; //obtenemos email (ID) objeto principal
+                datosUsuario.tipoLogin = "facebook";  // esto es facebook               
 
                 navegaSeccion("#process_select", "slideup");
+                
                 //recuperarListaFotosFB(/*ir a sigiente pantalla*/);
             } else {
 				//ha cancelado o da error
@@ -1177,6 +1200,10 @@ $(document).delegate("#logintype", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+        
+        datosUsuario.id = ""; //obtenemos email (ID) objeto principal
+        datosUsuario.tipoLogin = "anonimo";  // esto es millefeuille anonimo
+        
         navegaSeccion("#process_select", "slideup");
 
     });
@@ -1341,10 +1368,7 @@ $(document).delegate("#process_select", "pageshow", function () {
 
     });
 
-    //objeto global que contiene todos los datos del pedido
-    var datosPedido = {};
-    datosPedido.tipoPedido = -1;
- 
+  
    
 
     $("#btCreateNewAlbum").off().on("tap", function (e) {
@@ -1356,7 +1380,7 @@ $(document).delegate("#process_select", "pageshow", function () {
             if ($(value).hasClass("selected")) {
           
                 
-                datosPedido.tipoPedido = pos;
+                datosUsuario.tipoPedido = pos;
             }
 
         });
@@ -1364,7 +1388,7 @@ $(document).delegate("#process_select", "pageshow", function () {
 
         var destino;
 
-        switch (datosPedido.tipoPedido) {
+        switch (datosUsuario.tipoPedido) {
 
             case 0:
                 //album
@@ -1486,19 +1510,7 @@ $(document).delegate("#process_frames", "pageshow", function () {
 
 
 
-   var miSwipe = new Swipe(document.getElementById("sliderFrames"),{continuous:false,stopPropagation:true,callback: function(pos) {
-
-            var i = checkFrames.length;
-            while (i--) {
-              checkFrames[i].className = ' ';
-            }
-            checkFrames[pos].className = 'selected';
-
-            }
-     });
-
-
-    var checkFrames = document.getElementById('marcadorframes').getElementsByTagName('li');
+ 
 
 
 
@@ -2077,7 +2089,19 @@ $(document).delegate("#orderresume", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#address", "slideup");
+        
+        if(p.id == null) {
+            $("#passwordSet").css("display","inline");
+            $("#idSet").css("display","inline");
+            navegaSeccion("#address", "slideup");
+        }else{
+            $("#passwordSet").css("display","none");
+            $("#idSet").css("display","none");
+            navegaSeccion("#address", "slideup");
+        }
+        
+        
+        
 
     });
 
@@ -2213,6 +2237,10 @@ function loginUser() {
                 
                 logado = true;
                 _userID = $('#txtUserNameMF').val();
+                
+                datosUsuario.id = cadenaJSON.mensaje; //obtenemos email (ID) objeto principal
+                datosUsuario.tipoLogin = "millefeuille";  // esto es millefeuille
+                
             navegaSeccion("#process_select", "slideup");
             
 
@@ -2231,7 +2259,7 @@ function loginUser() {
 }
 
 function getPortadas() {
-    
+    //decoracionnnnnnnnnnnnnnnnnnnnnnnnnnn
     trace("recuperando portadas");
     
     
@@ -2250,14 +2278,14 @@ function getPortadas() {
         
         if(cadenaJSON.resultado == "OK") {
 
-              $(".listaproceso").html("");
-              $("#bgselect .divPaginationDots #marcadoresproceso").html("");
+              $(".listadecoracion").html("");
+              $("#bgselect .divPaginationDots #marcadordecoracion").html("");
               
               for (var i=0;i<cadenaJSON.mensaje.portadas.length;i++){
                   var imgPortada = cadenaJSON.mensaje.portadas[i].img;
                   var idPortada =  cadenaJSON.mensaje.portadas[i].id;
-                  $(".listaproceso").append("<div><img src='"+RUTA_IMAGENES_PORTADA+imgPortada+"' data-id='"+idPortada+"'></div>");
-                  $("#bgselect .divPaginationDots #marcadoresproceso").append("<li></li>");
+                  $(".listadecoracion").append("<div><img src='"+RUTA_IMAGENES_PORTADA+imgPortada+"' data-id='"+idPortada+"'></div>");
+                  $("#bgselect .divPaginationDots #marcadordecoracion").append("<li></li>");
               }
               
                $($("#marcadordecoracion li")[0]).addClass("selected");
@@ -2266,7 +2294,8 @@ function getPortadas() {
 
                  $("#marcadordecoracion li").removeClass("selected");      
                  $($("#marcadordecoracion li")[pos]).addClass("selected");
-
+                 datosUsuario.deco = $($(".listadecoracion div")[pos]).find('img').attr("data-id");
+                 
                  }
           });
 
@@ -2318,12 +2347,17 @@ function getMarcos() {
               
                $($("#marcadorframes li")[0]).addClass("selected");
               
-            var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
+            var miSwipe = new Swipe(document.getElementById("sliderFrames"),{continuous:false,stopPropagation:true,callback: function(pos) {
 
                  $("#marcadorframes li").removeClass("selected");      
                  $($("#marcadorframes li")[pos]).addClass("selected");
+                 
+                 datosUsuario.frame = $($(".decoframecont")[pos]).find('img').attr("data-id");
+                 
 
                  }
+                 
+                 
           });
 
           }else{
@@ -2340,3 +2374,4 @@ function getMarcos() {
         }
     });
 }
+

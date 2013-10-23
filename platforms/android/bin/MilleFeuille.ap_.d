@@ -130,9 +130,9 @@ C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\M
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\decorations\deco01c.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\decorations\desktop.ini \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\frames\desktop.ini \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\frames\frame01.png \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\frames\frame01b.png \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\frames\frame01c.png \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\frames\frame1.png \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\frames\frame2.png \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\frames\frame3.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\gallerys\default.jpg \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\gallerys\desktop.ini \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\gallerys\gal01.jpg \

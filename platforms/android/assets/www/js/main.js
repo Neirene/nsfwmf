@@ -32,6 +32,7 @@ var APP_ID_FB = "382088901918989";
 var REDIRECT_URL_FB = "http://genericwebdomain.com/mille-feuille/";
 
 var RUTA_IMAGENES_PORTADA = "http://genericwebdomain.com/mille-feuille/images/products/";
+var RUTA_IMAGENES_MARCOS = "http://genericwebdomain.com/mille-feuille/images/frames/";
 
 
 var logado = false;
@@ -1379,7 +1380,7 @@ $(document).delegate("#process_select", "pageshow", function () {
 
             case 1:
                 //marco
-                destino = "#process_frames";
+                destino = "#process_source";
                 
                 esAlbum = false;
                 esCanvas = true;
@@ -1471,7 +1472,7 @@ $(document).delegate("#process_frames", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#process_select", "slide", true);
+        navegaSeccion("#creation_edit", "slidedown");
 
     });
 
@@ -1479,12 +1480,12 @@ $(document).delegate("#process_frames", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#process_source", "slide");
+        navegaSeccion("#creation_title", "slideup");
 
     });
 
 
-
+/*
    var miSwipe = new Swipe(document.getElementById("sliderFrames"),{continuous:false,stopPropagation:true,callback: function(pos) {
 
             var i = checkFrames.length;
@@ -1498,7 +1499,7 @@ $(document).delegate("#process_frames", "pageshow", function () {
 
 
     var checkFrames = document.getElementById('marcadorframes').getElementsByTagName('li');
-
+*/
 
 
 });
@@ -1648,15 +1649,15 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 	}else{
             
             if(esAlbum == true) {
-              //  trace("debes seleccionar: " + cantidadFotosAlbum + " fotos para album");
+                trace("debes seleccionar: " + cantidadFotosAlbum + " fotos para album");
             }
             
             if(esCanvas == true) {
-             //   trace("debes seleccionar: " + cantidadFotosCanvas + " fotos para Canvas");
+                trace("debes seleccionar: " + cantidadFotosCanvas + " fotos para Canvas");
             }
             
             if(esFoto == true) {
-             //   trace("debes seleccionar: " + cantidadFotosSueltas + " fotos para impresion");
+                trace("debes seleccionar: " + cantidadFotosSueltas + " fotos para impresion");
             }
             
         }
@@ -1735,11 +1736,19 @@ $(document).delegate("#creation_edit", "pageshow", function () {
     $("#btEditTitle").off("tap").on("tap", function (e) {
         e.preventDefault();
         e.stopPropagation();
-        cambioOrientacion("vertical");
+        
         if(esAlbum == true) {
-			navegaSeccion("#process_decoration", "slideup"); 
+            cambioOrientacion("vertical");
+            getPortadas();
+            navegaSeccion("#process_decoration", "slideup"); 
+        }else if(esCanvas == true){
+            cambioOrientacion("vertical");
+            getMarcos();
+            navegaSeccion("#process_frames", "slideup"); 
+            
         }else{
-			navegaSeccion("#creation_title", "slideup");
+            cambioOrientacion("vertical");
+            navegaSeccion("#creation_title", "slideup");
         }
 
     });
@@ -1973,11 +1982,11 @@ $(document).delegate("#creation_title", "pageshow", function () {
         e.stopPropagation();
       
         if(esAlbum == true) {
-                 getPortadas(); // wsMilleFeuille
+                 cambioOrientacion("vertical");
        		 navegaSeccion("#process_decoration","slide");    
         }else if(esCanvas == true){
             
-                 getMarcos(); // wsMilleFeuille
+                cambioOrientacion("vertical");
        		 navegaSeccion("#process_frames","slide");
             
             
@@ -2228,21 +2237,25 @@ function getPortadas() {
     
     $.ajax({
 
-        dataType: 'json',
+       type: 'POST',
+        dataType: "json",
         contentType: 'application/json',
+      
         url: site_URL+'ws.asmx/recuperarPortadas',
         success: function(data) {
             trace(data);
         var cadenaJSON = JSON.parse(data.d);
+        
+        console.log(cadenaJSON);
         
         if(cadenaJSON.resultado == "OK") {
 
               $(".listaproceso").html("");
               $("#bgselect .divPaginationDots #marcadoresproceso").html("");
               
-              for (var i=0;i<cadenaJSON.portadas.length;i++){
-                  var imgPortada = cadenaJSON.portadas[i].img;
-                  var idPortada =  cadenaJSON.portadas[i].id;
+              for (var i=0;i<cadenaJSON.mensaje.portadas.length;i++){
+                  var imgPortada = cadenaJSON.mensaje.portadas[i].img;
+                  var idPortada =  cadenaJSON.mensaje.portadas[i].id;
                   $(".listaproceso").append("<div><img src='"+RUTA_IMAGENES_PORTADA+imgPortada+"' data-id='"+idPortada+"'></div>");
                   $("#bgselect .divPaginationDots #marcadoresproceso").append("<li></li>");
               }
@@ -2272,3 +2285,58 @@ function getPortadas() {
     });
 }
 
+
+function getMarcos() {
+    
+    trace("recuperando marcos");
+    
+    
+    $.ajax({
+
+       type: 'POST',
+        dataType: "json",
+        contentType: 'application/json',
+      
+        url: site_URL+'ws.asmx/recuperarMarcos',
+        success: function(data) {
+            trace(data);
+        var cadenaJSON = JSON.parse(data.d);
+        
+        console.log(cadenaJSON);
+        
+        if(cadenaJSON.resultado == "OK") {
+
+              $(".listaframes").html("");
+              $("#bgframes .divPaginationDots #marcadorframes").html("");
+              
+              for (var i=0;i<cadenaJSON.mensaje.marcos.length;i++){
+                  var imgMarcos = cadenaJSON.mensaje.marcos[i].img;
+                  var idMarcos =  cadenaJSON.mensaje.marcos[i].id;
+                  $(".listaframes").append("<div><div class='decoframecont'><img src='"+RUTA_IMAGENES_MARCOS+imgMarcos+"' data-id='"+idMarcos+"' /></div></div>");
+                  $("#bgframes .divPaginationDots #marcadorframes").append("<li></li>");
+              }
+              
+               $($("#marcadorframes li")[0]).addClass("selected");
+              
+            var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
+
+                 $("#marcadorframes li").removeClass("selected");      
+                 $($("#marcadorframes li")[pos]).addClass("selected");
+
+                 }
+          });
+
+          }else{
+              //se ha producido un error al recuperar portadas
+              trace("error al recuperar marcos"+data.d);
+        }
+          
+        },
+        error: function(e) {
+          trace("error de conexión: " + e);
+            
+
+            
+        }
+    });
+}

@@ -207,9 +207,9 @@ input { border-radius: 0px !important;}
 .listaframes{overflow: hidden;position: relative;}
 .listaframes > div {float:left;width:100%;position: relative;}
 
-#decoframecont { display: block; width: 30%; height:30%; margin: 0px; list-style-type: none; }
-#decoframecont span{ display: none; }
-#decoframecont img { width: 100%;}
+.decoframecont { display: block; width: 30%; height:30%; margin: 0px; list-style-type: none; }
+.decoframecont span{ display: none; }
+.decoframecont img { width: 100%;}
 
 .decorations {overflow: hidden;visibility: hidden;position: relative;width: 100%;height: 17em;}
 .listadecoracion {overflow: hidden;position: relative;}
