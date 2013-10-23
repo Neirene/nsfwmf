@@ -31,6 +31,8 @@ Variables web service (mover plz)
 var APP_ID_FB = "382088901918989";
 var REDIRECT_URL_FB = "http://genericwebdomain.com/mille-feuille/";
 
+var RUTA_IMAGENES_PORTADA = "http://genericwebdomain.com/mille-feuille/images/products/";
+
 
 var logado = false;
 var _userID = "";
@@ -70,13 +72,13 @@ var app = {
 
 
 
-/*
+
 function trace(queMsg){
     try{
         console.log(queMsg);
     }catch(err){}
 }
-*/
+
 
 /*********************************************************
 F U N C I O N E S      G L O B A L E S 
@@ -1312,7 +1314,7 @@ $(document).delegate("#process_select", "pageshow", function () {
           $("#debugScreen").css("display","none");
           });
     
-    getProducts(); // wsMilleFeuille
+   
     var tipoProducto = ["CREATE A NEW ALBUM","CREATE PHOTO FRAME","PRINT YOUR PHOTOS"];
                      
     //slides
@@ -1456,22 +1458,7 @@ $(document).delegate("#process_decoration", "pageshow", function () {
   //  mainslides("#process_decoration", "#listadecoracion", "#marcadordecoracion");
   
   
-    var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
-
-            var i = checkDeco.length;
-            while (i--) {
-              checkDeco[i].className = ' ';
-            }
-            checkDeco[pos].className = 'selected';
-         
-             
-             
-            }
-     });
-
-
-    var checkDeco = document.getElementById('marcadordecoracion').getElementsByTagName('li');
-
+   
 
 });
 
@@ -1984,8 +1971,16 @@ $(document).delegate("#creation_title", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+      
         if(esAlbum == true) {
+                 getPortadas(); // wsMilleFeuille
        		 navegaSeccion("#process_decoration","slide");    
+        }else if(esCanvas == true){
+            
+                 getMarcos(); // wsMilleFeuille
+       		 navegaSeccion("#process_frames","slide");
+            
+            
         }else{
                 cambioOrientacion("horizontal");
       		 navegaSeccion("#creation_edit", "slide", true);
@@ -2202,19 +2197,16 @@ function loginUser() {
         data: JSON.stringify(datos),
         url: site_URL+'ws.asmx/login',
         success: function (data) {
-            $('#spanErrorLogin').html(data.d);
-            //trace(data);
-            //trace(data);
-            if (data.d.indexOf("OK") >= 0) {
+        var cadenaJSON = JSON.parse(data.d);
+
+
+            if (cadenaJSON.resultado == "OK") {
+                
                 logado = true;
                 _userID = $('#txtUserNameMF').val();
             navegaSeccion("#process_select", "slideup");
             
-          $("#debugMsg").html("");
-          $("#alertType").css("color","green");
-          $("#alertType").html("WS CONNECT SUCCESS!"); 
-          $("#debugScreen").css("display","block");
-          $("#debugMsg").text(data);
+
             
             }
             else {
@@ -2229,37 +2221,50 @@ function loginUser() {
 
 }
 
-function getProducts() {
+function getPortadas() {
     
-    var datos = {};
+    trace("recuperando portadas");
+    
     
     $.ajax({
-        type: 'GET',
+
         dataType: 'json',
         contentType: 'application/json',
-        data: JSON.stringify(datos),
         url: site_URL+'ws.asmx/recuperarPortadas',
         success: function(data) {
-          
-          if(data.d.resultado == "OK") {
-          
-          $("#debugMsg").html("");
-          $("#alertType").css("color","green");
-          $("#alertType").html("WS CONNECT SUCCESS!"); 
-          $("#debugScreen").css("display","block");
-          $("#debugMsg").text(data.d.mensaje);
-          
-            }else{
-          $("#debugMsg").html("");
-          $("#alertType").css("color","red");
-          $("#alertType").html("ERROR ON REQUEST!"); 
-          $("#debugScreen").css("display","block");
-          $("#debugMsg").text(e); 
-          }
+            trace(data);
+        var cadenaJSON = JSON.parse(data.d);
+        
+        if(cadenaJSON.resultado == "OK") {
+
+              $(".listaproceso").html("");
+              $("#bgselect .divPaginationDots #marcadoresproceso").html("");
+              
+              for (var i=0;i<cadenaJSON.portadas.length;i++){
+                  var imgPortada = cadenaJSON.portadas[i].img;
+                  var idPortada =  cadenaJSON.portadas[i].id;
+                  $(".listaproceso").append("<div><img src='"+RUTA_IMAGENES_PORTADA+imgPortada+"' data-id='"+idPortada+"'></div>");
+                  $("#bgselect .divPaginationDots #marcadoresproceso").append("<li></li>");
+              }
+              
+               $($("#marcadordecoracion li")[0]).addClass("selected");
+              
+            var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
+
+                 $("#marcadordecoracion li").removeClass("selected");      
+                 $($("#marcadordecoracion li")[pos]).addClass("selected");
+
+                 }
+          });
+
+          }else{
+              //se ha producido un error al recuperar portadas
+              trace("error al recuperar portadas"+data.d);
+        }
           
         },
         error: function(e) {
-          //  trace("error: " + e);
+          trace("error de conexión: " + e);
             
 
             

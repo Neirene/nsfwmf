@@ -31,6 +31,9 @@ Variables web service (mover plz)
 var APP_ID_FB = "382088901918989";
 var REDIRECT_URL_FB = "http://genericwebdomain.com/mille-feuille/";
 
+var RUTA_IMAGENES_PORTADA = "http://genericwebdomain.com/mille-feuille/images/products/";
+var RUTA_IMAGENES_MARCOS = "http://genericwebdomain.com/mille-feuille/images/frames/";
+
 
 var logado = false;
 var _userID = "";
@@ -70,13 +73,13 @@ var app = {
 
 
 
-/*
+
 function trace(queMsg){
     try{
         console.log(queMsg);
     }catch(err){}
 }
-*/
+
 
 /*********************************************************
 F U N C I O N E S      G L O B A L E S 
@@ -1312,7 +1315,7 @@ $(document).delegate("#process_select", "pageshow", function () {
           $("#debugScreen").css("display","none");
           });
     
-    getProducts(); // wsMilleFeuille
+   
     var tipoProducto = ["CREATE A NEW ALBUM","CREATE PHOTO FRAME","PRINT YOUR PHOTOS"];
                      
     //slides
@@ -1377,7 +1380,7 @@ $(document).delegate("#process_select", "pageshow", function () {
 
             case 1:
                 //marco
-                destino = "#process_frames";
+                destino = "#process_source";
                 
                 esAlbum = false;
                 esCanvas = true;
@@ -1456,22 +1459,7 @@ $(document).delegate("#process_decoration", "pageshow", function () {
   //  mainslides("#process_decoration", "#listadecoracion", "#marcadordecoracion");
   
   
-    var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
-
-            var i = checkDeco.length;
-            while (i--) {
-              checkDeco[i].className = ' ';
-            }
-            checkDeco[pos].className = 'selected';
-         
-             
-             
-            }
-     });
-
-
-    var checkDeco = document.getElementById('marcadordecoracion').getElementsByTagName('li');
-
+   
 
 });
 
@@ -1484,7 +1472,7 @@ $(document).delegate("#process_frames", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#process_select", "slide", true);
+        navegaSeccion("#creation_edit", "slidedown");
 
     });
 
@@ -1492,7 +1480,7 @@ $(document).delegate("#process_frames", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#process_source", "slide");
+        navegaSeccion("#creation_title", "slideup");
 
     });
 
@@ -1661,15 +1649,15 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 	}else{
             
             if(esAlbum == true) {
-              //  trace("debes seleccionar: " + cantidadFotosAlbum + " fotos para album");
+                trace("debes seleccionar: " + cantidadFotosAlbum + " fotos para album");
             }
             
             if(esCanvas == true) {
-             //   trace("debes seleccionar: " + cantidadFotosCanvas + " fotos para Canvas");
+                trace("debes seleccionar: " + cantidadFotosCanvas + " fotos para Canvas");
             }
             
             if(esFoto == true) {
-             //   trace("debes seleccionar: " + cantidadFotosSueltas + " fotos para impresion");
+                trace("debes seleccionar: " + cantidadFotosSueltas + " fotos para impresion");
             }
             
         }
@@ -1748,11 +1736,19 @@ $(document).delegate("#creation_edit", "pageshow", function () {
     $("#btEditTitle").off("tap").on("tap", function (e) {
         e.preventDefault();
         e.stopPropagation();
-        cambioOrientacion("vertical");
+        
         if(esAlbum == true) {
-			navegaSeccion("#process_decoration", "slideup"); 
+            cambioOrientacion("vertical");
+            getPortadas();
+            navegaSeccion("#process_decoration", "slideup"); 
+        }else if(esCanvas == true){
+            cambioOrientacion("vertical");
+            getMarcos();
+            navegaSeccion("#process_frames", "slideup"); 
+            
         }else{
-			navegaSeccion("#creation_title", "slideup");
+            cambioOrientacion("vertical");
+            navegaSeccion("#creation_title", "slideup");
         }
 
     });
@@ -1984,8 +1980,16 @@ $(document).delegate("#creation_title", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+      
         if(esAlbum == true) {
+                 cambioOrientacion("vertical");
        		 navegaSeccion("#process_decoration","slide");    
+        }else if(esCanvas == true){
+            
+                cambioOrientacion("vertical");
+       		 navegaSeccion("#process_frames","slide");
+            
+            
         }else{
                 cambioOrientacion("horizontal");
       		 navegaSeccion("#creation_edit", "slide", true);
@@ -2202,19 +2206,16 @@ function loginUser() {
         data: JSON.stringify(datos),
         url: site_URL+'ws.asmx/login',
         success: function (data) {
-            $('#spanErrorLogin').html(data.d);
-            //trace(data);
-            //trace(data);
-            if (data.d.indexOf("OK") >= 0) {
+        var cadenaJSON = JSON.parse(data.d);
+
+
+            if (cadenaJSON.resultado == "OK") {
+                
                 logado = true;
                 _userID = $('#txtUserNameMF').val();
             navegaSeccion("#process_select", "slideup");
             
-          $("#debugMsg").html("");
-          $("#alertType").css("color","green");
-          $("#alertType").html("WS CONNECT SUCCESS!"); 
-          $("#debugScreen").css("display","block");
-          $("#debugMsg").text(data);
+
             
             }
             else {
@@ -2229,37 +2230,54 @@ function loginUser() {
 
 }
 
-function getProducts() {
+function getPortadas() {
     
-    var datos = {};
+    trace("recuperando portadas");
+    
     
     $.ajax({
-        type: 'GET',
-        dataType: 'json',
+
+       type: 'POST',
+        dataType: "json",
         contentType: 'application/json',
-        data: JSON.stringify(datos),
+      
         url: site_URL+'ws.asmx/recuperarPortadas',
         success: function(data) {
-          
-          if(data.d.resultado == "OK") {
-          
-          $("#debugMsg").html("");
-          $("#alertType").css("color","green");
-          $("#alertType").html("WS CONNECT SUCCESS!"); 
-          $("#debugScreen").css("display","block");
-          $("#debugMsg").text(data.d.mensaje);
-          
-            }else{
-          $("#debugMsg").html("");
-          $("#alertType").css("color","red");
-          $("#alertType").html("ERROR ON REQUEST!"); 
-          $("#debugScreen").css("display","block");
-          $("#debugMsg").text(e); 
-          }
+            trace(data);
+        var cadenaJSON = JSON.parse(data.d);
+        
+        console.log(cadenaJSON);
+        
+        if(cadenaJSON.resultado == "OK") {
+
+              $(".listaproceso").html("");
+              $("#bgselect .divPaginationDots #marcadoresproceso").html("");
+              
+              for (var i=0;i<cadenaJSON.mensaje.portadas.length;i++){
+                  var imgPortada = cadenaJSON.mensaje.portadas[i].img;
+                  var idPortada =  cadenaJSON.mensaje.portadas[i].id;
+                  $(".listaproceso").append("<div><img src='"+RUTA_IMAGENES_PORTADA+imgPortada+"' data-id='"+idPortada+"'></div>");
+                  $("#bgselect .divPaginationDots #marcadoresproceso").append("<li></li>");
+              }
+              
+               $($("#marcadordecoracion li")[0]).addClass("selected");
+              
+            var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
+
+                 $("#marcadordecoracion li").removeClass("selected");      
+                 $($("#marcadordecoracion li")[pos]).addClass("selected");
+
+                 }
+          });
+
+          }else{
+              //se ha producido un error al recuperar portadas
+              trace("error al recuperar portadas"+data.d);
+        }
           
         },
         error: function(e) {
-          //  trace("error: " + e);
+          trace("error de conexión: " + e);
             
 
             
@@ -2267,3 +2285,58 @@ function getProducts() {
     });
 }
 
+
+function getMarcos() {
+    
+    trace("recuperando marcos");
+    
+    
+    $.ajax({
+
+       type: 'POST',
+        dataType: "json",
+        contentType: 'application/json',
+      
+        url: site_URL+'ws.asmx/recuperarMarcos',
+        success: function(data) {
+            trace(data);
+        var cadenaJSON = JSON.parse(data.d);
+        
+        console.log(cadenaJSON);
+        
+        if(cadenaJSON.resultado == "OK") {
+
+              $(".listaframes").html("");
+              $("#bgframes .divPaginationDots #marcadorframes").html("");
+              
+              for (var i=0;i<cadenaJSON.mensaje.marcos.length;i++){
+                  var imgMarcos = cadenaJSON.mensaje.marcos[i].img;
+                  var idMarcos =  cadenaJSON.mensaje.marcos[i].id;
+                  $(".listaframes").append("<div><div class='decoframecont'><img src='"+RUTA_IMAGENES_MARCOS+imgMarcos+"' data-id='"+idMarcos+"' /></div></div>");
+                  $("#bgframes .divPaginationDots #marcadorframes").append("<li></li>");
+              }
+              
+               $($("#marcadorframes li")[0]).addClass("selected");
+              
+            var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
+
+                 $("#marcadorframes li").removeClass("selected");      
+                 $($("#marcadorframes li")[pos]).addClass("selected");
+
+                 }
+          });
+
+          }else{
+              //se ha producido un error al recuperar portadas
+              trace("error al recuperar marcos"+data.d);
+        }
+          
+        },
+        error: function(e) {
+          trace("error de conexión: " + e);
+            
+
+            
+        }
+    });
+}

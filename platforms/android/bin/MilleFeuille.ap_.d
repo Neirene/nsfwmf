@@ -140,10 +140,10 @@ C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\M
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\gallerys\p02.jpg \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\gallerys\p03.jpg \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\gallerys\p04.jpg \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\products\album1.png \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\products\album2.png \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\products\album3.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\products\desktop.ini \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\products\prod01.png \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\products\prod01b.png \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\products\prod01c.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\products\prod02.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\js\actions \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\js\caman.full.min.js \
