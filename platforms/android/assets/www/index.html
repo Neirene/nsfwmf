@@ -12,7 +12,7 @@
 <meta name="format-detection" content="telephone=no" />
 
 <!--android-->
-<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=1">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=1">
 
 
 <!-- SCRIPTS PRELOAD -->
@@ -206,9 +206,9 @@
                 </div>
                 
                 <div class="formRegister">
-                <input type="text" value="Email" id="txtEmailRegister" name="">
-                <input type="text" value="Your Password" id="txtPassRegister" name="">
-                <input type="text" value="Repeat Password" id="txtPassRepeatRegister" name="">
+                <input type="text" value="Email" id="txtEmailRegister" data-default="Email" name="">
+                <input type="password" value="Your Password" id="txtPassRegister" data-default="Your Password" data-type="password" name="">
+                <input type="password" value="Repeat Password" id="txtPassRepeatRegister" data-default="Repeat Password" data-type="password" name="">
                 
                     <div class="conditions">
                         <ul>
@@ -280,10 +280,11 @@
                 
                 <div class="formLogin">
                 <ul>
-                <li class="inputIcon"> <img src="images/iconUser.png" alt=""> <input type="text" value="User" name="" id="txtUserNameMF"></li>
-                <li class="inputIcon"> <img src="images/iconPass.png" alt=""> <input type="text" value="Password" name="" maxlength="6" id="txtPassMF"></li>
-                 <li class="buttonIcon" id="errorLogin"> 
-                    <span id="spanErrorLogin"></span>
+                    <li class="inputIcon"> <img src="images/iconUser.png" alt=""><input type="text" value="User" name="" id="txtUserNameMF" data-default="User" /></li>
+                    <li class="inputIcon"> <img src="images/iconPass.png" alt=""><input type="text" value="Password" name="" maxlength="50" id="txtPassMF" data-default="Password" data-type="password" /></li>
+                    
+                    <li class="buttonIcon" id="errorLogin"> 
+                        <span id="spanErrorLogin"></span>
                     </li>
                 </ul>
                     
@@ -316,7 +317,7 @@
                 </div>
                 
                 <div class="formRegister">
-                <input type="text" value="EMAIL" name="" id="recoveryEmail">
+                <input type="text" value="EMAIL" name="" id="recoveryEmail" data-default="EMAIL" />
                 </div>
                 
                 <div class="footerButtons">
@@ -422,9 +423,9 @@
                 
                 <div class="decoframes" id="sliderFrames">
                     <div class="listaframes">
-                    <div> <div class="decoframecont"> <img src="images/frames/frame1.png" alt=""> </div></div>
-                    <div> <div class="decoframecont"> <img src="images/frames/frame2.png" alt=""></div></div>
-                    <div> <div class="decoframecont"> <img src="images/frames/frame3.png" alt=""></div></div>
+                        <div><img src="images/frames/frame1.png" alt=""></div>
+                        <div><img src="images/frames/frame2.png" alt=""></div>
+                        <div><img src="images/frames/frame3.png" alt=""></div>
                     </div>
                 </div>
                 
@@ -909,7 +910,7 @@
                     Add a tittle an preview if is all as you like it
                 </div>
                 <div class="formRegister">
-                    <input type="text" value="ADD TITLE" name="">
+                    <input type="text" value="ADD TITLE" name="" data-default="ADD TITLE" id="tituloAlbum"/>
                 </div>
                 <div class="miniPreview">
                     <a href="phone#creation_preview" data-transition="slidedown" data-icon=""><div class="btPreview"> <img src="images/btLupa.png" alt=""> </div></a>
@@ -960,9 +961,9 @@
             
                 <div class="btArrow prev" id="btSavedBack"> <img src="images/arrPrev.png" alt=""> </div>
                 
-                <div data-controltype="textblock" class="titular02">
-                ALBUM TITLE HERE
-                </div>
+                <div data-controltype="textblock" class="titular02">ALBUM TITLE HERE</div>
+                
+                
                 
                 <div class="miniPreview">
                 <img src="images/products/prod02.png" alt="">
@@ -1038,7 +1039,7 @@
                         </tr>
                         
                         <tr>
-                        <td><span>QUANTITY</span> <input type="text" value="1" name="" class="formOderinput" data-role="none" ></td>
+                        <td><span>QUANTITY</span> <input type="text" value="1" name="" class="formOderinput" data-role="none" id="cantidad"></td>
                         </tr>  
                         
                         <tr>
@@ -1087,14 +1088,14 @@
                 </div>
                 
                 <div class="formRegister">
-                    <input type="text" value="NOMBRE" name="">
-                    <input type="text" value="DIRECCIÓN 1" name="">
-                    <input type="text" value="DIRECCIÓN 2" name="">
-                    <input type="text" value="CÓDIGO POSTAL" name="">
-                    <input type="text" value="CIUDAD" name="">
-                    <input type="text" value="PAÍS" name="">
-                    <input type="text" value="CHOOSE PASSWORD" name="">
-                    <input type="text" value="EMAIL" name="">
+                    <input type="text" value="NAME" name="" id="name" data-default="NAME" />
+                    <input type="text" value="ADDRESS" name="" id="addr1" data-default="ADDRESS" />
+                    <input type="text" value="PHONE" name="" id="phone" data-default="PHONE" />
+                    <input type="text" value="ZIP" name="" id="zip" data-default="ZIP" />
+                    <input type="text" value="CITY" name="" id="city" data-default="CITY" />
+                    <input type="text" value="COUNTRY" name="" id="country" data-default="COUNTRY" />
+                    <input type="text" value="CHOOSE PASSWORD" name="" id="passwordSet" data-default="CHOOSE PASSWORD" />
+                    <input type="text" value="EMAIL" name="" id="idSet" data-default="EMAIL" />
                 </div>
                 
                 <div class="footerButtons">
@@ -1104,7 +1105,30 @@
                 
         </div>
         </div>
-        
+
+        <!-- Pantalla UPLOAD IMAGENES -->  
+        <div data-role="page" data-control-title="uploadIMG"  data-url="uploadIMG" id="upload_screen">
+        <div data-role="content" id="payment">
+            
+                <div class="btArrow prev" id="btUpBack"> <img src="images/arrPrev.png" alt=""> </div>
+               <!-- <div class="btArrow next" id="btUpNext"> <img src="images/arrNextOver.png" alt=""> </div>-->
+                
+                <div data-controltype="textblock" class="titular02">
+                BAKING YOUR DESERT! 
+                </div>
+                <div class="uplogo"> <img src="images/miniLogo.png" alt=""> </div>
+               <div class="subtitular02"><h3>uploading <span id="contadorUpload">1</span> of <span id="totalUpload">10</span> pictures</h3></div>
+                 
+                
+                
+                <div data-controltype="textblock" class="subtitular02" id="contadorUpload">
+                    Please wait until the upload process is completed<br> to continue with your order.
+                </div>
+                
+                
+                
+        </div>
+        </div>
         
         
         <!-- Pantalla tipo de pagos -->  

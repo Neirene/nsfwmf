@@ -22,24 +22,73 @@ var totalAlbum;
 var fotosFinales;
 var numFotoEditando = 0;
 
+var fotoActualSubida;
+
+
+var _tokenFB = "";
+
+var $soporteFotoThu;
+ 
+var _igToken="";
+var _listaFotos;
+
+var CLIENT_ID_IG = "6a115ece6f1246a3b77d3593552d28a4";
+var REDIRECT_URI = "http://genericwebdomain.com/mille-feuille/token/";
+
+
+
+var numeroFotos;
+var fotosElegidas = new Array();
+
+var paginaIzq = 0;
+var paginaDer = 0;
+var miSwipeIzquierda;
+var miSwipeDerecha;
+
+var fotosFaltanConvertir;
+
+//relacion1
+  
+var relacion1;
+var relacion2;
+
+var altoEditor;
+var anchoEditor;
+var escalaFinal;
+
+//var listaCanvas = new Array();
+var fotoMod;
+var foto64;
+var totalFotosAlbum;
+var totalFotosCanvas;
+var totalFotosSueltas;
+/*var idRegField = $('#txtEmailRegister').val();
+var idPassField = $('#txtPassRegister').val();
+var idRepeatPassField = $('#txtPassRepeatRegister').val();*/
+
+
+var regIdVal = "Email";
+var regPassVal = "Your Password";
+var regRepeatPassVal = "Repeat Password";
+
+//paginasFull contiene un array con las posiciones de cada foto en el álbum
+var paginasFull = new Array();
+//var fi = 0;
+var numPagina = 0;
+//var pos;
+var filter = 0;
+
+//var widthImagen = $("#fullScPic").width();
+
 
 
 
 
 //objetoprincipal
-// "p" de "PEDIDO"
+
 
 var datosUsuario = new Object();
-   /* p.id;   //email
-    p.name;
-    p.address;
-    p.phone;
-    p.product;
-    p.decos;
-    p.quantity;
-    p.nPictures;
-    p.unitPrice;
-    p.totalPrice;*/
+
     
     
 
@@ -50,7 +99,7 @@ Variables web service (mover plz)
 var APP_ID_FB = "382088901918989";
 var REDIRECT_URL_FB = "http://genericwebdomain.com/mille-feuille/";
 
-var RUTA_IMAGENES_PORTADA = "http://genericwebdomain.com/mille-feuille/images/products/";
+var RUTA_IMAGENES_PORTADA = "http://genericwebdomain.com/mille-feuille/images/decorations/";
 var RUTA_IMAGENES_MARCOS = "http://genericwebdomain.com/mille-feuille/images/frames/";
 
 
@@ -234,7 +283,6 @@ function navegaSeccion(idSeccionNueva, transicion, esReverse) {
  Funciones Facebook
 **********************************/
 
-var _tokenFB = "";
 
 function conectarFacebook() {
     //abrimos la consola web de autenticaciÃ³n instagram
@@ -262,7 +310,7 @@ function conectarFacebook() {
 
                 _tokenFB = objDevuelto.access_token;
                 
-                datosUsuario.id = _tokenFb; //obtenemos email (ID) objeto principal
+                datosUsuario.id = _tokenFB; //obtenemos email (ID) objeto principal
                 datosUsuario.tipoLogin = "facebook";  // esto es facebook               
 
                 navegaSeccion("#process_select", "slideup");
@@ -389,13 +437,7 @@ function recuperarListaFotosFB() {
  Funciones Instagram
  ********************************/
  
-var $soporteFotoThu;
- 
-var _igToken="";
-var _listaFotos;
 
-var CLIENT_ID_IG = "6a115ece6f1246a3b77d3593552d28a4";
-var REDIRECT_URI = "http://genericwebdomain.com/mille-feuille/token/";
 
 
 
@@ -588,8 +630,6 @@ function representarFotos(){
  seleccionadas del carrete/IG/FB
 ************************************/
 
-var numeroFotos;
-var fotosElegidas;
 
 
 
@@ -631,10 +671,7 @@ function convertirCanvas(objFoto) {
 }
 
 
-var paginaIzq = 0;
-var paginaDer = 0;
-var miSwipeIzquierda;
-var miSwipeDerecha;
+
 
 
 
@@ -679,6 +716,8 @@ function rellenarAlbum() {
                     //paginaIzq = pos;
                     paginasFull[numPagina] = pos;
                     numFotoEditando = pos;
+                    
+                    fotosElegidas[pos].orden = numPagina;
                  } 
     });
     
@@ -695,6 +734,8 @@ function rellenarAlbum() {
 			//paginaDer = pos;
 			numFotoEditando = pos;
 			paginasFull[numPagina+1] = pos;
+                        
+                        fotosElegidas[pos].orden = numPagina+1;
                  }
     });  
 	
@@ -787,16 +828,7 @@ function magicWandSet(filter) {
 
 
 
-//relacion1
-  
-var relacion1;
-var relacion2;
 
-var altoEditor;
-var anchoEditor;
-var escalaFinal;
-
-//var widthImagen = $("#fullScPic").width();
 
 
 function resizeEditorPic() {
@@ -840,9 +872,9 @@ function resizeEditorPic() {
 }
    
 
-//var listaCanvas = new Array();
-var fotoMod;
-var foto64;
+
+
+
 function cropCanvas() {
    
 	//corta la imagen
@@ -923,43 +955,42 @@ function actualizarFotoAlbum(dataURL) {
  * pantallas de pedido
  ***********************************/
 
-var totalFotosAlbum;
-var totalFotosCanvas;
-var totalFotosSueltas;
+
+
 function calcularPrecioFinal() {
     
+    
+     var precioTotal = 0;       
+     var totalFotos = fotosElegidas.length;
+              
     if(esAlbum == true) {
-        totalFotosAlbum = fotosElegidas.length;
+       
 
-        totalAlbum = totalFotosAlbum * precioFoto;
-
-
-        $("#photoNumber").val(cantidadFotosAlbum);
-        $("#totalPrice").val(totalAlbum+"€")
+        precioTotal = totalFotos * precioFoto;
 
     }
 
     if(esCanvas == true) {
-        totalFotosCanvas = fotosElegidas.length;
+       // totalFotosCanvas = fotosElegidas.length;
 
-        totalCanvas = (totalFotosCanvas * precioFoto)*precioCanvas;
+        precioTotal = (totalFotos * precioFoto)*precioCanvas;
 
-
-        $("#photoNumber").val(cantidadFotosCanvas);
-        $("#totalPrice").val(totalCanvas+"€")
 
     }
 
     if(esFoto == true) {
-        totalFotosSueltas = fotosElegidas.length;
+        //totalFotosSueltas = fotosElegidas.length;
 
-        totalFotos = totalFotosSueltas * precioFoto;
-
-
-        $("#photoNumber").val(cantidadFotosCanvas);
-        $("#totalPrice").val(totalFotos+"€")
+        precioTotal = totalFotos * precioFoto;
 
     }    
+    
+     $("#photoNumber").val(totalFotos);
+     $("#totalPrice").val(precioTotal+"€");
+     
+    datosUsuario.numeroImagenes = totalFotos;
+    datosUsuario.cantidad = parseInt($("#orderresume #cantidad").val());
+    datosUsuario.precioTotal = precioTotal;
     
 }
 
@@ -1074,14 +1105,7 @@ $(document).delegate("#aboutus", "pageshow", function () {
 /************************************
 Pantalla de registro cuentas MF
 ************************************/
-var idRegField = $('#txtEmailRegister').val();
-var idPassField = $('#txtPassRegister').val();
-var idRepeatPassField = $('#txtPassRepeatRegister').val();
 
-
-var regIdVal = "Email";
-var regPassVal = "Your Password";
-var regRepeatPassVal = "Repeat Password";
 
 $(document).delegate("#registerarea", "pageshow", function () {
 
@@ -1103,27 +1127,75 @@ $(document).delegate("#registerarea", "pageshow", function () {
 
     });
 
-    $("#txtEmailRegister").focus(function() {
+    /*$("#txtEmailRegister").focus(function() {
        
-       //if (idField == loginIdVal) {
+       var userName = $("#txtEmailRegister").val();
+       
+	   if (userName == $(this).attr("data-default")){
            $("#txtEmailRegister").val("");
-       //}
-        $("body").offset({top:0});
+	   }
+       
+       $("body").offset({top:0});
 
     });
     
     $("#txtEmailRegister").blur(function() {
+		
        var userName = $("#txtEmailRegister").val();
-       if (userName == "" || userName == regIdVal){
-           $("#txtEmailRegister").val(regIdVal);       }
-       else {
-           regIdVal = $("#txtEmailRegister").val();
-           
-       }
+	   
+       if (userName == ""){
+           $("#txtEmailRegister").val($(this).attr("data-default"));      
+		}
+       
        $(document).scrollTop(0);
-    });
+	   
+    });*/
+	
+	$("input").bind("focus",function(){
+		if ($(this).val()==$(this).attr("data-default")){
+			//
+			
+			$(this).removeClass("textoApagado");
+			if ($(this).attr("data-type")=="password"){
+				//hacemos copia
+				var copia = $(this).clone(true);
+				copia.attr("type","password");
+				copia.val("");
+				
+				$(this).replaceWith(copia);
+				copia.focus();
+			}else{
+				$(this).val("");	
+				
+			}
+			// $(this).css('background-position-x', 'center');
+		}
+		
+	});
+	
+	$("input").bind("blur",function(){
+		if ($(this).val()==""){
+			//
+			$(this).addClass("textoApagado");
+			
+			if ($(this).attr("data-type")=="password"){
+				//
+				var copia = $(this).clone(true);
+				copia.attr("type","text");
+				copia.val($(this).attr("data-default"));
+				
+				$(this).replaceWith(copia);
+			}else{
+				$(this).val($(this).attr("data-default"));	
+			}
+			//$(this).css('background-position-x', '0px');
+		}
+		
+		$(document).scrollTop(0);
+		
+	});
     
-    $("#txtPassRegister").focus(function() {
+   /* $("#txtPassRegister").focus(function() {
 
        $("#txtPassRegister").val("");
 
@@ -1141,8 +1213,10 @@ $(document).delegate("#registerarea", "pageshow", function () {
        }
        $(document).scrollTop(0);
     });
+	
+	*/
     
-    $("#txtPassRepeatRegister").focus(function() {
+   /* $("#txtPassRepeatRegister").focus(function() {
 
         $("#txtPassRepeatRegister").val("");
 
@@ -1160,7 +1234,7 @@ $(document).delegate("#registerarea", "pageshow", function () {
        }
        $(document).scrollTop(0);
        
-    });
+    });*/
 
 });
 
@@ -1216,12 +1290,12 @@ Pantalla de login MF
 ************************************/
 $(document).delegate("#loginaccess", "pageshow", function () {
     
-    var idField = $("#txtUserNameMF").val();
-    var passField = $("#txtPassMF").val();
+   // var idField = $("#txtUserNameMF").val();
+   // var passField = $("#txtPassMF").val();
     
     
-    var loginIdVal = "User";
-    var loginPassVal = "Password";
+   // var loginIdVal = "User";
+   // var loginPassVal = "Password";
 
     $("#btLoginMF").off("tap").on("tap", function (e) {
         loginUser();
@@ -1239,7 +1313,7 @@ $(document).delegate("#loginaccess", "pageshow", function () {
 
     });
 
-    $("#txtUserNameMF").focus(function() {
+   /* $("#txtUserNameMF").focus(function() {
 
            $("#txtUserNameMF").val("");
         
@@ -1274,7 +1348,7 @@ $(document).delegate("#loginaccess", "pageshow", function () {
            
        }
        $(document).scrollTop(0);
-    });
+    });*/
 
 });
 
@@ -1282,8 +1356,8 @@ $(document).delegate("#loginaccess", "pageshow", function () {
 Pantalla de Olvide Password
 ************************************/
 $(document).delegate("#rememberPass", "pageshow", function () {
-    var RePassField = $("#recoveryEmail").val();
-    var RePassVal = "EMAIL";
+   // var RePassField = $("#recoveryEmail").val();
+   // var RePassVal = "EMAIL";
 
     $("#btRePassRecover").off("tap").on("tap", function (e) {
 
@@ -1302,7 +1376,7 @@ $(document).delegate("#rememberPass", "pageshow", function () {
     });
     
     
-    $("#recoveryEmail").focus(function() {
+    /*$("#recoveryEmail").focus(function() {
        
        //if (idField == loginIdVal) {
            $("#recoveryEmail").val("");
@@ -1328,7 +1402,7 @@ $(document).delegate("#rememberPass", "pageshow", function () {
 
        
 
-    });
+    });*/
     
 
 });
@@ -1590,9 +1664,6 @@ $(document).delegate("#clanding", "pageshow", function () {
 Pantalla Galeria Carrete
 ************************************/
 
-var miFoto = new Object();
-
-var fotosFaltanConvertir;
 
 $(document).delegate("#creation_gallery","pageshow",function(e) {
 
@@ -1727,11 +1798,7 @@ Pantalla Seleccion/Edicion Fotos
 //var fotosFull = new Array();
  //fotosfull = ["default.jpg", "p01.jpg", "p02.jpg", "p03.jpg", "gal01.jpg"];
 
-//paginasFull contiene un array con las posiciones de cada foto en el álbum
-var paginasFull = new Array();
-//var fi = 0;
-var numPagina = 0;
-//var pos;
+
 
 $(document).delegate("#creation_edit", "pageshow", function () {
 
@@ -1878,7 +1945,7 @@ function lanzarAnimacionLibro(queDireccion){
 /************************************
 Pantalla Foto FullScreen
 ************************************/
-var filter = 0;
+
 
 
 $(document).delegate("#creation_full", "pageshow", function () {
@@ -2013,8 +2080,9 @@ $(document).delegate("#creation_title", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
+        datosUsuario.tituloAlbum = $("#tituloAlbum").val();
         navegaSeccion("#creation_saved", "slide");
-
+            
     });
     
     
@@ -2042,6 +2110,8 @@ $(document).delegate("#creation_preview", "pageshow", function () {
 Pantalla final titulo album
 ************************************/
 $(document).delegate("#creation_saved", "pageshow", function () {
+
+    $("#creation_saved .titular02").html(datosUsuario.tituloAlbum);
 
     $("#btSavedBack").off("tap").on("tap", function (e) {
 
@@ -2089,25 +2159,25 @@ $(document).delegate("#orderresume", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        
-        if(p.id == null) {
-            $("#passwordSet").css("display","inline");
-            $("#idSet").css("display","inline");
+        trace("boton");
+        if(datosUsuario.tipoLogin == "anonimo") {
+            $("#passwordSet").show();
+            $("#idSet").show();
             navegaSeccion("#address", "slideup");
         }else{
-            $("#passwordSet").css("display","none");
-            $("#idSet").css("display","none");
+            $("#passwordSet").hide();
+            $("#idSet").hide();
             navegaSeccion("#address", "slideup");
         }
-        
-        
-        
+         
 
     });
 
-    $("#orderresume input").blur(function() {
-        $(document).scrollTop(0);
-    });
+
+    
+    $("#orderresume #cantidad").on("change",function(){
+        calcularPrecioFinal();
+    })
 
 });
 
@@ -2128,16 +2198,65 @@ $(document).delegate("#addressresume", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#payment", "slideup");
+        
+        
+        //llamada server final guardar TOOOODOS LOS DATOS
+        //llamar al upload de imagenes
+        datosUsuario.nombre = $("#name").val();
+        datosUsuario.telefono = $("#phone").val();
+        datosUsuario.direccion = $("#addr1").val()+"###"+$("#zip").val()+"###"+$("#city").val()+"###"+$("#country").val();
+        
+        enviarPedido();
+        //subirImagenes();
+        
+        
+        
+        //navegaSeccion("#payment", "slideup");
 
     });
     
-    $("#addressresume input").blur(function() {
-        $(document).scrollTop(0);
-    });    
+
 
 });
 
+/************************************
+Pantalla Upload Fotos
+************************************/
+function actualizarProgreso(){
+    
+    $("#contadorUpload").html(fotoActualSubida+1);
+    $("#totalUpload").html(fotosElegidas.length);
+   
+    
+}
+
+$(document).delegate("#upload_screen", "pageshow", function () {
+
+fotoActualSubida = 0;
+actualizarProgreso();
+//colocar el array para mostrar el orden de páginas
+
+enviarFoto(fotoActualSubida);
+
+    $("#btUpBack").off("tap").on("tap", function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        navegaSeccion("#address", "slide", true);
+
+    });
+
+    $("#btUpFinish").off("tap").on("tap", function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        navegaSeccion("#finish", "slideup");
+
+    });
+    
+
+
+});
 
 /************************************
 Pantalla Pagos
@@ -2279,13 +2398,13 @@ function getPortadas() {
         if(cadenaJSON.resultado == "OK") {
 
               $(".listadecoracion").html("");
-              $("#bgselect .divPaginationDots #marcadordecoracion").html("");
+              $("#bgdecoracion .divPaginationDots #marcadordecoracion").html("");
               
               for (var i=0;i<cadenaJSON.mensaje.portadas.length;i++){
                   var imgPortada = cadenaJSON.mensaje.portadas[i].img;
                   var idPortada =  cadenaJSON.mensaje.portadas[i].id;
                   $(".listadecoracion").append("<div><img src='"+RUTA_IMAGENES_PORTADA+imgPortada+"' data-id='"+idPortada+"'></div>");
-                  $("#bgselect .divPaginationDots #marcadordecoracion").append("<li></li>");
+                  $("#bgdecoracion .divPaginationDots #marcadordecoracion").append("<li></li>");
               }
               
                $($("#marcadordecoracion li")[0]).addClass("selected");
@@ -2375,3 +2494,119 @@ function getMarcos() {
     });
 }
 
+function enviarPedido() {
+    
+   var datos = {'idUser':datosUsuario.id,
+                'nombre':datosUsuario.nombre,
+                'direccion':datosUsuario.direccion,
+                'telefono':datosUsuario.telefono,
+                'tipoPedido':datosUsuario.tipoPedido,
+                'tipoPersonalizacion':2, //datosUsuario.deco !!!!!
+                'cantidad':datosUsuario.cantidad,
+                'numeroImagenes':datosUsuario.numeroImagenes,
+                'costeUnidad':precioFoto,
+                'costeTotal':datosUsuario.precioTotal
+                };
+            
+            
+    trace("enviando pedido al servidor");
+    
+    
+    $.ajax({
+
+       type: 'POST',
+        dataType: "json",
+        contentType: 'application/json',
+        data: JSON.stringify(datos),
+        url: site_URL+'ws.asmx/pedido',
+        success: function(data) {
+            trace(data);
+        var cadenaJSON = JSON.parse(data.d);
+        
+        trace(cadenaJSON);
+        
+        if(cadenaJSON.resultado == "OK") {
+            trace("recibo respuesta correcta");
+           trace(cadenaJSON);
+           
+           navegaSeccion("#upload_screen","slide");
+           datosUsuario.idPedido = cadenaJSON.mensaje.idPedido;
+
+          }else{
+              //se ha producido un error al recuperar portadas
+              trace("error al enviar "+data.d);
+        }
+          
+        },
+        error: function(e) {
+          trace("error de conexión: " + e);
+            
+
+            
+        }
+    });
+}
+
+function enviarFoto(numFoto) {
+    
+    var canvasFoto;
+    
+    if(!!fotosElegidas[numFoto].canvasModificado){
+        
+        canvasFoto = fotosElegidas[numFoto].canvasModificado;
+    }else{
+        canvasFoto = fotosElegidas[numFoto].canvas;
+    }
+    
+    var datos = {'idPedido':parseInt(datosUsuario.idPedido),
+                 //'ordenFoto':fotosElegidas[numFoto].orden,
+                 'ordenFoto':1,
+                 'nombreImagen':canvasFoto
+             };
+    
+ $.ajax({
+
+       type: 'POST',
+        dataType: "json",
+        contentType: 'application/json',
+        data: JSON.stringify(datos),
+        url: site_URL+'ws.asmx/uploadImg',
+        success: function(data) {
+            trace(data);
+        var cadenaJSON = JSON.parse(data.d);
+        
+        trace(cadenaJSON);
+        
+        if(cadenaJSON.resultado == "OK") {
+           trace("recibo respuesta correcta");
+           trace(cadenaJSON);
+           
+           //navegarSeccion("#upload_screen","slide");
+           //comprobamos si hemos terminado o hay que subir más fotos
+           fotoActualSubida++;
+           
+           if (fotoActualSubida>=fotosElegidas.length){
+               //he terminado
+               navegaSeccion("#upload_screen","slide");
+           }else{
+               //hay que subir más fotos
+               actualizarProgreso();
+               enviarFoto(fotoActualSubida);
+           }
+
+          }else{
+              //se ha producido un error al recuperar portadas
+              trace("error al enviar "+data.d);
+        }
+          
+        },
+        error: function(e) {
+          trace("error de conexión: " + e);
+            
+
+            
+        }
+    });    
+
+    
+}

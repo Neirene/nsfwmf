@@ -125,10 +125,10 @@ C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\M
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\shareIcon01.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\shareIcon02.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\whiteDot.png \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\decorations\deco01.png \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\decorations\deco01b.png \
-C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\decorations\deco01c.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\decorations\desktop.ini \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\decorations\frame1.png \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\decorations\frame2.png \
+C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\decorations\frame3.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\frames\desktop.ini \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\frames\frame1.png \
 C:\Users\Administrador\Dropbox\Proyectos\Antoine\MilleFeuille\NetBeansProjects\MILLEFEUILLE\platforms\android\assets\www\images\frames\frame2.png \
