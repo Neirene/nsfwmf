@@ -312,16 +312,15 @@ input { border-radius: 0px !important;}
 
 
 
-
 /* edit */
 #creation_edit {position:relative;min-height: 480px;min-width: 320px; background-position: initial initial; background-repeat: no-repeat no-repeat; background-size: cover;}
-.book { width: 800px; height: 300px; border: 3px solid #333; border-radius: 4px; background-color: #fff; position: absolute; /* -webkit-transform:rotate(90deg); */ /* margin-left: -152px; */ top: 85px; left: 10px; /* margin-top: 174px; */}
-.book li {width: 48%; height: 268px;float: left;/* max-height: 200px; *//* overflow: hidden; */position: relative;}
+.book { width: 94%; height: 70%; border: 3px solid #333; border-radius: 4px; background-color: #fff; position: absolute; /* -webkit-transform:rotate(90deg); */ /* margin-left: -152px; */ top: 85px; left: 10px; /* margin-top: 174px; */}
+.book li {width: 48%; height: 269px;float: left;/* max-height: 200px; *//* overflow: hidden; */position: relative;}
 .leftSlide { margin: 2%; margin-right:0; }
 .rightSlide { margin: 2%; margin-left:0; }
 .book img {width: 100%; overflow-y: hidden; }
 .doblez {position: absolute; width: 146px; margin-left: 50%; left: -68px; height: 100%; background-image: url(../images/bgDoblez.png); background-position: center; background-repeat: repeat-y; z-index: 4000  ;pointer-events:none}
-.optionsPage { width: 100%; position: absolute; z-index: 4999; left: 0; height: 268px;pointer-events:none} //CHECK!!!
+.optionsPage { width: 100%; position: absolute; z-index: 4999; left: 0; height: 75%;pointer-events:none} //CHECK!!!
 .optionsPage2 { width: 100%; position: absolute; z-index: 5000; left: 0; top: 0; height: 97%;}
 .arrUpPage, .arrDownPage {position: absolute; width: 96%; text-align: center; max-height: 21px;padding: 2%;}
 .arrUpPage img, .arrDownPage img {height: 100%;width: auto;}
@@ -336,8 +335,8 @@ input { border-radius: 0px !important;}
 .btFull { width: 100%; left: 0; text-align: left; max-width: 67px; position: absolute; top: 0px; margin: 3%;  z-index: 5000}
 .btFull img {width: 60%; height: auto;}
 
-.offPage {position: absolute; background-image: url(../images/whiteDot.png); overflow: hidden; z-index: 8000; left: 0; height: 100%;}
-.offPage span {margin-left: 58px;margin-top: 116px;color: #fff; font-family: 'DINEngschriftLTAlternateRegular';  position:absolute; width: 70%; text-align: center;  left: 0;/* margin: 15%; */font-size: 1.75em;}
+.offPage {position: absolute; background-image: url(../images/whiteDot.png); overflow: hidden; z-index: 8000; left: 0; height: 76%;}
+.offPage span {margin-left: 29%;margin-top: 41%;color: #fff; font-family: 'DINEngschriftLTAlternateRegular';  position:absolute; width: 50%; text-align: center;  left: 0;/* margin: 15%; */font-size: 1.75em;}
 
 .mod90title { margin-top: 20px}
 .mod90button {width: 100%;position: absolute;/* margin-left: 15px; *//* -webkit-transform: rotate(90deg); */ margin-top: 7px;}
@@ -369,7 +368,8 @@ pruebas carousel  BORRAR
   position: relative;
 }
 
-.contenedorSwipesEdit {position:relative;width: 384px;height: 268px;background-color:#42698A;}
+.contenedorSwipesEdit {position:relative;/* width: inherit; */height: 209px;overflow: hidden;}
+
 
 
 
@@ -393,7 +393,7 @@ pruebas carousel  BORRAR
 
 
 
-.borderEffect { -webkit-box-shadow: 0px 0px 0px 200px rgba(255,255,255,0.1); /* -webkit-transform:rotate(90deg); */ border-style: dashed; border-color: white; border-width: 1px; width: 400px; height: 300px; /* background-color: rgb(189, 113, 113); */ position: absolute; top: 50%; left: 50%; margin-top: -125px; margin-left: -207px;pointer-events:none}
+.borderEffect { -webkit-box-shadow: 0px 0px 0px 200px rgba(255,255,255,0.1); /* -webkit-transform:rotate(90deg); */ border-style: dashed; border-color: white; border-width: 1px; width: 400px; height: 300px; /* background-color: rgb(189, 113, 113); */ position: absolute; top: 42%; left: 50%; margin-top: -125px; margin-left: -207px;pointer-events:none}
     #fsFix{padding:0px;width: 100%;overflow: hidden;height: 100%;}
 //#fsFix{min-height: 480px;padding:0px;width: 100%;overflow: hidden;}
 

@@ -6,6 +6,7 @@ var fotoCaman;
 var esAlbum = false;
 var esCanvas = false;
 var esFoto = false;
+var uploadFinished = false;
 
 //cantidad fotos por producto
 var cantidadFotosCanvas = 1;
@@ -135,19 +136,19 @@ var app = {
 	//		//document.body.style.marginTop = "20px";
 	//		$(".btArrow").css("top","25px");
 	//	}
-      //  trace('Received Event: ' + id);
+      //  console.log('Received Event: ' + id);
     }
 };
 
 
 
-
-function trace(queMsg){
+/*
+function console.log(queMsg){
     try{
         console.log(queMsg);
     }catch(err){}
 }
-
+*/
 
 /*********************************************************
 F U N C I O N E S      G L O B A L E S 
@@ -354,7 +355,7 @@ function conectarFacebook() {
 
 
         var queURL = e.url;
-		//trace("estoy en la url:"+queURL);
+		//console.log("estoy en la url:"+queURL);
 
         if (queURL.toLowerCase().indexOf(REDIRECT_URL_FB.toLowerCase()) == 0) {
             //ESTOY EN LA REDIRECT URL
@@ -379,7 +380,7 @@ function conectarFacebook() {
 				/*error_reason=user_denied
  				 &error=access_denied
  				 &error_description=The+user+denied+your+request.*/
-				// trace("ERROR DE LOGIN FB:"+objDevuelto.error_reason);
+				// console.log("ERROR DE LOGIN FB:"+objDevuelto.error_reason);
                                  
             }
             ref.close();
@@ -401,7 +402,7 @@ function conectarFotosFacebook() {
 	
 	
 			var queURL = e.url;
-			//trace("estoy en la url:"+queURL);
+			//console.log("estoy en la url:"+queURL);
 	
 			if (queURL.toLowerCase().indexOf(REDIRECT_URL_FB.toLowerCase()) == 0) {
 				//ESTOY EN LA REDIRECT URL
@@ -422,7 +423,7 @@ function conectarFotosFacebook() {
 					/*error_reason=user_denied
 					 &error=access_denied
 					 &error_description=The+user+denied+your+request.*/
-					// trace("ERROR DE LOGIN FB:"+objDevuelto.error_reason);
+					// console.log("ERROR DE LOGIN FB:"+objDevuelto.error_reason);
 	
 				}
 				ref.close();
@@ -457,7 +458,7 @@ function recuperarListaFotosFB() {
         data: datos,
         url: url_base,
         success: function(datosRecibidos) {
-            //trace(data);
+            //console.log(data);
             var listaFotosTemp = datosRecibidos.data;
 
             _listaFotos = new Array();
@@ -480,7 +481,7 @@ function recuperarListaFotosFB() {
 
             
              for (var x in e){
-             //	trace(x+"**"+e);   
+             //	console.log(x+"**"+e);   
              }
         }
     });
@@ -600,7 +601,7 @@ function recuperarListaFotosIG() {
         data: datos,
         url: url_base,
         success: function(datosRecibidos) {
-            //trace(data);
+            //console.log(data);
             var listaFotosTemp = datosRecibidos.data;
 
             _listaFotos = new Array();
@@ -626,7 +627,7 @@ function recuperarListaFotosIG() {
 
             /*
              for (var x in e){
-             trace(x+"**"+e.);   
+             console.log(x+"**"+e.);   
              }*/
         }
     });
@@ -711,7 +712,7 @@ function convertirCanvas(objFoto) {
 
             dataURL = canvas.toDataURL(); 
            // fotosFull.push(dataURL);
-		  // trace("meto canvas:"+dataURL+"**en:"+objFoto.id);
+		  // console.log("meto canvas:"+dataURL+"**en:"+objFoto.id);
             objFoto.canvas = dataURL;
             
             //
@@ -735,7 +736,7 @@ function convertirCanvas(objFoto) {
 
 function rellenarAlbum() {
 
-   // trace("fotosElegidas: " + fotosElegidas.length)
+   // console.log("fotosElegidas: " + fotosElegidas.length)
     
     $soportePagIzq.html('');
     $soportePagDer.html('');
@@ -766,7 +767,7 @@ function rellenarAlbum() {
 		speed:300,
 		stopPropagation:true,
 		callback: function(pos,elem){
-                   // trace("posIzq: "+pos+"**elem:"+elem); 
+                   // console.log("posIzq: "+pos+"**elem:"+elem); 
                     
 					ponerImagenFull(fotosElegidas[pos].canvas);
 					
@@ -787,7 +788,7 @@ function rellenarAlbum() {
 		 speed:300,
 		 stopPropagation:true,
 		 callback: function(pos){
-						//trace("posDer: "+pos); 
+						//console.log("posDer: "+pos); 
 						ponerImagenFull(fotosElegidas[pos].canvas);
 						//paginaDer = pos;
 						numFotoEditando = pos;
@@ -812,11 +813,11 @@ function rellenarAlbum() {
 	
     $('body').off("swipeleft").on("swipeleft", function(e){
 		cambiarPagina(1,e)
-		//trace("cambia pág libro 1");
+		//console.log("cambia pág libro 1");
 	});
     $('body').off("swiperight").on("swiperight", function(e){
 		cambiarPagina(-1,e);
-		//trace("cambia pág libro 1");
+		//console.log("cambia pág libro 1");
 	});
 	
 	ponerFotoAlbum(0, "izq");
@@ -963,17 +964,17 @@ function cropCanvas() {
    
    /*
    
-   trace("Imagen: "+queImagen);
-   trace("Source X Pos: "+sourceX);
-   trace("Source Y Pos: "+sourceY);
-   trace("Source Width: "+sourceWidth);
-   trace("Source Height: "+sourceHeight);
+   console.log("Imagen: "+queImagen);
+   console.log("Source X Pos: "+sourceX);
+   console.log("Source Y Pos: "+sourceY);
+   console.log("Source Width: "+sourceWidth);
+   console.log("Source Height: "+sourceHeight);
    
    
-   trace("Destination X: "+destX);
-   trace("Destination Y: "+destY);
-   trace("Destination Width: "+destWidth);
-   trace("Destination Height: "+destHeight);
+   console.log("Destination X: "+destX);
+   console.log("Destination Y: "+destY);
+   console.log("Destination Width: "+destWidth);
+   console.log("Destination Height: "+destHeight);
    */
      //Leyenda      (imageObj,   c.x,     c.y,      c.w,           c.h,          0, 0, canvas.width, canvas.height);
    //context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
@@ -1373,14 +1374,17 @@ $(document).delegate("#loginaccess", "pageshow", function () {
 Pantalla de Olvide Password
 ************************************/
 $(document).delegate("#rememberPass", "pageshow", function () {
-   // var RePassField = $("#recoveryEmail").val();
-   // var RePassVal = "EMAIL";
+  
+    $("#recoveryEmail").val($("#recoveryEmail").attr("data-default"));
+   $("#confirmRecoveryMsg").html("");
 
     $("#btRePassRecover").off("tap").on("tap", function (e) {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#loginaccess", "slideup");
+        recuperarPassword();
+        
+       // navegaSeccion("#loginaccess", "slideup");
 
     });
 
@@ -1438,7 +1442,7 @@ $(document).delegate("#process_select", "pageshow", function () {
                      
     //slides
    /* mainslides("#process_select", "#listaproceso", "#marcadoresproceso",function(index){
-               trace("elige producto:"+index);
+               console.log("elige producto:"+index);
               $("#btCreateNewAlbum").text(tipoProducto[index]);
     });
 */
@@ -1675,10 +1679,10 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 
     $("#btCreationEdit").off("tap").on("tap",function(e){
         
-		//trace("fotosFinales:"+fotosFinales+"**numfotos:"+numeroFotos);
+		//console.log("fotosFinales:"+fotosFinales+"**numfotos:"+numeroFotos);
         if(fotosFinales == numeroFotos){
-          //  trace("has seleccionado 10");
-          //  trace("Final checkpoint!");
+          //  console.log("has seleccionado 10");
+          //  console.log("Final checkpoint!");
           //navegaSeccion("#creation_edit","slide");
    
             var elegidas = $("#fotos .contenedorpic .selectioncomplete").parent();
@@ -1723,11 +1727,11 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
         
 	}else{
             if(esAlbum == true) {
-                trace("debes seleccionar: " + cantidadFotosAlbum + " fotos para album");
+                console.log("debes seleccionar: " + cantidadFotosAlbum + " fotos para album");
             }else if(esCanvas == true) {
-                trace("debes seleccionar: " + cantidadFotosCanvas + " fotos para Canvas");
+                console.log("debes seleccionar: " + cantidadFotosCanvas + " fotos para Canvas");
             }else if(esFoto == true) {
-                trace("debes seleccionar: " + cantidadFotosSueltas + " fotos para impresion");
+                console.log("debes seleccionar: " + cantidadFotosSueltas + " fotos para impresion");
             }
         }
        
@@ -1784,7 +1788,7 @@ Pantalla Seleccion/Edicion Fotos
 
 
 $(document).delegate("#creation_edit", "pageshow", function () {
-
+    uploadFinished = false;
     $("#btEditBack").off("tap").on("tap", function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -1892,7 +1896,7 @@ function lanzarAnimacionLibro(queDireccion){
             paginasFull[numPagina] = fi;
 		}*/
         
-		//trace("numPagina antes de pinchar: " + numPagina);
+		//console.log("numPagina antes de pinchar: " + numPagina);
 		
 	    if(direccion > 0) { 
 			numPagina+=2
@@ -1900,7 +1904,7 @@ function lanzarAnimacionLibro(queDireccion){
 			numPagina-=2;
        	}
         
-       // trace("numPagina después de pinchar: " + numPagina);
+       // console.log("numPagina después de pinchar: " + numPagina);
 
         if (numPagina < 0) {
             numPagina = paginasFull.length - 2;
@@ -1911,7 +1915,7 @@ function lanzarAnimacionLibro(queDireccion){
         
         //fi = paginasFull[numPagina];
 		//////////////////////////////////CAMBIAMOS AMBAS PÁGINAS//////////////////////////////////
-		//trace("cambiamos páginas");
+		//console.log("cambiamos páginas");
 	   
 	   	//mostramos páginas numeradas desde la 1
 		$('#txtDer').text('Page ' + parseInt(numPagina + 2));
@@ -2125,7 +2129,7 @@ $(document).delegate("#orderresume", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        trace("boton");
+        console.log("boton");
 		
         if(datosUsuario.tipoLogin == "anonimo") {
             $("#passwordSet").show();
@@ -2168,7 +2172,7 @@ $(document).delegate("#addressresume", "pageshow", function () {
 		
 		//comprobar que todos los datos están ok antes de enviar
 		
-         
+
         //llamada server final guardar TOOOODOS LOS DATOS
         //llamar al upload de imagenes
         datosUsuario.nombre = $("#name").val();
@@ -2263,6 +2267,7 @@ $(document).delegate("#finishscreen", "pageshow", function () {
         esAlbum = false;
         esCanvas = false;
         esFoto = false;
+        uploadFinished = false;
         fotosFinales = 0;
     });
 
@@ -2297,7 +2302,7 @@ function registerUser() {
         },
         error: function (e) {
             $('#txtErrorRegister').html('An error has occured while registering your account.');
-           // trace(e);
+           // console.log(e);
         }
     });
 
@@ -2337,16 +2342,63 @@ function loginUser() {
             }
         },
         error: function (e) {
-         //   trace('error login: ' + e);
+         //   console.log('error login: ' + e);
         }
     });
 
 
 }
 
+function recuperarPassword() {
+    
+    $('#confirmRecoveryMsg').html("Please Wait...");
+    
+    var datos = { "email": $('#recoveryEmail').val() };
+    
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        contentType: 'application/json',
+        data: JSON.stringify(datos),
+        url: site_URL+'ws.asmx/recuperarPass',
+        success: function (data) {
+        var cadenaJSON = JSON.parse(data.d);
+
+
+            if (cadenaJSON.resultado == "OK") {         
+            $('#confirmRecoveryMsg').html('A confirmation message was sent to your email with instructions on how to recover your Mille Feuille account.');
+            }
+            else {
+            $('#confirmRecoveryMsg').html('User not found, please verify your Email and try again.');
+            }
+        },
+        error: function (e) {
+         //   console.log('error login: ' + e);
+        }
+    });
+
+
+}
+
+function iniciarSwipeDeco() {
+    
+    
+
+			var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
+	
+					 $("#marcadordecoracion li").removeClass("selected");      
+					 $($("#marcadordecoracion li")[pos]).addClass("selected");
+					 datosUsuario.deco = $($(".listadecoracion div")[pos]).find('img').attr("data-id");
+					 
+					 }
+			  });
+
+    
+    }
+
 function getPortadas() {
     //decoracionnnnnnnnnnnnnnnnnnnnnnnnnnn
-    trace("recuperando portadas");
+    console.log("recuperando portadas");
     
     
     $.ajax({
@@ -2357,7 +2409,7 @@ function getPortadas() {
       
         url: site_URL+'ws.asmx/recuperarPortadas',
         success: function(data) {
-            trace(data);
+            console.log(data);
         var cadenaJSON = JSON.parse(data.d);
         
         console.log(cadenaJSON);
@@ -2379,7 +2431,8 @@ function getPortadas() {
                $($("#marcadordecoracion li")[0]).addClass("selected");
 			   datosUsuario.deco = cadenaJSON.mensaje.portadas[0].id;
               
-				var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
+              /*
+			var miSwipe = new Swipe(document.getElementById("sliderDeco"),{continuous:false,stopPropagation:true,callback: function(pos) {
 	
 					 $("#marcadordecoracion li").removeClass("selected");      
 					 $($("#marcadordecoracion li")[pos]).addClass("selected");
@@ -2387,15 +2440,20 @@ function getPortadas() {
 					 
 					 }
 			  });
+                
+                */
+               
+               iniciarSwipeDeco();
+                
 
           }else{
               //se ha producido un error al recuperar portadas
-              trace("error al recuperar portadas"+data.d);
+              console.log("error al recuperar portadas"+data.d);
         }
           
         },
         error: function(e) {
-          trace("error de conexión: " + e);
+          console.log("error de conexión: " + e);
             
 
             
@@ -2403,10 +2461,26 @@ function getPortadas() {
     });
 }
 
+function iniciarSwipeFrames() {
+    
+    
+
+                var miSwipe = new Swipe(document.getElementById("sliderFrames"),{continuous:false,stopPropagation:true,callback: function(pos) {
+
+                 $("#marcadorframes li").removeClass("selected");      
+                 $($("#marcadorframes li")[pos]).addClass("selected");
+                 
+                 datosUsuario.frame = $($(".decoframecont")[pos]).find('img').attr("data-id");
+                 
+
+                 }
+            });
+    
+    }
 
 function getMarcos() {
     
-    trace("recuperando marcos");
+    console.log("recuperando marcos");
     
     
     $.ajax({
@@ -2417,7 +2491,7 @@ function getMarcos() {
       
         url: site_URL+'ws.asmx/recuperarMarcos',
         success: function(data) {
-            trace(data);
+            console.log(data);
         var cadenaJSON = JSON.parse(data.d);
         
         console.log(cadenaJSON);
@@ -2436,7 +2510,8 @@ function getMarcos() {
               
                $($("#marcadorframes li")[0]).addClass("selected");
               
-            var miSwipe = new Swipe(document.getElementById("sliderFrames"),{continuous:false,stopPropagation:true,callback: function(pos) {
+           /*
+                var miSwipe = new Swipe(document.getElementById("sliderFrames"),{continuous:false,stopPropagation:true,callback: function(pos) {
 
                  $("#marcadorframes li").removeClass("selected");      
                  $($("#marcadorframes li")[pos]).addClass("selected");
@@ -2445,18 +2520,21 @@ function getMarcos() {
                  
 
                  }
+            });
+                  */
+            
+            iniciarSwipeFrames();
                  
-                 
-          });
+          
 
           }else{
               //se ha producido un error al recuperar portadas
-              trace("error al recuperar marcos"+data.d);
+              console.log("error al recuperar marcos"+data.d);
         }
           
         },
         error: function(e) {
-          trace("error de conexión: " + e);
+          console.log("error de conexión: " + e);
             
 
             
@@ -2471,7 +2549,7 @@ function enviarPedido() {
                 'direccion':datosUsuario.direccion,
                 'telefono':datosUsuario.telefono,
                 'tipoPedido':datosUsuario.tipoPedido,
-                'tipoPersonalizacion':datosUsuario.deco,
+                'tipoPersonalizacion':parseInt(datosUsuario.deco),
                 'cantidad':datosUsuario.cantidad,
                 'numeroImagenes':datosUsuario.numeroImagenes,
                 'costeUnidad':precioFoto,
@@ -2479,7 +2557,7 @@ function enviarPedido() {
                 };
             
             
-    trace("enviando pedido al servidor");
+    console.log("enviando pedido al servidor"+JSON.stringify(datos));
         
     $.ajax({
 
@@ -2489,24 +2567,29 @@ function enviarPedido() {
         data: JSON.stringify(datos),
         url: site_URL+'ws.asmx/pedido',
         success: function(data) {
-            trace(data);
+            console.log(data);
         var cadenaJSON = JSON.parse(data.d);
         
-        trace(cadenaJSON);
+        console.log("datos enviados pedido: "+cadenaJSON);
         
-        if(cadenaJSON.resultado == "OK") {
-           trace("recibo respuesta correcta");
+        if(cadenaJSON.resultado == "OK" && uploadFinished == false) {
+           console.log("recibo respuesta correcta");
            datosUsuario.idPedido = cadenaJSON.mensaje.idPedido;
-		   navegaSeccion("#upload_screen","slide");
+           navegaSeccion("#upload_screen","slide");
 
+        }else if(cadenaJSON.resultado == "OK" && uploadFinished == true){
+            
+            //datosUsuario.idPedido = cadenaJSON.mensaje.idPedido;
+            navegaSeccion("#payment","slide");
+            
         }else{
               //se ha producido un error al recuperar portadas
-             trace("error al enviar "+data.d);
+             console.log("error al enviar "+data.d);
         }
           
         },
         error: function(e) {
-          trace("error de conexión: " + e);
+          console.log("error de conexión: " + e);
     
         }
     });
@@ -2558,13 +2641,13 @@ function enviarFoto(numFoto) {
         data: JSON.stringify(datos),
         url: site_URL+'ws.asmx/uploadImg',
         success: function(data) {
-            trace(data);
+            console.log(data);
 			var cadenaJSON = JSON.parse(data.d);
 			
-			trace(cadenaJSON);
+			console.log(cadenaJSON);
 			
 			if(cadenaJSON.resultado == "OK") {
-				   trace("recibo respuesta correcta");
+				   console.log("recibo respuesta correcta");
   
 				   //navegarSeccion("#upload_screen","slide");
 				   //comprobamos si hemos terminado o hay que subir más fotos
@@ -2572,7 +2655,8 @@ function enviarFoto(numFoto) {
 				   
 				   if (fotoActualSubida>=fotosElegidas.length){
 					   //he terminado
-					   navegaSeccion("#upload_screen","slide");
+                                           uploadFinished = true;
+					   navegaSeccion("#payment","slide");
 				   }else{
 					   //hay que subir más fotos
 					   actualizarProgreso();
@@ -2581,12 +2665,12 @@ function enviarFoto(numFoto) {
 	
 			  }else{
 				  //se ha producido un error al recuperar portadas
-				  trace("error al enviar "+data.d);
+				  console.log("error al enviar "+data.d);
 			  }
           
         },
         error: function(e) {
-          trace("error de conexión: " + e);
+          console.log("error de conexión: " + e);
         }
     });    
 
