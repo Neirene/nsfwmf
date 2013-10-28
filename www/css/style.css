@@ -315,17 +315,17 @@ input { border-radius: 0px !important;}
 
 /* edit */
 #creation_edit {position:relative;min-height: 480px;min-width: 320px; background-position: initial initial; background-repeat: no-repeat no-repeat; background-size: cover;}
-.book { width: 95%; /* height: 240px; */ border: 3px solid #333; border-radius: 4px; background-color: #fff; position: relative; /* -webkit-transform:rotate(90deg); */ /* margin-left: -152px; */ top: 85px; left: 10px; /* margin-top: 174px; */}
-.book li {width: 48%; /* height: 100%; */float: left;max-height: 200px;overflow: hidden;position: relative;}
+.book { width: 800px; height: 300px; border: 3px solid #333; border-radius: 4px; background-color: #fff; position: absolute; /* -webkit-transform:rotate(90deg); */ /* margin-left: -152px; */ top: 85px; left: 10px; /* margin-top: 174px; */}
+.book li {width: 48%; height: 268px;float: left;/* max-height: 200px; *//* overflow: hidden; */position: relative;}
 .leftSlide { margin: 2%; margin-right:0; }
 .rightSlide { margin: 2%; margin-left:0; }
 .book img {width: 100%; overflow-y: hidden; }
 .doblez {position: absolute; width: 146px; margin-left: 50%; left: -68px; height: 100%; background-image: url(../images/bgDoblez.png); background-position: center; background-repeat: repeat-y; z-index: 4000  ;pointer-events:none}
-.optionsPage { width: 100%; position: absolute; z-index: 5000; left: 0; height: 200px;pointer-events:none} //CHECK!!!
+.optionsPage { width: 100%; position: absolute; z-index: 4999; left: 0; height: 268px;pointer-events:none} //CHECK!!!
 .optionsPage2 { width: 100%; position: absolute; z-index: 5000; left: 0; top: 0; height: 97%;}
 .arrUpPage, .arrDownPage {position: absolute; width: 96%; text-align: center; max-height: 21px;padding: 2%;}
 .arrUpPage img, .arrDownPage img {height: 100%;width: auto;}
-.arrUpPage { top: 0; height: 20px; width: 20px; left: 43%; }
+.arrUpPage { top: 0; height: 20px; width: 20px; left: 44%; }
 .arrDownPage { bottom: 0; height: 20px; width: 20px; left: 45%; }
 
 .arrLeftPage, .arrRightPage {position: absolute; width: 96%; text-align: center; height: 100%; padding: 2%;}
@@ -337,7 +337,7 @@ input { border-radius: 0px !important;}
 .btFull img {width: 60%; height: auto;}
 
 .offPage {position: absolute; background-image: url(../images/whiteDot.png); overflow: hidden; z-index: 8000; left: 0; height: 100%;}
-.offPage span {color: #fff; font-family: 'DINEngschriftLTAlternateRegular'; overflow: hidden; position:absolute; width: 70%; text-align: center; margin-top: 39% !important; left: 0;margin: 15%;font-size: 1.75em;}
+.offPage span {margin-left: 58px;margin-top: 116px;color: #fff; font-family: 'DINEngschriftLTAlternateRegular';  position:absolute; width: 70%; text-align: center;  left: 0;/* margin: 15%; */font-size: 1.75em;}
 
 .mod90title { margin-top: 20px}
 .mod90button {width: 100%;position: absolute;/* margin-left: 15px; *//* -webkit-transform: rotate(90deg); */ margin-top: 7px;}
@@ -369,7 +369,7 @@ pruebas carousel  BORRAR
   position: relative;
 }
 
-.contenedorSwipesEdit {position:relative;width: 250px;height: 200px;background-color:#42698A;}
+.contenedorSwipesEdit {position:relative;width: 384px;height: 268px;background-color:#42698A;}
 
 
 
