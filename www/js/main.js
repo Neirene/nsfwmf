@@ -2544,7 +2544,8 @@ function getMarcos() {
 
 function enviarPedido() {
     
-   var datos = {'idUser':datosUsuario.id,
+   var datos = {
+                'idUser':datosUsuario.id,
                 'nombre':datosUsuario.nombre,
                 'direccion':datosUsuario.direccion,
                 'telefono':datosUsuario.telefono,
@@ -2554,7 +2555,7 @@ function enviarPedido() {
                 'numeroImagenes':datosUsuario.numeroImagenes,
                 'costeUnidad':precioFoto,
                 'costeTotal':datosUsuario.precioTotal
-                };
+               };
             
             
     console.log("enviando pedido al servidor"+JSON.stringify(datos));

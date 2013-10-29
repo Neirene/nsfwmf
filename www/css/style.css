@@ -203,18 +203,20 @@ input { border-radius: 0px !important;}
 .btDelete img {}
 
 /* TODO: CHECK THIS*/
-.decoframes {overflow: hidden;visibility: hidden;position: relative; width: 330%;}
+.decoframes {overflow: hidden;visibility: hidden;position: relative; width: 100%;}
 .listaframes{overflow: hidden;position: relative;}
 .listaframes > div {float:left;width:100%;position: relative;}
+.listaframes img{width: 75%;height:75%;margin-left: 10%;margin-right:10%}
+
 
 .decoframecont { display: block; width: 30%; height:30%; margin: 0px; list-style-type: none; }
 .decoframecont span{ display: none; }
 .decoframecont img { width: 100%;}
 
-.decorations {overflow: hidden;visibility: hidden;position: relative;width: 300%;height: 17em;}
+.decorations {overflow: hidden;visibility: hidden;position: relative;width: 100%}
 .listadecoracion {overflow: hidden;position: relative;}
 .listadecoracion > div {float:left;width:100%;position: relative;}
-.listadecoracion img{width: 75%;margin-left: 20px;}
+.listadecoracion img{width: 75%;height:75%;margin-left: 10%;margin-right:10%}
 
 
 #decorations ul {margin: 0px;padding: 0px;list-style-type: none;}
