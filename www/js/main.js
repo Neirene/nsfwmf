@@ -13,6 +13,8 @@ var cantidadFotosCanvas = 1;
 var cantidadFotosAlbum = 10;
 var cantidadFotosSueltas = 5;
 
+var orientacionActual="portrait";
+
 
 //precio foto unitaria
 var precioFoto = 4;
@@ -142,13 +144,13 @@ var app = {
 
 
 
-/*
-function console.log(queMsg){
+
+function trace(queMsg){
     try{
         console.log(queMsg);
     }catch(err){}
 }
-*/
+
 
 /*********************************************************
 F U N C I O N E S      G L O B A L E S 
@@ -290,9 +292,26 @@ function iniciarDOM(){
  Cambio de Orientacion para iPhone
 *************************************/
 
+
+
 function cambioOrientacion(tipo) {
+    trace("cambio de orientación a:"+tipo);
     //aqui!
+    if (orientacionActual!=tipo){
+        orientacionActual = tipo;
     
+         window.cambiarOrientacion(orientacionActual,
+                              function(e){
+                                //success
+                                   trace("success cambio:"+e);
+                              
+                              },
+                              function(e){
+                                //error
+                                     trace("error cambio:"+e);
+                              }
+        )
+    }
     
 }
 
@@ -555,6 +574,24 @@ function conectarInstagram() {
     });
 }
 
+function loginFBFake(queUrl){
+
+    
+    var objDevuelto = deserializarQueryString(queUrl);
+    
+    if (!!objDevuelto.access_token) {
+        //VIENE EL TOKEN.
+        
+        _tokenFB = objDevuelto.access_token;
+        
+        datosUsuario.id = _tokenFB; //obtenemos email (ID) objeto principal
+        datosUsuario.tipoLogin = "facebook";  // esto es facebook
+        
+        navegaSeccion("#process_select", "slideup");
+    }
+
+}
+
 function activarZonaFotosFalso() {
     /// BORRAR ESTA FUNCIÓN
 
@@ -756,7 +793,7 @@ function rellenarAlbum() {
 
 
 	//
-	ponerImagenFull(fotosElegidas[0].canvas);
+	//ponerImagenFull(fotosElegidas[0].canvas);
     
     numFotoEditando = 0;
 
@@ -769,12 +806,12 @@ function rellenarAlbum() {
 		callback: function(pos,elem){
                    // console.log("posIzq: "+pos+"**elem:"+elem); 
                     
-					ponerImagenFull(fotosElegidas[pos].canvas);
-					
+					//ponerImagenFull(fotosElegidas[pos].canvas);
+					 //numFotoEditando = pos;
 					
                     //paginaIzq = pos;
                     paginasFull[numPagina] = pos;
-                    numFotoEditando = pos;
+                   
                     
                     fotosElegidas[pos].orden = numPagina;
                  } 
@@ -789,9 +826,9 @@ function rellenarAlbum() {
 		 stopPropagation:true,
 		 callback: function(pos){
 						//console.log("posDer: "+pos); 
-						ponerImagenFull(fotosElegidas[pos].canvas);
+						//ponerImagenFull(fotosElegidas[pos].canvas);
 						//paginaDer = pos;
-						numFotoEditando = pos;
+						//numFotoEditando = pos;
 						paginasFull[numPagina+1] = pos;
                     
                         fotosElegidas[pos].orden = numPagina+1;
@@ -1145,7 +1182,7 @@ $(document).delegate("#aboutus", "pageshow", function () {
 
     //slides
     //mainslides("#about01", "#listaabout", "#marcadoresabout");
-    var miSwipe = new Swipe(document.getElementById("sliderAbout"),{continuous:false,stopPropagation:true,callback: function(pos) {
+    var miSwipe = new Swipe(document.getElementById("sliderAbout"),{continuous:false,stopPropagation:false,callback: function(pos) {
 
             var i = checkAbout.length;
             while (i--) {
@@ -1539,7 +1576,7 @@ $(document).delegate("#process_decoration", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#creation_edit", "slidedown");
+        navegaSeccion("#creation_edit");
         
     });
 
@@ -1569,7 +1606,7 @@ $(document).delegate("#process_frames", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#creation_edit", "slidedown");
+        navegaSeccion("#creation_edit");
 
     });
 
@@ -1711,7 +1748,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 			   miFoto.id = idFoto;
 			   miFoto.url = urlFotoLimpia;
 			   miFoto.canvas = null;
-                           miFoto.canvasModificado = null;
+               miFoto.canvasModificado = null;
 			   
 			   
 			   convertirCanvas(miFoto);
@@ -1719,8 +1756,8 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
                 
             }
             
-             cambioOrientacion("horizontal");
-             navegaSeccion("#creation_edit","slide");
+             cambioOrientacion("landscape");
+             navegaSeccion("#creation_edit");
             
             
            // recojofotos(); // envio fotos a las variables globales
@@ -1788,12 +1825,15 @@ Pantalla Seleccion/Edicion Fotos
 
 
 $(document).delegate("#creation_edit", "pageshow", function () {
+   
+    
     uploadFinished = false;
+    
     $("#btEditBack").off("tap").on("tap", function (e) {
         e.preventDefault();
         e.stopPropagation();
-        cambioOrientacion("vertical");
-        navegaSeccion("#creation_gallery", "slidedown");
+        cambioOrientacion("portrait");
+        navegaSeccion("#creation_gallery");
        // fotosFull = [];
 		fotosElegidas = [];
         
@@ -1804,26 +1844,40 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         e.stopPropagation();
         
         if(esAlbum == true) {
-            cambioOrientacion("vertical");
+            cambioOrientacion("portrait");
             getPortadas();
-            navegaSeccion("#process_decoration", "slideup"); 
+            navegaSeccion("#process_decoration"); 
         }else if(esCanvas == true){
-            cambioOrientacion("vertical");
+            cambioOrientacion("portrait");
             getMarcos();
-            navegaSeccion("#process_frames", "slideup"); 
+            navegaSeccion("#process_frames"); 
             
         }else{
-            cambioOrientacion("vertical");
-            navegaSeccion("#creation_title", "slideup");
+            cambioOrientacion("portrait");
+            navegaSeccion("#creation_title");
         }
 
     });
 
     $(".btEditFullScreen").off("tap").on("tap", function (e) {
+               
+		var pagDerecha = $(e.currentTarget).attr("data-id");
+		var pagIzquierda = $(e.currentTarget).attr("data-id");
+		var indice;                        
+		 if (pagDerecha == "derecha"){
+			 indice = miSwipeDerecha.getPos();
+		 }else if(pagIzquierda == "izquierda"){
+		  	 indice = miSwipeIzquierda.getPos();
+		 }
+		 
+		 ponerImagenFull(fotosElegidas[indice].canvas);
+		 numFotoEditando = indice;
+		 
+		 
 
         e.preventDefault();
         e.stopPropagation();
-        cambioOrientacion("horizontal");
+        cambioOrientacion("landscape");
         
 		 //PASO1: remover ID data-caman del canvas, PASO2: iniciar CAMAN de nuevo 
 	 
@@ -1959,7 +2013,7 @@ $(document).delegate("#creation_full", "pageshow", function () {
 			e.stopPropagation();                      
 			actualizarFotoAlbum($("#fullScPic").attr("src"));
 			stopMovimiento();
-			cambioOrientacion("horizontal");
+			cambioOrientacion("landscape");
 			navegaSeccion("#creation_edit", "fade");
 			
 			
@@ -2038,14 +2092,14 @@ $(document).delegate("#creation_title", "pageshow", function () {
         e.stopPropagation();
       
         if(esAlbum == true) {
-             cambioOrientacion("vertical");
+             cambioOrientacion("portrait");
        		 navegaSeccion("#process_decoration","slide");    
         }else if(esCanvas == true){            
-             cambioOrientacion("vertical");
+             cambioOrientacion("portrait");
        		 navegaSeccion("#process_frames","slide");
         }else{
-             cambioOrientacion("horizontal");
-      		 navegaSeccion("#creation_edit", "slide", true);
+             cambioOrientacion("landscape");
+      		 navegaSeccion("#creation_edit");
         }
 
     });
@@ -2263,12 +2317,15 @@ $(document).delegate("#finishscreen", "pageshow", function () {
 
         e.preventDefault();
         e.stopPropagation();
-        navegaSeccion("#welcome", "slide");
+        
         esAlbum = false;
         esCanvas = false;
         esFoto = false;
         uploadFinished = false;
         fotosFinales = 0;
+        navegaSeccion("#welcome", "slide");
+        
+        
     });
 
 });
@@ -2619,7 +2676,7 @@ function enviarFoto(numFoto) {
 		 //Upload progress
 		 xhr.upload.addEventListener("progress", function(evt){
 		   if (evt.lengthComputable) {
-				  var porcentajeSubida = evt.loaded / evt.total;
+				  var porcentajeSubida = evt.loaded*100 / evt.total;
 				  //Do something with upload progress
 				  console.log("subiendo..."+porcentajeSubida);
 				  
@@ -2629,7 +2686,7 @@ function enviarFoto(numFoto) {
 		 //Download progress
 		 xhr.addEventListener("progress", function(evt){
 		   if (evt.lengthComputable) {
-				 var porcentajeBajada = evt.loaded / evt.total;
+				 var porcentajeBajada = evt.loaded*100 / evt.total;
 				 //Do something with download progress
 				 console.log("bajando...:"+percentComplete);
 		   }
