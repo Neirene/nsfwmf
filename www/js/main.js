@@ -96,7 +96,7 @@ var datosUsuario = new Object();
     
 
 
-/*******************************
+/*********************************
 Variables web service (mover plz)
 **********************************/
 var APP_ID_FB = "382088901918989";
@@ -156,10 +156,10 @@ function trace(queMsg){
 F U N C I O N E S      G L O B A L E S 
 **********************************************************/
 
-/***************************
+/******************************
  Iniciar Elementos DOM cuando
  la pagina este cargada
- **************************/
+ *****************************/
 
 $(document).ready(function(){
 
@@ -300,6 +300,7 @@ function cambioOrientacion(tipo) {
     if (orientacionActual!=tipo){
         orientacionActual = tipo;
     
+    try {
          window.cambiarOrientacion(orientacionActual,
                               function(e){
                                 //success
@@ -311,6 +312,11 @@ function cambioOrientacion(tipo) {
                                      trace("error cambio:"+e);
                               }
         )
+    }catch(err){
+    
+    }
+    
+    
     }
     
 }
@@ -681,9 +687,10 @@ function representarFotos(){
 
 	for (var i=0;i<_listaFotos.length;i++){
 		var $miSoporte = $soporteFotoThu.clone();
-		$miSoporte.css("background","url("+_listaFotos[i].med+")");
+		//$miSoporte.css("background","url("+_listaFotos[i].med+")");
 		$miSoporte.attr("id",_listaFotos[i].id);
 	   
+                miniaturasCanvas(_listaFotos[i].low,_listaFotos[i].id);
 		$("#fotos").append($miSoporte);
 	
 	}
@@ -710,7 +717,7 @@ function representarFotos(){
                 
              
 		$("#selectedpics").text(selectedlist);
-		fotosFinales = selectedlist;
+		//fotosFinales = selectedlist;
 	
         
 		e.preventDefault();
@@ -727,11 +734,63 @@ function representarFotos(){
 ************************************/
 
 
+function miniaturasCanvas(url,idSoporte) {
+    
+    trace("inicia la carga de: " + idSoporte);
+    
+   var dataURL;
+    //var canvas = document.createElement('canvas');
+     var canvasModificado = document.createElement('canvas');
+   // var ctx = canvas.getContext("2d");
+     var ctx2 = canvasModificado.getContext("2d");
+    
+    var img = new Image();
+    
+    var anchoMax = 320;
+    var altoMax = 310;
+    
+    
+    img.onload = function() {
+        
+        trace("finaliza la carga de: " + idSoporte);
+            
+            //canvas.width = img.width;
+           // canvas.height = img.height;
 
+           // ctx.drawImage(img, 0, 0);
+            
+         var ratio = 1;
+
+        if(img.width > anchoMax)
+            ratio = anchoMax / img.width;
+        else if(img.height > altoMax)
+            ratio = altoMax / img.height;
+
+      
+
+        canvasModificado.width = img.width * ratio;
+        canvasModificado.height = img.height * ratio;
+        ctx2.drawImage(img, 0, 0, canvasModificado.width, canvasModificado.height, 0, 0, img.width, img.height);
+
+
+            dataURL = canvasModificado.toDataURL(); 
+            
+           
+           $("#"+idSoporte).css("background","url("+dataURL+")");
+           
+            
+     };
+     img.setAttribute('crossOrigin','anonymous');
+     img.src = "http://genericwebdomain.com/mille-feuille/proxy.php?URL="+url;
+    
+    
+    
+}
 
 
 function convertirCanvas(objFoto) {
 
+trace("comenzamos a convertir el canvas: " + objFoto.id);
     
     var dataURL;
     var canvas = document.createElement('canvas');
@@ -741,6 +800,8 @@ function convertirCanvas(objFoto) {
     
     
     img.onload = function() {
+        
+        trace("terminamos de convertir: "+ objFoto.id);
             
             canvas.width = img.width;
             canvas.height = img.height;
@@ -766,13 +827,25 @@ function convertirCanvas(objFoto) {
        
 }
 
+function getUrlFoto(idFoto){
+    var encontrado = false;
+    for(var i = 0;i<_listaFotos.length&&!encontrado;i++) {
+        if (_listaFotos[i].id == idFoto) {
+            encontrado = true;
+            return _listaFotos[i].high;
+        }
+    }
+    return encontrado;
+   
+}
+
 
 
 
 
 
 function rellenarAlbum() {
-
+    trace("comenzamos a rellenar album");
    // console.log("fotosElegidas: " + fotosElegidas.length)
     
     $soportePagIzq.html('');
@@ -811,6 +884,7 @@ function rellenarAlbum() {
 					
                     //paginaIzq = pos;
                     paginasFull[numPagina] = pos;
+                    trace("swipe Izquirda pos: " + pos);
                    
                     
                     fotosElegidas[pos].orden = numPagina;
@@ -829,9 +903,10 @@ function rellenarAlbum() {
 						//ponerImagenFull(fotosElegidas[pos].canvas);
 						//paginaDer = pos;
 						//numFotoEditando = pos;
-						paginasFull[numPagina+1] = pos;
-                    
-                        fotosElegidas[pos].orden = numPagina+1;
+		 paginasFull[numPagina+1] = pos;
+                 trace("swipe Derecha pos: " + pos);
+                 fotosElegidas[pos].orden = numPagina+1;
+                 
                    }
     });  
 	
@@ -858,7 +933,7 @@ function rellenarAlbum() {
 	});
 	
 	ponerFotoAlbum(0, "izq");
-	ponerFotoAlbum(1, "der");
+	ponerFotoAlbum(0, "der");   //o 1 como estaba antes?
 	
     
     
@@ -874,7 +949,7 @@ function ponerImagenFull(queImg){
 
 
 function magicWandSet(filter) {
-
+    
     
     console.log(filter);
     
@@ -1717,7 +1792,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
     $("#btCreationEdit").off("tap").on("tap",function(e){
         
 		//console.log("fotosFinales:"+fotosFinales+"**numfotos:"+numeroFotos);
-        if(fotosFinales == numeroFotos){
+        if($("#fotos .contenedorpic .selectioncomplete").length == numeroFotos){
           //  console.log("has seleccionado 10");
           //  console.log("Final checkpoint!");
           //navegaSeccion("#creation_edit","slide");
@@ -1726,10 +1801,10 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
             fotosFaltanConvertir = elegidas.length;
             
             var urlelegidas;
-            urlelegidas = new Array();
+            //urlelegidas = new Array();
             
            
-            idElegidas = new Array();
+           // idElegidas = new Array();
             
             
             fotosElegidas = new Array();
@@ -1740,15 +1815,17 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
             for (i=0;i<elegidas.length;i++){
                 
                 var idFoto = $(elegidas[i]).attr("id");
-                var urlFoto = $(elegidas[i]).css("background-image");
-                var urlFotoLimpia = urlFoto.substring(4,urlFoto.length-1);
+                var urlFoto = getUrlFoto(idFoto);
+                trace("la url foto es: " + urlFoto)
+                //var urlFotoLimpia = urlFoto.substring(4,urlFoto.length-1);
                 
              
 			   var miFoto = new Object();
 			   miFoto.id = idFoto;
-			   miFoto.url = urlFotoLimpia;
+			   miFoto.url = urlFoto;
 			   miFoto.canvas = null;
-               miFoto.canvasModificado = null;
+                           miFoto.canvasModificado = null;
+                           miFoto.orden = i;
 			   
 			   
 			   convertirCanvas(miFoto);
