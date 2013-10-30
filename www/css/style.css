@@ -503,13 +503,26 @@ select {
 #address div.ui-input-text { margin: 0.2em;}
 
 /*Uploader*/
-.ventanaUpload {position:absolute;top:0px;left: 0px; width:100%;height:100%;background-color:black;opacity:0.8;z-index:10000;display:none}
-.cajaUpload {position:absolute;top: 20%;left: 13%;background-color:white;color:black;width: 74%;height: 4%;padding: 1.4%;opacity:1}
+.ventanaLoading {position:fixed;top:0px;left: 0px; width:100%;height:100%;background:rgba(10,100,255,0.3);;z-index:10000;display:none}
+.cajaLoading {position:absolute;top: 20%;left: 13%;color:white;width: 74%;padding: 1.4%;}
 
-/*DEBUG*/
+#loadingIcon {width:60px;height:60px;background: url('images/loadingBit.png');}
 
-.pantallaDebug {position:fixed;top:0px;left: 0px; width:100%;height:100%;background-color:#42698A ;z-index:10000;display:none;color:red}
-.mensajeError {position:absolute;top: 18%;background-color:white;color:black;width: 85%;height: 70%;padding: 1.4%;margin:5%;overflow:auto;}
+@-webkit-keyframes rotating {
+    from{
+        -webkit-transform: rotate(0deg);
+    }
+    to{
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.rotating {
+    -webkit-animation: rotating 2s linear infinite;
+}
+
+
+
 
 /* payment */
 #payment{ background-image: url(../images/bg04.jpg); min-height: 600px; background-position: initial initial; background-repeat: no-repeat no-repeat; background-size: cover;}

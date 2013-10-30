@@ -2,6 +2,8 @@
 
 var fotoCaman;
 
+var NUMERO_FILTROS = 6;
+
 //tipos de producto
 var esAlbum = false;
 var esCanvas = false;
@@ -910,7 +912,7 @@ function rellenarAlbum() {
                    }
     });  
 	
-	
+	$(".ventanaLoading").css("display","none");
 	//programar el cambio de página del libro
 	
 	paginasFull = new Array();
@@ -950,52 +952,108 @@ function ponerImagenFull(queImg){
 }
 
 
-function magicWandSet(filter) {
+function cambiarFiltroFotoActiva() {
+     var objMetaData = fotosElegidas[numFotoEditando].metadata;
+    var filtroActual = objMetaData.filtro;
+    
+    var filtroNext = (filtroActual+1)%NUMERO_FILTROS;
+    
+    fotosElegidas[numFotoEditando].metadata.filtro = filtroNext;
+    
+    ponerFiltroFoto(filtroNext);
+}
+
+function ponerFiltroFoto(idFiltro) {
+    
+   
+      
+    var filter;
+    
+        switch(idFiltro) {
+           
+                 //sin filtro
+           
+            case 1:
+                    filter = "herMajesty";
+            break;
+
+            case 2:
+                     filter = "vintage";
+            break;
+
+            case 3:
+                     filter = "sinCity";
+            break;
+
+            case 4:
+                    filter = "lomo";
+            break;
+
+            case 5:
+                    filter = "pinhole";
+            break;
+
+            case 6:
+                    filter = "revert";
+            break;
+            
+            case 0:
+            default:
+                //sin filtro
+                filter = "";
+            
+            break;
+        }
     
     
-    console.log(filter);
+        console.log(filter);
     
 	// Listen to a single instance only
         
 	//hago  una copia de la imagen para aplicar filtros
 	 var canvasFinal = document.createElement("canvas");
-	 canvasFinal.height = $("#fullScPic").height();
-	 canvasFinal.width = $("#fullScPic").width();
+	 //canvasFinal.height = $("#fullScPic").height();
+	 //canvasFinal.width = $("#fullScPic").width();
 	 var context = canvasFinal.getContext('2d');
 	 
-	 var fotoOriginal =  fotosElegidas[numFotoEditando].canvas;
+	 var fotoOriginal = fotosElegidas[numFotoEditando].canvas;
 
 	// var img = document.getElementById("fullScPic");
 	var img = new Image();
 	img.src = fotoOriginal;
+        
+        canvasFinal.height = img.height;
+	canvasFinal.width = img.width;
 	
-	context.drawImage(img,0,0,$("#fullScPic").width()/escalaFinal,$("#fullScPic").height()/escalaFinal,0,0,$("#fullScPic").width(),$("#fullScPic").height());
+	//context.drawImage(img,0,0,$("#fullScPic").width()/escalaFinal,$("#fullScPic").height()/escalaFinal,0,0,$("#fullScPic").width(),$("#fullScPic").height());
+        context.drawImage(img,0,0);
    
-   
-	var c = Caman(canvasFinal);
+	var camanObj = Caman(canvasFinal);
 	
-	Caman.Event.listen(c, "processStart", function () {
+	/*Caman.Event.listen(camanObj, "processStart", function () {
 	  console.log("Working!");
-	});
+	});*/
 	
 	
 		
 		
 	Caman(canvasFinal, function () {
 		// If such an effect exists, use it:
-		if( filter in this){
-			
+		if(filter in this){
 			this.revert();
 			this[filter]();
-			this.render(function(){
 			
-                            
-				console.log("DONE!");
+		}else{
+                    //
+                    this.revert();
+                    
+                }
+                
+                this.render(function(){
+                               console.log("DONE!");
                                console.log(this.toBase64());
                                $("#fullScPic").attr("src",this.toBase64());
-                               
 			});
-		}
 	});
     
     
@@ -1036,6 +1094,7 @@ if(!!fotosElegidas[numFotoEditando].metadata ) {
       miLeft = objMetaData.left;
       
       //aplicamos filtro y zoom
+      ponerFiltroFoto(objMetaData.filtro);
     
     
 }else{
@@ -1087,7 +1146,7 @@ if(!!fotosElegidas[numFotoEditando].metadata ) {
 
      
      
-     fotosElegidas[numFotoEditando].metadata = objMetaData
+     fotosElegidas[numFotoEditando].metadata = objMetaData;
      
   
   }
@@ -1173,8 +1232,8 @@ context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX,
 
 function actualizarFotoAlbum(dataURL) {
     
-  /* fotosElegidas[numFotoEditando].canvasModificado = dataURL;
-   $(".fotoAlbum_"+numFotoEditando).attr("src", dataURL);*/
+   fotosElegidas[numFotoEditando].canvasModificado = dataURL;
+   $(".fotoAlbum_"+numFotoEditando).attr("src", dataURL);
     
     
     
@@ -1890,8 +1949,9 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 			   fotosElegidas.push(miFoto);
                 
             }
-            
+             
              cambioOrientacion("landscape");
+             $(".ventanaLoading").css("display","inline");
              navegaSeccion("#creation_edit");
             
             
@@ -2161,37 +2221,8 @@ $(document).delegate("#creation_full", "pageshow", function () {
 		
 	
 		$("#wandBt").off("tap").on("tap", function (e) {
-			if (filter >= 6) {
-				filter = 0;
-			}
-					
-			filter++;
-				
-			switch(filter) {
-			case 1:
-				magicWandSet("herMajesty");
-			break;
 			
-			case 2:
-				magicWandSet("vintage");
-			break;
-			
-			case 3:
-				magicWandSet("sinCity");
-			break;
-			
-			case 4:
-				magicWandSet("lomo");
-			break;
-			
-			case 5:
-				magicWandSet("pinhole");
-			break;
-		
-			case 6:
-				magicWandSet("revert");
-			break;
-			}
+                        cambiarFiltroFotoActiva();
 		
 			e.preventDefault();
 			e.stopPropagation();
@@ -2369,22 +2400,38 @@ $(document).delegate("#addressresume", "pageshow", function () {
 
         //llamada server final guardar TOOOODOS LOS DATOS
         //llamar al upload de imagenes
+
+        var campoEmail = $("#idSet").val();
+        var campoPassword = $("#passwordSet").val();
+        
+       //pendiente.....
+        
+        if($("#idNombre").val()!=""){
+            if ($("#idApellidos").val()!=""){
+                if (validoEmail(campoEmail)){
+                    if (validoTelefono($("#idTelefono").val())){
+                        
+                    }else{
+                        //error telefono
+                        
+                    }
+                }else{
+                    //revisa el email
+                }
+            }else{
+                //apellidos error
+            }
+        }else{
+            //error nombre
+        }
         
         
-            $("#recoveryEmail").val($("#recoveryEmail").attr("data-default"));
-   $("#confirmRecoveryMsg").html("");
         
-        if($("#idSet").val().search("@") == "-1")
+        //datosUsuario.nombre = $("#name").val();
+        //datosUsuario.telefono = $("#phone").val();
+        //datosUsuario.direccion = $("#addr1").val()+"###"+$("#zip").val()+"###"+$("#city").val()+"###"+$("#country").val();
         
-        
-        
-        
-        
-        datosUsuario.nombre = $("#name").val();
-        datosUsuario.telefono = $("#phone").val();
-        datosUsuario.direccion = $("#addr1").val()+"###"+$("#zip").val()+"###"+$("#city").val()+"###"+$("#country").val();
-        
-        enviarPedido();
+        //enviarPedido();
         //subirImagenes();
          
         //navegaSeccion("#payment", "slideup");
@@ -2394,6 +2441,22 @@ $(document).delegate("#addressresume", "pageshow", function () {
 
 
 });
+
+ function validoEmail(email) { 
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        /****/
+    return re.test(email);
+} 
+
+function validaPassword(quePwd){
+  return quePwd.length>0;
+  
+}
+function validoTelefono(queTelefono){
+  return queTelefono.length>0;
+  
+}
+      
 
 /************************************
 Pantalla Upload Fotos
@@ -2488,7 +2551,7 @@ $(document).delegate("#finishscreen", "pageshow", function () {
 
 //FUNCIONES AJAX, LLAMADAS A WS (REGISTRO, LOGIN)
 
-function registerUser() {
+function registerUser(email,password) {
     var email = $('#txtEmailRegister').val();
     var password = $('#txtPassRegister').val(); ;
     var repeatPassword = $('#txtPassRepeatRegister').val();

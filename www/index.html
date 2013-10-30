@@ -897,12 +897,7 @@
         <div data-role="page" data-control-title="address"  data-url="address" id="addressresume">
         <div data-role="content" id="address">
         
-                <div class="ventanaUpload">
-                    <div class="cajaUpload">Uploading Pictures...</div>
 
-
-
-                </div>
             
                 <div class="btArrow prev" id="btAddressBack"> <img src="images/arrPrev.png" alt=""> </div>
                 
@@ -1010,11 +1005,19 @@
         </div>
         </div>
        
-        
+      
+<!--LOADING-->   
+<div class="ventanaLoading">
+    <div class="cajaLoading"><h2>Now Loading...</h2><div id="loadingIcon" class="rotating"></div></div>
+</div>
         
         
 
-
+<!--DEBUG-->
+<div class="pantallaDebug" id="debugScreen">
+    <div class="mensajeError" id="debugMsg"></div>
+    <div><h2 id="alertType"></h2></div>
+</div>
 
         
         <script type="text/javascript" src="cordova.js"></script>
@@ -1025,10 +1028,6 @@
         </script>
         
         
-<!--DEBUG-->
-<div class="pantallaDebug" id="debugScreen">
-    <div class="mensajeError" id="debugMsg"></div>
-    <div><h2 id="alertType"></h2></div>
-</div>
+
 </body>
 </html>
