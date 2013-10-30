@@ -944,6 +944,8 @@ function ponerImagenFull(queImg){
 	$("#fullScPic").attr("src", queImg);
 	$("#fullScPic").css("height","auto");
 	$("#fullScPic").css("width","auto");
+        
+        $("#fullScPic").css("visibility","hidden");
 	
 }
 
@@ -1006,6 +1008,37 @@ function magicWandSet(filter) {
 function resizeEditorPic() {
 
 
+/************
+ * vamos a buscar los metadata de la imagen que se esta
+ * editando y en caso de que los tenga los representamos
+ * si no los tiene los generamos
+ */
+
+var miTop;
+var miLeft;
+
+if(!!fotosElegidas[numFotoEditando].metadata ) {
+     /*objMetaData.ancho = anchoEditor;
+     objMetaData.alto = altoEditor;
+     objMetaData.filtro = 0;
+     objMetaData.top = miTop;
+     objMetaData.left = miLeft;
+     objMetaData.escala = escalaFinal;
+     objMetaData.maskHeight = $(".borderEffect").height();
+     objMetaData.maskWidth = $(".borderEffect").width();*/
+      
+      var objMetaData = fotosElegidas[numFotoEditando].metadata;
+      
+      $("#fullScPic").css("width",objMetaData.ancho);
+      $("#fullScPic").css("height",objMetaData.alto); 
+      miTop = objMetaData.top;
+      miLeft = objMetaData.left;
+      
+      //aplicamos filtro y zoom
+    
+    
+}else{
+
     relacion1 = $(".borderEffect").width() / $(".borderEffect").height();
     relacion2 = $("#fullScPic").width() / $("#fullScPic").height();
     
@@ -1014,32 +1047,55 @@ function resizeEditorPic() {
     
     //TRABAJAR AQUI
         
- if (relacion1 <= relacion2) {
-      //ajustamos imagen al ALTO
-      altoEditor = $(".borderEffect").height();
-      anchoEditor = altoEditor * relacion2;
-      console.log("aca?")
-  }else{
-      //ajustamos imagen al ANCHO
-     console.log("Aqui?");
-     //imgHeight = $("#fullScPic").height();
-     anchoEditor = $(".borderEffect").width();
-     altoEditor = anchoEditor * $("#fullScPic").height()/$("#fullScPic").width();
+    if (relacion1 <= relacion2) {
+         //ajustamos imagen al ALTO
+         altoEditor = $(".borderEffect").height();
+         anchoEditor = altoEditor * relacion2;
+         console.log("aca?")
+     }else{
+         //ajustamos imagen al ANCHO
+        console.log("Aqui?");
+        //imgHeight = $("#fullScPic").height();
+        anchoEditor = $(".borderEffect").width();
+        altoEditor = anchoEditor * $("#fullScPic").height()/$("#fullScPic").width();
 
+     }
+
+      escalaFinal =  anchoEditor / $("#fullScPic").width(); 
+
+
+     $("#fullScPic").css("width",anchoEditor);
+     $("#fullScPic").css("height",altoEditor);
+
+     var despX = ($("#fullScPic").width() - $(".borderEffect").width())/2;
+     var despY = ($("#fullScPic").height() - $(".borderEffect").height())/2;
+
+      miTop = $(".borderEffect").offset().top - despY;
+      miLeft = $(".borderEffect").offset().left - despX;
+     
+     var objMetaData = new Object();
+     
+     objMetaData.ancho = anchoEditor;
+     objMetaData.alto = altoEditor;
+     objMetaData.filtro = 0;
+     objMetaData.top = miTop;
+     objMetaData.left = miLeft;
+     objMetaData.escala = escalaFinal;
+     objMetaData.maskHeight = $(".borderEffect").height();
+     objMetaData.maskWidth = $(".borderEffect").width();
+
+     
+     
+     fotosElegidas[numFotoEditando].metadata = objMetaData
+     
+  
   }
-
-   escalaFinal =  anchoEditor / $("#fullScPic").width(); 
-
   
-  $("#fullScPic").css("width",anchoEditor);
-  $("#fullScPic").css("height",altoEditor);
   
-  var miTop = $(".borderEffect").offset().top;
-  var miLeft = $(".borderEffect").offset().left;
   
   $("#fullScPic").offset({"top":miTop,"left":miLeft});
   
- 
+   $("#fullScPic").css("visibility","visible").fadeOut(0).fadeIn();
     
 }
    
@@ -1116,8 +1172,8 @@ context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX,
 
 function actualizarFotoAlbum(dataURL) {
     
-   fotosElegidas[numFotoEditando].canvasModificado = dataURL;
-   $(".fotoAlbum_"+numFotoEditando).attr("src", dataURL);
+  /* fotosElegidas[numFotoEditando].canvasModificado = dataURL;
+   $(".fotoAlbum_"+numFotoEditando).attr("src", dataURL);*/
     
     
     
@@ -1826,6 +1882,7 @@ $(document).delegate("#creation_gallery","pageshow",function(e) {
 			   miFoto.canvas = null;
                            miFoto.canvasModificado = null;
                            miFoto.orden = i;
+                           miFoto.metadata= null;
 			   
 			   
 			   convertirCanvas(miFoto);
@@ -1938,12 +1995,12 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 
     $(".btEditFullScreen").off("tap").on("tap", function (e) {
                
-		var pagDerecha = $(e.currentTarget).attr("data-id");
-		var pagIzquierda = $(e.currentTarget).attr("data-id");
+		var idPagina = $(e.currentTarget).attr("data-id");
+		//var pagIzquierda = $(e.currentTarget).attr("data-id");
 		var indice;                        
-		 if (pagDerecha == "derecha"){
+		 if (idPagina == "derecha"){
 			 indice = miSwipeDerecha.getPos();
-		 }else if(pagIzquierda == "izquierda"){
+		 }else if(idPagina == "izquierda"){
 		  	 indice = miSwipeIzquierda.getPos();
 		 }
 		 
@@ -1958,7 +2015,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         
 		 //PASO1: remover ID data-caman del canvas, PASO2: iniciar CAMAN de nuevo 
 	 
-		$("#fullScPic").removeAttr("data-caman-id");
+		//$("#fullScPic").removeAttr("data-caman-id");
 		/*if ($(e.currentTarget).attr("data-id")=="derecha"){
 			miPagina = paginaDer;
 		}else{
@@ -2090,9 +2147,14 @@ $(document).delegate("#creation_full", "pageshow", function () {
 			e.stopPropagation();                      
 			actualizarFotoAlbum($("#fullScPic").attr("src"));
 			stopMovimiento();
-			cambioOrientacion("landscape");
+			//cambioOrientacion("landscape");
 			navegaSeccion("#creation_edit", "fade");
-			
+                        //actualizamos los metadata
+                        
+                    fotosElegidas[numFotoEditando].metadata.top = $("#fullScPic").offset().top;
+                    fotosElegidas[numFotoEditando].metadata.left = $("#fullScPic").offset().left;
+                    //fotosElegidas[numFotoEditando].metadata.escala = obj.escala;
+                    //fotosElegidas[numFotoEditando].metadata.filtro = obj.filtro;
 			
 		});
 		
