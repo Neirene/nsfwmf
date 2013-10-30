@@ -988,7 +988,8 @@ function magicWandSet(filter) {
 			this.revert();
 			this[filter]();
 			this.render(function(){
-				
+			
+                            
 				console.log("DONE!");
                                console.log(this.toBase64());
                                $("#fullScPic").attr("src",this.toBase64());
@@ -2368,6 +2369,17 @@ $(document).delegate("#addressresume", "pageshow", function () {
 
         //llamada server final guardar TOOOODOS LOS DATOS
         //llamar al upload de imagenes
+        
+        
+            $("#recoveryEmail").val($("#recoveryEmail").attr("data-default"));
+   $("#confirmRecoveryMsg").html("");
+        
+        if($("#idSet").val().search("@") == "-1")
+        
+        
+        
+        
+        
         datosUsuario.nombre = $("#name").val();
         datosUsuario.telefono = $("#phone").val();
         datosUsuario.direccion = $("#addr1").val()+"###"+$("#zip").val()+"###"+$("#city").val()+"###"+$("#country").val();
