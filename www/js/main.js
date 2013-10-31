@@ -1777,19 +1777,25 @@ $(document).delegate("#process_select", "pageshow", function () {
 
             case 0:
                 //album
-                esAlbum = true;     
+                esCanvas = false;
+                esAlbum = true;
+                esFoto = false;
                 numeroFotos = cantidadFotosAlbum;
                 break;
 
             case 1:
                 //marco
+                esAlbum = false;
                 esCanvas = true;
+                esFoto = false;
                 numeroFotos = cantidadFotosCanvas;
                 break;
 
             case 2:
                 //fotos
+                esCanvas = false;
                 esFoto = true;   
+                esAlbum = false;
                 numeroFotos = cantidadFotosSueltas;
                 break;
         }
