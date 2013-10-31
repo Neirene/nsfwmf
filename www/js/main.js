@@ -913,6 +913,7 @@ function rellenarAlbum() {
     });  
 	
 	$(".ventanaLoading").css("display","none");
+        rellenarMetadataInicial();
 	//programar el cambio de página del libro
 	
 	paginasFull = new Array();
@@ -974,7 +975,7 @@ function ponerFiltroFoto(idFiltro) {
                  //sin filtro
            
             case 1:
-                    filter = "herMajesty";
+                    filter = "crossProcess";
             break;
 
             case 2:
@@ -1159,13 +1160,77 @@ if(!!fotosElegidas[numFotoEditando].metadata ) {
     
 }
    
+function rellenarMetadataInicial() {
 
-
-
-
-function cropCanvas() {
+    for(var i = 0;i<fotosElegidas.length;i++) {
    
-	//corta la imagen
+
+            var miTop;
+            var miLeft;
+            var queImagen = new Image();
+
+            queImagen.src = fotosElegidas[i].canvas;
+
+
+            relacion1 = $(".borderEffect").width() / $(".borderEffect").height();
+            relacion2 = queImagen.width / queImagen.height;
+
+            console.log(relacion1);
+            console.log(relacion2);
+
+            //TRABAJAR AQUI
+
+            if (relacion1 <= relacion2) {
+                 //ajustamos imagen al ALTO
+                 altoEditor = $(".borderEffect").height();
+                 anchoEditor = altoEditor * relacion2;
+                 console.log("aca?")
+             }else{
+                 //ajustamos imagen al ANCHO
+                console.log("Aqui?");
+                //imgHeight = $("#fullScPic").height();
+                anchoEditor = $(".borderEffect").width();
+                altoEditor = anchoEditor * relacion2;
+
+             }
+
+              escalaFinal =  anchoEditor / queImagen.width; 
+
+
+
+
+             var despX = (queImagen.width - $(".borderEffect").width())/2;
+             var despY = (queImagen.height - $(".borderEffect").height())/2;
+
+              miTop = $(".borderEffect").offset().top - despY;
+              miLeft = $(".borderEffect").offset().left - despX;
+
+             var objMetaData = new Object();
+
+             objMetaData.ancho = anchoEditor;
+             objMetaData.alto = altoEditor;
+             objMetaData.filtro = 0;
+             objMetaData.top = miTop;
+             objMetaData.left = miLeft;
+             objMetaData.escala = escalaFinal;
+             objMetaData.maskHeight = $(".borderEffect").height();
+             objMetaData.maskWidth = $(".borderEffect").width();
+
+
+
+             fotosElegidas[i].metadata = objMetaData;
+     
+     }
+    
+}
+
+
+
+function cropCanvas(objFoto,indice,usarModificado) {
+    
+    trace("corto foto del indice: " + indice)
+   
+//corta la imagen
 	
    var canvasFinal = document.createElement("canvas");
    canvasFinal.height = $(".borderEffect").height();
@@ -1176,10 +1241,10 @@ function cropCanvas() {
   // $(".borderEffect").html(canvasFinal);
    
    
-   var queImagen = document.getElementById("fullScPic");
+   //var queImagen = document.getElementById("fullScPic");
    //coordenadas de corte en la imagen grande
-   var sourceX = ($(".borderEffect").offset().left-$("#fullScPic").offset().left)/escalaFinal;
-   var sourceY = ($(".borderEffect").offset().top-$("#fullScPic").offset().top)/escalaFinal;
+   var sourceX = ($(".borderEffect").offset().left-objFoto.metadata.left)/escalaFinal;
+   var sourceY = ($(".borderEffect").offset().top-objFoto.metadata.top)/escalaFinal;
    var sourceWidth = $(".borderEffect").width()/escalaFinal;
    var sourceHeight = $(".borderEffect").height()/escalaFinal;
    
@@ -1189,44 +1254,22 @@ function cropCanvas() {
    var destWidth = $(".borderEffect").width();
    var destHeight =  $(".borderEffect").height();
    
+   var queImagen = new Image()
    
-   /*
-   
-   console.log("Imagen: "+queImagen);
-   console.log("Source X Pos: "+sourceX);
-   console.log("Source Y Pos: "+sourceY);
-   console.log("Source Width: "+sourceWidth);
-   console.log("Source Height: "+sourceHeight);
-   
-   
-   console.log("Destination X: "+destX);
-   console.log("Destination Y: "+destY);
-   console.log("Destination Width: "+destWidth);
-   console.log("Destination Height: "+destHeight);
-   */
-     //Leyenda      (imageObj,   c.x,     c.y,      c.w,           c.h,          0, 0, canvas.width, canvas.height);
-   //context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
-   
-context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
-   
-  // listaCanvas.push(canvasFinal);
-  
-  //var topCuadro = $(".borderEffect").offset().top;
-  //var leftCuadro = $(".borderEffect").offset().top
-  
-   $("#fullScPic").removeAttr("width");
-   $("#fullScPic").removeAttr("height");
-   $("#fullScPic").attr("src", canvasFinal.toDataURL());
-   $("#fullScPic").offset($(".borderEffect").offset());
+   if(usarModificado){
+      queImagen.src = objFoto.canvasModificado; 
+   }else{
+       queImagen.src = objFoto.canvas; 
+   }
    
    
-   stopMovimiento();
-   //salimos fuera de fullscreen al album
-   navegaSeccion("#creation_edit", "fade");
    
-   actualizarFotoAlbum(canvasFinal.toDataURL());
+   context.drawImage(queImagen, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
    
-    
+   
+   
+    fotosElegidas[indice].canvasModificado=canvasFinal.toDataURL();
+ 
     
 }
 
@@ -1238,6 +1281,25 @@ function actualizarFotoAlbum(dataURL) {
     
     
 }
+
+function procesarFotosPedido() {
+    
+    for(var i = 0;i<fotosElegidas.length;i++) {
+
+        if(!!fotosElegidas[i].canvasModificado) {
+            cropCanvas(fotosElegidas[i],i,true)
+        }else{
+            cropCanvas(fotosElegidas[i],i,false)
+        }
+
+
+
+
+    }
+    
+    
+}
+
 
 /**************************************
  * pantallas de pedido
@@ -2405,7 +2467,7 @@ $(document).delegate("#addressresume", "pageshow", function () {
         var campoPassword = $("#passwordSet").val();
         
        //pendiente.....
-        
+    /*    
         if($("#idNombre").val()!=""){
             if ($("#idApellidos").val()!=""){
                 if (validoEmail(campoEmail)){
@@ -2425,13 +2487,13 @@ $(document).delegate("#addressresume", "pageshow", function () {
             //error nombre
         }
         
+        */
         
+        datosUsuario.nombre = $("#name").val();
+        datosUsuario.telefono = $("#phone").val();
+        datosUsuario.direccion = $("#addr1").val()+"###"+$("#zip").val()+"###"+$("#city").val()+"###"+$("#country").val();
         
-        //datosUsuario.nombre = $("#name").val();
-        //datosUsuario.telefono = $("#phone").val();
-        //datosUsuario.direccion = $("#addr1").val()+"###"+$("#zip").val()+"###"+$("#city").val()+"###"+$("#country").val();
-        
-        //enviarPedido();
+        enviarPedido();
         //subirImagenes();
          
         //navegaSeccion("#payment", "slideup");
@@ -2470,6 +2532,8 @@ function actualizarProgreso(){
 }
 
 $(document).delegate("#upload_screen", "pageshow", function () {
+
+procesarFotosPedido();
 
 fotoActualSubida = 0;
 actualizarProgreso();
@@ -2890,7 +2954,7 @@ function enviarFoto(numFoto) {
 		 //Upload progress
 		 xhr.upload.addEventListener("progress", function(evt){
 		   if (evt.lengthComputable) {
-				  var porcentajeSubida = evt.loaded*100 / evt.total;
+				  var porcentajeSubida = Math.ceil(evt.loaded*100 / evt.total);
 				  //Do something with upload progress
 				  console.log("subiendo..."+porcentajeSubida);
 				  
@@ -2900,7 +2964,7 @@ function enviarFoto(numFoto) {
 		 //Download progress
 		 xhr.addEventListener("progress", function(evt){
 		   if (evt.lengthComputable) {
-				 var porcentajeBajada = evt.loaded*100 / evt.total;
+				 var porcentajeBajada = Math.ceil(evt.loaded*100 / evt.total);
 				 //Do something with download progress
 				 console.log("bajando...:"+percentComplete);
 		   }
