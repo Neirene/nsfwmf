@@ -2444,6 +2444,8 @@ Pantalla Direccion/Datos Personales
 ************************************/
 $(document).delegate("#addressresume", "pageshow", function () {
 
+$("#alertAddress").html("");
+
     $("#btAddressBack").off("tap").on("tap", function (e) {
 
         e.preventDefault();
@@ -2467,12 +2469,15 @@ $(document).delegate("#addressresume", "pageshow", function () {
         var campoPassword = $("#passwordSet").val();
         
        //pendiente.....
-    /*    
+     /*
         if($("#idNombre").val()!=""){
+                  // ok nombre
             if ($("#idApellidos").val()!=""){
+                    //ok apellidos
                 if (validoEmail(campoEmail)){
+                       //ok email
                     if (validoTelefono($("#idTelefono").val())){
-                        
+                         //ok telefono
                     }else{
                         //error telefono
                         
@@ -2486,14 +2491,80 @@ $(document).delegate("#addressresume", "pageshow", function () {
         }else{
             //error nombre
         }
+       */
+
+       var direccion;
+       var codigoPostal;
+       var ciudad;
+       var pais;
+       datosUsuario.completed = false;
         
-        */
+      if($("#name").val()!="NAME") {
+          datosUsuario.nombre = $("#name").val();
+          trace("????");
+          if($("#addr1").val()!="ADDRESS"){
+              direccion = $("#addr1").val();
+              
+              if($("#zip").val()!="ZIP"){
+                  
+                  codigoPostal = $("#zip").val();
+                  
+                  if($("#city").val()!="CITY"){
+                      
+                      ciudad = $("#city").val();
+                      
+                      if($("#country").val()!="COUNTRY"){
+                          
+                          pais =  $("#country").val();
+                          
+                          if($("#phone").val()!="PHONE"){
+                              
+                              datosUsuario.telefono = $("#phone").val();     
+                              
+                              /*
+                                if(pasofinal){
+                                  enviarPedido();
+                                }else{
+                                  $("#alertAddress").html("general error");
+                                }
+                              */
+                              
+                          }else{
+                              //phone
+                              $("#alertAddress").html("incorrect PHONE");
+                          }
+                      }else{
+                          //country
+                          $("#alertAddress").html("incorrect COUNTRY");
+                      }
+                  }else{
+                      //city
+                      $("#alertAddress").html("incorrect CITY");
+                  }
+              }else{
+                  //zip
+                  $("#alertAddress").html("incorrect ZIP");
+              }
+          }else{
+              //direccion
+              $("#alertAddress").html("incorrect ADDRESS");
+          }
+      }else{
+        // nombre
+        trace("!!!!");
+        $("#alertAddress").html("incorrect NAME");
+      }
+      
+
+      datosUsuario.direccion = direccion+","+codigoPostal+","+ciudad+","+pais;
+           
+
+       
         
-        datosUsuario.nombre = $("#name").val();
-        datosUsuario.telefono = $("#phone").val();
-        datosUsuario.direccion = $("#addr1").val()+"###"+$("#zip").val()+"###"+$("#city").val()+"###"+$("#country").val();
         
-        enviarPedido();
+        
+        
+        //enviarPedido();
         //subirImagenes();
          
         //navegaSeccion("#payment", "slideup");
