@@ -26,6 +26,7 @@ var precioCanvas = 2.3;
 var totalAlbum;
 var fotosFinales;
 var numFotoEditando = 0;
+var numPaginaEditando = 0;
 
 var fotoActualSubida;
 
@@ -396,7 +397,8 @@ function conectarFacebook() {
 
                 _tokenFB = objDevuelto.access_token;
                 
-                datosUsuario.id = _tokenFB; //obtenemos email (ID) objeto principal
+                datosUsuario.id = "0";
+                datosUsuario.tokenFacebook = _tokenFB; //obtenemos email (ID) objeto principal
                 datosUsuario.tipoLogin = "facebook";  // esto es facebook               
 
                 navegaSeccion("#process_select", "slideup");
@@ -878,18 +880,21 @@ function rellenarAlbum() {
 		continuous:true,
 		speed:300,
 		stopPropagation:true,
-		callback: function(pos,elem){
-                   // console.log("posIzq: "+pos+"**elem:"+elem); 
+		callback: function(pos){
+                             // console.log("posIzq: "+pos+"**elem:"+elem); 
                     
-					//ponerImagenFull(fotosElegidas[pos].canvas);
-					 //numFotoEditando = pos;
+                            //ponerImagenFull(fotosElegidas[pos].canvas);
+                             //numFotoEditando = pos;
 					
-                    //paginaIzq = pos;
-                    paginasFull[numPagina] = pos;
-                    trace("swipe Izquirda pos: " + pos);
+                            //paginaIzq = pos;
+                            paginasFull[numPagina].numeroFoto = pos;
+                            paginasFull[numPagina].canvasModificado = fotosElegidas[pos].canvas;
+                            iniciarMetadata((numPagina),pos);
+
+                            trace("swipe Izquirda pos: " + pos);
                    
                     
-                    fotosElegidas[pos].orden = numPagina;
+                    //fotosElegidas[pos].orden = numPagina;
                  } 
     });
     
@@ -901,26 +906,37 @@ function rellenarAlbum() {
 		 speed:300,
 		 stopPropagation:true,
 		 callback: function(pos){
-						//console.log("posDer: "+pos); 
-						//ponerImagenFull(fotosElegidas[pos].canvas);
-						//paginaDer = pos;
-						//numFotoEditando = pos;
-		 paginasFull[numPagina+1] = pos;
-                 trace("swipe Derecha pos: " + pos);
-                 fotosElegidas[pos].orden = numPagina+1;
+                        //console.log("posDer: "+pos); 
+                        //ponerImagenFull(fotosElegidas[pos].canvas);
+                        //paginaDer = pos;
+                        //numFotoEditando = pos;
+                        paginasFull[numPagina+1].numeroFoto = pos;
+                        paginasFull[numPagina+1].canvasModificado = fotosElegidas[pos].canvas;
+                        iniciarMetadata((numPagina+1),pos);
+
+                        trace("swipe Derecha pos: " + pos);
+                        //fotosElegidas[pos].orden = numPagina+1;
                  
                    }
     });  
 	
 	$(".ventanaLoading").css("display","none");
-        rellenarMetadataInicial();
+        //rellenarMetadataInicial();
 	//programar el cambio de página del libro
 	
 	paginasFull = new Array();
 	//preasignamos una foto para cada página
 	for (var i=0;i<fotosElegidas.length;i++){
-   		 paginasFull.push(i);
-		 fotosElegidas[i].orden = i;
+            var objPagina = new Object();
+            
+            objPagina.canvasModificado = fotosElegidas[i].canvas;
+            objPagina.metadata = null;
+            objPagina.numeroFoto = i;
+            
+   		 paginasFull.push(objPagina);
+                 
+                 iniciarMetadata(i,i);
+		// fotosElegidas[i].orden = i;
 	};
 	
 	//fi = 0;
@@ -954,12 +970,12 @@ function ponerImagenFull(queImg){
 
 
 function cambiarFiltroFotoActiva() {
-     var objMetaData = fotosElegidas[numFotoEditando].metadata;
+     var objMetaData = paginasFull[numPaginaEditando].metadata;
     var filtroActual = objMetaData.filtro;
     
     var filtroNext = (filtroActual+1)%NUMERO_FILTROS;
     
-    fotosElegidas[numFotoEditando].metadata.filtro = filtroNext;
+    paginasFull[numPaginaEditando].metadata.filtro = filtroNext;
     
     ponerFiltroFoto(filtroNext);
 }
@@ -1017,7 +1033,7 @@ function ponerFiltroFoto(idFiltro) {
 	 //canvasFinal.width = $("#fullScPic").width();
 	 var context = canvasFinal.getContext('2d');
 	 
-	 var fotoOriginal = fotosElegidas[numFotoEditando].canvas;
+	 var fotoOriginal = fotosElegidas[paginasFull[numPaginaEditando].numeroFoto].canvas;
 
 	// var img = document.getElementById("fullScPic");
 	var img = new Image();
@@ -1077,7 +1093,7 @@ function resizeEditorPic() {
 var miTop;
 var miLeft;
 
-if(!!fotosElegidas[numFotoEditando].metadata ) {
+if(!!paginasFull[numPaginaEditando].metadata ) {
      /*objMetaData.ancho = anchoEditor;
      objMetaData.alto = altoEditor;
      objMetaData.filtro = 0;
@@ -1087,7 +1103,7 @@ if(!!fotosElegidas[numFotoEditando].metadata ) {
      objMetaData.maskHeight = $(".borderEffect").height();
      objMetaData.maskWidth = $(".borderEffect").width();*/
       
-      var objMetaData = fotosElegidas[numFotoEditando].metadata;
+      var objMetaData = paginasFull[numPaginaEditando].metadata;
       
       $("#fullScPic").css("width",objMetaData.ancho);
       $("#fullScPic").css("height",objMetaData.alto); 
@@ -1147,7 +1163,7 @@ if(!!fotosElegidas[numFotoEditando].metadata ) {
 
      
      
-     fotosElegidas[numFotoEditando].metadata = objMetaData;
+     paginasFull[numPaginaEditando].metadata = objMetaData;
      
   
   }
@@ -1160,6 +1176,7 @@ if(!!fotosElegidas[numFotoEditando].metadata ) {
     
 }
    
+   /*
 function rellenarMetadataInicial() {
 
     for(var i = 0;i<fotosElegidas.length;i++) {
@@ -1223,6 +1240,65 @@ function rellenarMetadataInicial() {
      }
     
 }
+                                    
+ */
+
+function iniciarMetadata(numPagina,numFoto) {
+
+            var miTop;
+            var miLeft;
+            var queImagen = new Image();
+
+            queImagen.src = fotosElegidas[numFoto].canvas;
+
+
+            relacion1 = $(".borderEffect").width() / $(".borderEffect").height();
+            relacion2 = queImagen.width / queImagen.height;
+
+            console.log(relacion1);
+            console.log(relacion2);
+
+            //TRABAJAR AQUI
+
+            if (relacion1 <= relacion2) {
+                 //ajustamos imagen al ALTO
+                 altoEditor = $(".borderEffect").height();
+                 anchoEditor = altoEditor * relacion2;
+                 console.log("aca?")
+             }else{
+                 //ajustamos imagen al ANCHO
+                console.log("Aqui?");
+                //imgHeight = $("#fullScPic").height();
+                anchoEditor = $(".borderEffect").width();
+                altoEditor = anchoEditor * relacion2;
+
+             }
+
+              escalaFinal =  anchoEditor / queImagen.width; 
+
+             var despX = (queImagen.width - $(".borderEffect").width())/2;
+             var despY = (queImagen.height - $(".borderEffect").height())/2;
+
+              miTop = $(".borderEffect").offset().top - despY;
+              miLeft = $(".borderEffect").offset().left - despX;
+
+             var objMetaData = new Object();
+
+             objMetaData.ancho = anchoEditor;
+             objMetaData.alto = altoEditor;
+             objMetaData.filtro = 0;
+             objMetaData.top = miTop;
+             objMetaData.left = miLeft;
+             objMetaData.escala = escalaFinal;
+             objMetaData.maskHeight = $(".borderEffect").height();
+             objMetaData.maskWidth = $(".borderEffect").width();
+
+
+
+             paginasFull[numPagina].metadata = objMetaData;
+    
+    
+}
 
 
 
@@ -1256,11 +1332,11 @@ function cropCanvas(objFoto,indice,usarModificado) {
    
    var queImagen = new Image()
    
-   if(usarModificado){
+  // if(usarModificado){
       queImagen.src = objFoto.canvasModificado; 
-   }else{
-       queImagen.src = objFoto.canvas; 
-   }
+  // }else{
+   //    queImagen.src = objFoto.canvas; 
+  // }
    
    
    
@@ -1268,32 +1344,29 @@ function cropCanvas(objFoto,indice,usarModificado) {
    
    
    
-    fotosElegidas[indice].canvasModificado=canvasFinal.toDataURL();
+    paginasFull[indice].canvasModificado=canvasFinal.toDataURL();
  
     
 }
 
 function actualizarFotoAlbum(dataURL) {
     
-   fotosElegidas[numFotoEditando].canvasModificado = dataURL;
-   $(".fotoAlbum_"+numFotoEditando).attr("src", dataURL);
-    
-    
-    
+   paginasFull[numPaginaEditando].canvasModificado = dataURL;
+   
+   //comprobar si estamos en la pagina derecha o izquierda
+   $(".fotoAlbum_"+paginasFull[numPaginaEditando].numeroFoto).attr("src", dataURL);
+
 }
 
 function procesarFotosPedido() {
     
-    for(var i = 0;i<fotosElegidas.length;i++) {
+    for(var i = 0;i<paginasFull.length;i++) {
 
-        if(!!fotosElegidas[i].canvasModificado) {
-            cropCanvas(fotosElegidas[i],i,true)
+        if(!!paginasFull[i].canvasModificado) {
+            cropCanvas(paginasFull[i],i,true);
         }else{
-            cropCanvas(fotosElegidas[i],i,false)
+            cropCanvas(paginasFull[i],i,false);
         }
-
-
-
 
     }
     
@@ -1583,7 +1656,7 @@ $(document).delegate("#logintype", "pageshow", function () {
         e.preventDefault();
         e.stopPropagation();
         
-        datosUsuario.id = ""; //obtenemos email (ID) objeto principal
+        datosUsuario.id = "0"; //obtenemos email (ID) objeto principal
         datosUsuario.tipoLogin = "anonimo";  // esto es millefeuille anonimo
         
         navegaSeccion("#process_select", "slideup");
@@ -2098,7 +2171,7 @@ $(document).delegate("#creation_edit", "pageshow", function () {
         cambioOrientacion("portrait");
         navegaSeccion("#creation_gallery");
        // fotosFull = [];
-		fotosElegidas = [];
+	//fotosElegidas = [];
         
     });
 
@@ -2129,12 +2202,14 @@ $(document).delegate("#creation_edit", "pageshow", function () {
 		var indice;                        
 		 if (idPagina == "derecha"){
 			 indice = miSwipeDerecha.getPos();
+                         numPaginaEditando = numPagina+1;
 		 }else if(idPagina == "izquierda"){
 		  	 indice = miSwipeIzquierda.getPos();
+                         numPaginaEditando = numPagina;
 		 }
 		 
 		 ponerImagenFull(fotosElegidas[indice].canvas);
-		 numFotoEditando = indice;
+		 //numFotoEditando = indice;
 		 
 		 
 
@@ -2238,8 +2313,8 @@ function lanzarAnimacionLibro(queDireccion){
 		$('#txtDer').text('Page ' + parseInt(numPagina + 2));
 		$('#txtIzq').text('Page ' + parseInt(numPagina + 1));
 		
-		ponerFotoAlbum(paginasFull[numPagina], "izq");
-		ponerFotoAlbum(paginasFull[numPagina+1], "der");
+		ponerFotoAlbum(paginasFull[numPagina].numeroFoto, "izq");
+		ponerFotoAlbum(paginasFull[numPagina+1].numeroFoto, "der");
 
         e.preventDefault();
         e.stopPropagation();
@@ -2280,8 +2355,8 @@ $(document).delegate("#creation_full", "pageshow", function () {
 			navegaSeccion("#creation_edit", "fade");
                         //actualizamos los metadata
                         
-                    fotosElegidas[numFotoEditando].metadata.top = $("#fullScPic").offset().top;
-                    fotosElegidas[numFotoEditando].metadata.left = $("#fullScPic").offset().left;
+                    paginasFull[numPaginaEditando].metadata.top = $("#fullScPic").offset().top;
+                    paginasFull[numPaginaEditando].metadata.left = $("#fullScPic").offset().left;
                     //fotosElegidas[numFotoEditando].metadata.escala = obj.escala;
                     //fotosElegidas[numFotoEditando].metadata.filtro = obj.filtro;
 			
@@ -2300,19 +2375,19 @@ $(document).delegate("#creation_full", "pageshow", function () {
 	
 	
 	
-		$("#btCrop").off("tap").on("tap", function (e) {
+		/*$("#btCrop").off("tap").on("tap", function (e) {
 				e.preventDefault();
 				e.stopPropagation();
 				cropCanvas();
-			});
+			});*/
 	
 	
-		$("#btCompleteEdit").off("tap").on("tap", function (e) {
+		/*$("#btCompleteEdit").off("tap").on("tap", function (e) {
 			e.preventDefault();
 			e.stopPropagation();
 			navegaSeccion("#creation_edit", "fade");
 			
-		});
+		});*/
 
 
 
@@ -2504,37 +2579,46 @@ $("#alertAddress").html("");
        var ciudad;
        var pais;
        datosUsuario.completed = false;
+       var puedoEnviar=false;
         
-      if($("#name").val()!="NAME") {
-          datosUsuario.nombre = $("#name").val();
-          trace("????");
-          if($("#addr1").val()!="ADDRESS"){
-              direccion = $("#addr1").val();
+      if($("#name").val()!=$("#name").attr("data-default")) {
+         
+     
+          if($("#addr1").val()!=$("#addr1").attr("data-default")){
+           
               
-              if($("#zip").val()!="ZIP"){
-                  
-                  codigoPostal = $("#zip").val();
-                  
-                  if($("#city").val()!="CITY"){
+              if($("#zip").val()!=$("#zip").attr("data-default")){
+                   
+                  if($("#city").val()!=$("#city").attr("data-default")){
+              
                       
-                      ciudad = $("#city").val();
-                      
-                      if($("#country").val()!="COUNTRY"){
+                      if($("#country").val()!=$("#country").attr("data-default")){
                           
-                          pais =  $("#country").val();
-                          
-                          if($("#phone").val()!="PHONE"){
+                          if(validoTelefono($("#phone").val())){
                               
-                              datosUsuario.telefono = $("#phone").val();     
                               
-                              /*
-                                if(pasofinal){
-                                  enviarPedido();
+                                if (datosUsuario.id!=0){
+                                    puedoEnviar=true;
                                 }else{
-                                  $("#alertAddress").html("general error");
+                                    //comprobar email y password
+                                     if (validoEmail($("#idSet").val())){
+                                          if (validaPassword($("#passwordSet").val())){
+                                              //todo ok
+                                              puedoEnviar=true;
+                                              
+                                          }else{
+                                              //password incorrecta
+                                               $("#alertAddress").html("incorrect PASSWORD");
+                                          }
+                                 
+                                    }else{
+                                        //email incorrecto
+
+                                       $("#alertAddress").html("incorrect EMAIL");
+                                    }
+                                    
                                 }
-                              */
-                              
+                           
                           }else{
                               //phone
                               $("#alertAddress").html("incorrect PHONE");
@@ -2561,23 +2645,22 @@ $("#alertAddress").html("");
         $("#alertAddress").html("incorrect NAME");
       }
       
+      if (puedoEnviar){
+           datosUsuario.telefono = $("#phone").val();     
+            datosUsuario.nombre = $("#name").val();   
+            direccion = $("#addr1").val(); 
+            codigoPostal = $("#zip").val();
+            ciudad = $("#city").val(); 
+            pais =  $("#country").val();
+            datosUsuario.direccion = direccion+","+codigoPostal+","+ciudad+","+pais;
+            
+            datosUsuario.email =  $("#idSet").val(); 
+             datosUsuario.password =  $("#passwordSet").val(); 
 
-      datosUsuario.direccion = direccion+","+codigoPostal+","+ciudad+","+pais;
-           
-
-       
-        
-        
-        
-        
-        //enviarPedido();
-        //subirImagenes();
-         
-        //navegaSeccion("#payment", "slideup");
+            enviarPedido();
+      }
 
     });
-    
-
 
 });
 
@@ -2603,7 +2686,7 @@ Pantalla Upload Fotos
 function actualizarProgreso(){
     
     $("#contadorUpload").html(fotoActualSubida+1);
-    $("#totalUpload").html(fotosElegidas.length);
+    $("#totalUpload").html(paginasFull.length);
    
     
 }
@@ -2966,7 +3049,10 @@ function enviarPedido() {
                 'cantidad':datosUsuario.cantidad,
                 'numeroImagenes':datosUsuario.numeroImagenes,
                 'costeUnidad':precioFoto,
-                'costeTotal':datosUsuario.precioTotal
+                'costeTotal':datosUsuario.precioTotal,
+                'tokenFB':datosUsuario.tokenFacebook,
+                'newEmail':datosUsuario.email,
+                'password':datosUsuario.password
                };
             
             
@@ -3012,14 +3098,14 @@ function enviarFoto(numFoto) {
     
     var canvasFoto;
     
-    if(!!fotosElegidas[numFoto].canvasModificado){
-        canvasFoto = fotosElegidas[numFoto].canvasModificado;
-    }else{
-        canvasFoto = fotosElegidas[numFoto].canvas;
-    }
+    //if(!!fotosElegidas[numFoto].canvasModificado){
+        canvasFoto = paginasFull[numFoto].canvasModificado;
+    //}else{
+        //canvasFoto = fotosElegidas[numFoto].canvas;
+   // }
     
     var datos = {'idPedido':parseInt(datosUsuario.idPedido),
-                 'ordenFoto':fotosElegidas[numFoto].orden,
+                 'ordenFoto':numFoto,
                  //'ordenFoto':1,
                  'nombreImagen':canvasFoto
              };
@@ -3066,7 +3152,7 @@ function enviarFoto(numFoto) {
 				   //comprobamos si hemos terminado o hay que subir más fotos
 				   fotoActualSubida++;
 				   
-				   if (fotoActualSubida>=fotosElegidas.length){
+				   if (fotoActualSubida>=paginasFull.length){
 					   //he terminado
                                            uploadFinished = true;
 					   navegaSeccion("#payment","slide");
